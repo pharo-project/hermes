@@ -1,0 +1,22 @@
+{
+	"commentStamp" : "",
+	"super" : "HEAbstractExported",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"className",
+		"superclass",
+		"instanceVariables",
+		"methods",
+		"classSideMethods",
+		"classInstancevariables",
+		"classVariables",
+		"sharedPools",
+		"category",
+		"layoutClass"
+	],
+	"name" : "HEClass",
+	"type" : "normal"
+}
