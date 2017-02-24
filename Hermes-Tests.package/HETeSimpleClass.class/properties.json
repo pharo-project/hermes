@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Hermes-Tests-Test-Classes",
+	"classinstvars" : [
+		"aClassInstanceVariable"
+	],
+	"pools" : [ ],
+	"classvars" : [
+		"AClassVariable"
+	],
+	"instvars" : [
+		"anInstanceVariable"
+	],
+	"name" : "HETeSimpleClass",
+	"type" : "normal"
+}
