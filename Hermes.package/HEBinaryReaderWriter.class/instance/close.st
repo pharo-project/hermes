@@ -1,0 +1,3 @@
+writting
+close
+	stream close.

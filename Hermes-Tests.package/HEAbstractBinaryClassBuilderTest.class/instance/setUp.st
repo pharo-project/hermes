@@ -1,7 +1,8 @@
 initialization
 setUp
 	super setUp.
-	filename := (FileReference newTempFilePrefix: 'export' suffix: '.exp') fullName.
+	fileReference := (FileReference newTempFilePrefix: 'export' suffix: '.exp').
+	filename := fileReference fullName.
 
 	writer := HEBinaryReaderWriter new
 		stream: (File openForWriteFileNamed:filename);
