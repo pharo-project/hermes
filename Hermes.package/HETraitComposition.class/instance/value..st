@@ -1,3 +1,3 @@
 accessing
 value: aTraitComposition
-	value := aTraitComposition transformations asArray asExportedLiteral.
+	value := aTraitComposition transformations asArray collect:#asExportedLiteral.

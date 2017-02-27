@@ -1,3 +1,3 @@
 accessing
 value: aTraitExclusion
-	value := aTraitExclusion exclusions asExportedLiteral.
+	value := aTraitExclusion exclusions collect:#asExportedLiteral.

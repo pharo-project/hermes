@@ -14,3 +14,6 @@ writeInto: aWriter
 	
 	aWriter writeInt: classSideMethods size.
 	classSideMethods do:[:e | e writeInto:aWriter].
+	
+	traitComposition writeInto: aWriter.
+	classTraitComposition writeInto: aWriter.	

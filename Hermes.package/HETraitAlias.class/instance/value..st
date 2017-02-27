@@ -1,3 +1,3 @@
 accessing
 value: aTraitAlias
-	value := aTraitAlias aliases asExportedLiteral.
+	value := aTraitAlias aliases collect:#asExportedLiteral.

@@ -15,7 +15,9 @@
 		"classVariables",
 		"sharedPools",
 		"category",
-		"layoutClass"
+		"layoutClass",
+		"traitComposition",
+		"classTraitComposition"
 	],
 	"name" : "HEClass",
 	"type" : "normal"

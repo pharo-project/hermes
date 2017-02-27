@@ -20,4 +20,7 @@ readFrom: aReader
 
 	classSideMethods := (1 to: numberOfClassMethods)
 		collect: [ :i | HEMethod readFrom: aReader ]
-		as: Array
+		as: Array.
+		
+	traitComposition := HEExportedLiteral readFrom: aReader.
+	classTraitComposition := HEExportedLiteral readFrom: aReader.

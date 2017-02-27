@@ -1,0 +1,13 @@
+{
+	"classtraitcomposition" : "THEOneTestTrait classTrait + THEOtherTestTrait classTrait",
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HETeSimpleClassWithTraits",
+	"commentStamp" : "",
+	"super" : "HETeSimpleClass",
+	"traitcomposition" : "THEOneTestTrait + THEOtherTestTrait",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Hermes-Tests-Test-Classes"
+}
