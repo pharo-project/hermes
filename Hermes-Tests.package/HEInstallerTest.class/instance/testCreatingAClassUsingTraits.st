@@ -16,7 +16,7 @@ testCreatingAClassUsingTraits
 	self deny: aClass traitComposition isEmpty.
 	self deny: aClass class traitComposition isEmpty.
 		
-	obj := aClass new.
+	obj := aClass someClassSideMessage.
 	
 	self assert: obj oneMessage equals: 1234.
 	self assert: obj otherMessage equals: 4321.	

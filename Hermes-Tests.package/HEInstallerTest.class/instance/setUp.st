@@ -1,4 +1,4 @@
 initialization
 setUp
 	super setUp.
-	builder := HEClassBuilder new.
+	builder := HEInstaller new.

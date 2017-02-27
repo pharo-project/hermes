@@ -4,7 +4,7 @@ doTestExportingTrait: traitUnderTest
 	old := HETrait for: traitUnderTest.
 
 	nonExtensionMethods := (traitUnderTest methods reject: #isExtension) size.
-	nonExtensionMethodsClassSide := (traitUnderTest class methods reject: #isExtension) size.
+	nonExtensionMethodsClassSide := (traitUnderTest theMetaClass methods reject: #isExtension) size.
 
 	self assert: old methods size equals: nonExtensionMethods.
 	self assert: old classSideMethods size equals: nonExtensionMethodsClassSide.

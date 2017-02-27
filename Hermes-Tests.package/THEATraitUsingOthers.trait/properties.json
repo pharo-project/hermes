@@ -1,0 +1,7 @@
+{
+	"commentStamp" : "",
+	"traitcomposition" : "THEOtherTestTrait - {#otherMessage} + THEOneTestTrait",
+	"classtraitcomposition" : "THEOneTestTrait classTrait + THEOtherTestTrait classTrait",
+	"category" : "Hermes-Tests-Test-Classes",
+	"name" : "THEATraitUsingOthers"
+}

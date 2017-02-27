@@ -7,8 +7,9 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"builder",
-		"aClass"
+		"aClass",
+		"aTrait"
 	],
-	"name" : "HEClassBuilderTest",
+	"name" : "HEInstallerTest",
 	"type" : "normal"
 }
