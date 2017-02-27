@@ -1,9 +1,9 @@
 converting
 asLiteralIn: env
 	| additionalMethodState |
-	additionalMethodState := AdditionalMethodState new.
+	additionalMethodState := AdditionalMethodState new: value value size.
 	additionalMethodState method: env newMethod.
 	additionalMethodState selector: (selector asLiteralIn: env).
 
-	value withIndexDo: [ :e :idx | additionalMethodState at: idx put: e ].
+	value value withIndexDo: [ :e :idx | additionalMethodState basicAt: idx put: (e asLiteralIn: env) ].
 	^ additionalMethodState

@@ -14,6 +14,9 @@ testCreatingASimpleClassExportingToFile
 	builder installClass: aClass in: exportedClass category.
 	builder installMethods: exportedClass into: aClass.
 
+	self assert: aClass traitComposition isEmpty.
+	self assert: aClass class traitComposition isEmpty.
+
 	obj := aClass newInstance.
 	
 	obj anInstanceVariable: 25.

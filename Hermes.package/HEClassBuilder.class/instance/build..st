@@ -21,5 +21,8 @@ build: aHEClass
 
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
+
+	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
+	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
 	
 	^newClass.
