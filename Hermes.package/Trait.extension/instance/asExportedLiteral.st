@@ -1,3 +1,3 @@
 *Hermes
 asExportedLiteral
-	^ HETrait for: self.
+	^ HETraitLiteral for: self.

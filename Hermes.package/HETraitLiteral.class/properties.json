@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "HETrait",
+	"name" : "HETraitLiteral",
 	"type" : "normal"
 }
