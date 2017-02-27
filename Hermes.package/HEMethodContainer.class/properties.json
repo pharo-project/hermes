@@ -6,13 +6,12 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"version",
-		"imageVersion",
-		"packageName",
-		"classes",
-		"extensionMethods",
-		"traits"
+		"methods",
+		"classSideMethods",
+		"traitComposition",
+		"classTraitComposition",
+		"category"
 	],
-	"name" : "HEPackage",
+	"name" : "HEMethodContainer",
 	"type" : "normal"
 }

@@ -4,7 +4,11 @@ writeInto: aWriter
 	aWriter writeByteString: packageName.
 	aWriter writeInt: imageVersion.
 
-	self writeClassesInto: aWriter.
-	
+	aWriter writeInt: traits size.
+	traits do: [ :each | each writeInto: aWriter ].
+
+	aWriter writeInt: classes size.
+	classes do: [ :each | each writeInto: aWriter ].
+
 	aWriter writeInt: extensionMethods size.
-	extensionMethods do:[:e | e writeInto: aWriter].
+	extensionMethods do: [ :e | e writeInto: aWriter ]

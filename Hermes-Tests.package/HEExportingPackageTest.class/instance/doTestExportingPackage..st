@@ -8,6 +8,8 @@ doTestExportingPackage: aPackageNamed
 	new := HEPackage readFrom: reader.
 	
 	self assert: old classes size equals: (aPackage definedClasses reject:#isTrait) size.
+	self assert: old traits size equals: (aPackage definedClasses select:#isTrait) size.
+
 	self assert: old extensionMethods size equals: (aPackage extensionMethods) size.
 	
 	self assert: ( old classes allSatisfy: [ :e | self in: old classes allSuperclassesAreBeforeThan: e] ).

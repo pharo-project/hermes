@@ -1,5 +1,5 @@
 instance creation
-readFrom: aReader
+for: aTrait
 	^ self new
-		readFrom: aReader;
+		fromTrait: aTrait;
 		yourself
