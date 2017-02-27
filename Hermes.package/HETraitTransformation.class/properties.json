@@ -1,11 +1,13 @@
 {
 	"commentStamp" : "",
-	"super" : "HETraitTransformation",
+	"super" : "HEArray",
 	"category" : "Hermes-Model",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
-	"name" : "HETraitExclusion",
+	"instvars" : [
+		"subject"
+	],
+	"name" : "HETraitTransformation",
 	"type" : "normal"
 }

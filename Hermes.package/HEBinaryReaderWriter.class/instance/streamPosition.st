@@ -1,3 +1,0 @@
-accessing
-streamPosition
-	^ stream position.

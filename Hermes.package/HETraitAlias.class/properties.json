@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "HEArray",
+	"super" : "HETraitTransformation",
 	"category" : "Hermes-Model",
 	"classinstvars" : [ ],
 	"pools" : [ ],

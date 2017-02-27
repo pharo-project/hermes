@@ -1,3 +1,3 @@
-writting
+initialize-release
 close
-	stream close.
+	self stream close.
