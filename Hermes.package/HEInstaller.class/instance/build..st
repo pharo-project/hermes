@@ -1,4 +1,4 @@
-building class
+creating classes
 build: aHEClass
 	| newMetaclass newClass superclass layoutType |
 	newMetaclass := Metaclass new.

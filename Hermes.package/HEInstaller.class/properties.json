@@ -8,6 +8,6 @@
 	"instvars" : [
 		"environment"
 	],
-	"name" : "HEClassBuilder",
+	"name" : "HEInstaller",
 	"type" : "normal"
 }
