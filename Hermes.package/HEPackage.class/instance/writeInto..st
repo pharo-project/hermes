@@ -2,7 +2,6 @@ writing
 writeInto: aWriter
 	aWriter writeInt: version.
 	aWriter writeByteString: packageName.
-	aWriter writeInt: imageVersion.
 
 	aWriter writeInt: traits size.
 	traits do: [ :each | each writeInto: aWriter ].

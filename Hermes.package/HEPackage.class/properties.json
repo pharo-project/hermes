@@ -7,7 +7,6 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"version",
-		"imageVersion",
 		"packageName",
 		"classes",
 		"extensionMethods",

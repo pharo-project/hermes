@@ -5,4 +5,3 @@ initialize
 	traits := OrderedCollection new.
 
 	extensionMethods := OrderedCollection new.
-	imageVersion := SystemVersion current highestUpdate.

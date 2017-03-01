@@ -3,7 +3,6 @@ readFrom: aReader
 	| numberOfTraits numberOfClasses numberOfExtensionMethods |
 	version := aReader readInt.
 	packageName := aReader readByteSymbol.
-	imageVersion := aReader readInt.
 
 	numberOfTraits := aReader readInt.
 	1 to: numberOfTraits do: [ :idx | traits add: (HETrait readFrom: aReader)].

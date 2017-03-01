@@ -1,3 +1,3 @@
 initialization
 initialize
-	environment := Smalltalk globals.
+	environment := self class environment.
