@@ -5,10 +5,10 @@ doFromMethodContainer: aMethodContainer
 	classTraitComposition := aMethodContainer theMetaClass traitComposition
 		asExportedLiteral.
 
-	methods := aMethodContainer methods
+	methods := aMethodContainer localMethods
 		select: [ :e | e isExtension not ]
 		thenCollect: [ :e | HEMethod for: e ].
 
-	classSideMethods := aMethodContainer theMetaClass methods
+	classSideMethods := aMethodContainer theMetaClass localMethods
 		select: [ :e | e isExtension not ]
 		thenCollect: [ :e | HEMethod for: e ]

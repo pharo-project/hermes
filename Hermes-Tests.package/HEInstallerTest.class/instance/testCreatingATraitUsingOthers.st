@@ -3,7 +3,7 @@ testCreatingATraitUsingOthers
 	| exportedTrait |
 	
 	exportedTrait := HETrait for: THEATraitUsingOthers. 
-	self changeNameOf: exportedTrait to: #THEATraitUsingOthersNew.
+	self changeNameOf: exportedTrait to: #THEATraitUsingOthersNew. 
 	
 	aTrait := builder buildTrait: exportedTrait.	
 	builder installMethods: exportedTrait into: aTrait.

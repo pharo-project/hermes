@@ -3,9 +3,9 @@ doTestExportingClass: classUnderTest
 	| new old nonExtensionMethodsClassSide nonExtensionMethods |
 	old := HEClass for: classUnderTest.
 
-	nonExtensionMethods := (classUnderTest methods reject: #isExtension)
+	nonExtensionMethods := (classUnderTest localMethods reject: #isExtension)
 		size.
-	nonExtensionMethodsClassSide := (classUnderTest class methods
+	nonExtensionMethodsClassSide := (classUnderTest class localMethods
 		reject: #isExtension) size.
 
 	self assert: old methods size equals: nonExtensionMethods.

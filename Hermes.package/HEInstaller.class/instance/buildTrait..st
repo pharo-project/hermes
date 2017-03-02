@@ -1,13 +1,14 @@
 creating traits
 buildTrait: aTraitDefinition
-	| newTrait |
+	| newTrait traitComposition |
+	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
+	
 	newTrait := Trait
 		named: aTraitDefinition traitName
-		uses: (aTraitDefinition traitComposition asLiteralIn: environment)
+		uses: traitComposition
 		category: aTraitDefinition category
 		env: environment.
 
-	newTrait classTrait
-		traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment).
+	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment).
 
 	^ newTrait

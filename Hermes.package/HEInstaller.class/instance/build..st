@@ -25,4 +25,7 @@ build: aHEClass
 	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
 	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
 	
+	newClass applyChangesOfNewTraitCompositionReplacing:#() asTraitComposition.
+	newClass class applyChangesOfNewTraitCompositionReplacing:#() asTraitComposition.
+	
 	^newClass.
