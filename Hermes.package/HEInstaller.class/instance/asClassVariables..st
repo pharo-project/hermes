@@ -1,3 +1,9 @@
 converting
 asClassVariables: aString
-	^ (aString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]
+	| trimmed |
+	trimmed := aString trimBoth.
+
+	trimmed isEmpty
+		ifTrue: [ ^ #() ].
+
+	^ (trimmed substrings: ' ') collect: [:x | x asSymbol => ClassVariable]
