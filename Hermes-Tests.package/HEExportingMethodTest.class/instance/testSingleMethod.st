@@ -3,6 +3,8 @@ testSingleMethod
 	| old new |
 	old := HEMethod for: (Behavior >> #basicNew:).
 	old writeInto: writer.
+	writer flush.
+	
 	new := HEMethod readFrom: reader.
 
 	self assert: old name equals: #basicNew:.

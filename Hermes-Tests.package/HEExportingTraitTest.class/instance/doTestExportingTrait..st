@@ -10,6 +10,7 @@ doTestExportingTrait: traitUnderTest
 	self assert: old classSideMethods size equals: nonExtensionMethodsClassSide.
 
 	old writeInto: writer.
+	writer flush.
 
 	new := HETrait readFrom: reader.
 	self assert: old equals: new

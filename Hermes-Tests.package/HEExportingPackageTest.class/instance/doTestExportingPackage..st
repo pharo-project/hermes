@@ -5,6 +5,8 @@ doTestExportingPackage: aPackageNamed
 	old := HEPackage for:aPackage.
  
 	old writeInto: writer.
+	writer flush.
+	
 	new := HEPackage readFrom: reader.
 	
 	self assert: old classes size equals: (aPackage definedClasses reject:#isTrait) size.

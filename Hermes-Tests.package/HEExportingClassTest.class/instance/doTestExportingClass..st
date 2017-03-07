@@ -14,6 +14,7 @@ doTestExportingClass: classUnderTest
 		equals: nonExtensionMethodsClassSide.
 
 	old writeInto: writer.
+	writer flush.
 
 	new := HEClass readFrom: reader.
 	self assert: old equals: new

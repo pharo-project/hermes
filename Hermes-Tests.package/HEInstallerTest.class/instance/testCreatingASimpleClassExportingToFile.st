@@ -6,6 +6,8 @@ testCreatingASimpleClassExportingToFile
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 
 	exportedClass writeInto: writer.
+	writer flush.
+	
 	readedClass := HEClass readFrom: reader.
 
 	self assert: readedClass equals: exportedClass.
