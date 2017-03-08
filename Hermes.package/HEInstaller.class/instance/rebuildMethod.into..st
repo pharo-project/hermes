@@ -1,5 +1,5 @@
 installing methods
-rebuildMethod: aMethod into: aClass from: exportedClass
+rebuildMethod: aMethod into: aClass
 	| newMethod literalSpace extendedEnvironment |
 	newMethod := CompiledMethod newMethod: aMethod bytecode size header: aMethod header.
 
