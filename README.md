@@ -5,19 +5,31 @@
 For exporting it should be something like:
 
 ```smalltalk
-writer := (File named: 'test.hermes') writeStream.
+fileReference := ('sunit.hermes') asFileReference.
+fileName := fileReference fullName.
+writer := HEBinaryReaderWriter new
+		stream: (File openForWriteFileNamed:fileName);
+		yourself.
 
-oldPackage := RPackageOrganizer default packageNamed: #'Hermes-Tests-External-Package'.
+oldPackage := RPackageOrganizer default packageNamed: #'SUnit-Core'.
 hePackage := HEPackage for: oldPackage.
 hePackage writeInto: writer.
+
+writer stream flush.
+
 ```
 
 And for installing back in the system just do:
 
 ```smalltalk
-reader := (File named: 'test.hermes') readStream.
+fileReference := ('sunit.hermes') asFileReference.
+filename := fileReference fullName.
+
+reader := HEBinaryReaderWriter new
+	stream: (File openForReadFileNamed:filename);
+	yourself.
 
 readPackage := HEPackage readFrom: reader.
-installer := HEInstaller new. 
-installer installPackage: readPackage.
+        installer := HEInstaller new. 
+        installer installPackage: readPackage.
 ```
