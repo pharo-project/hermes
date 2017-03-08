@@ -1,5 +1,5 @@
 installing methods
 installExtensionMethod: extensionMethod
 	| aClass |
-	aClass := self environment at: extensionMethod className.
+	aClass := self environment classNamed: extensionMethod className.
 	self rebuildMethod: extensionMethod into: aClass.
