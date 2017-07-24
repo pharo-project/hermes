@@ -7,8 +7,8 @@ visitClass: aClass
 
 	aHEClass className: aClass name.
 	aHEClass superclass: aClass superclass name.
-	aHEClass instanceVariables: aClass instanceVariablesString.
-	aHEClass classInstancevariables: aClass theMetaClass instanceVariablesString.
+	aHEClass instanceVariables: (aClass instanceVariables joinUsing: ' ').
+	aHEClass classInstancevariables: (aClass theMetaClass instanceVariables joinUsing: ' ').
 	aHEClass classVariables: (aClass classPool keys joinUsing: ' ').
 	aHEClass sharedPools: ((aClass sharedPools collect: #name) joinUsing: ' ').
 	aHEClass layoutClass: aClass ficusClass layout realClassName.

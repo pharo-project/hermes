@@ -6,7 +6,8 @@ bindingOf: aName
 	(ringMethod ast hasArgumentNamed: aName)
 		ifTrue: [ ^ nil ].
 
-	"^ (ringClass bindingOf: aName)"
+	"
+	^ (ringClass bindingOf: aName)"
 	binding isNil] whileTrue: [
 		 ]
 
