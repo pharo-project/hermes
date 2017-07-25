@@ -7,12 +7,12 @@ baseline: spec
 			spec
 				className: #ConfigurationOfFicus;
 				versionString: '0.3.7';
-				loads: #FicusMonticello;
+				loads: #FicusRing;
 				repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main' ];
 
 		package: 'Hermes';
 		package: 'Hermes-Tests-External-Package';
-		package: 'Hermes-Ring' with: [ spec requires: #('core') ];
+		package: 'Hermes-Ring' with: [ spec requires: #('core' 'Ficus') ];
 		package: 'Hermes-Tests' with: [ spec requires: #('core' 'Hermes-Tests-External-Package') ];
 
 		group: 'core'
