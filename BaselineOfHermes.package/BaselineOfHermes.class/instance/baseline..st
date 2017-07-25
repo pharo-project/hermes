@@ -2,6 +2,14 @@ baselines
 baseline: spec
 	<baseline>
 	spec for: #common do: [ spec
+
+		project: 'Ficus' with: [
+			spec
+				className: #ConfigurationOfFicus;
+				versionString: '0.3.7';
+				loads: #FicusMonticello;
+				repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main' ];
+
 		package: 'Hermes';
 		package: 'Hermes-Tests-External-Package';
 		package: 'Hermes-Ring' with: [ spec requires: #('core') ];
