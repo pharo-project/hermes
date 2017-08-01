@@ -1,5 +1,5 @@
 reading
-readInt
+readInt32
 	| byteArray n |
 	byteArray := stream next: self intSize.
 	n := byteArray at: 4.

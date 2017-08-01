@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "HEBoxedFloat64",
+	"name" : "HEFloat",
 	"type" : "normal"
 }

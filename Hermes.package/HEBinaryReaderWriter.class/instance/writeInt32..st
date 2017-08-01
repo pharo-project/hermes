@@ -1,5 +1,5 @@
 writting
-writeInt: aNumber
+writeInt32: aNumber
 	| numberToSave |
 	numberToSave := aNumber < 0
 		ifTrue: [ (0 - aNumber) bitInvert32 + 1 ]
