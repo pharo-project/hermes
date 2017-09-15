@@ -1,14 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "HEAbstractBinaryClassBuilderTest",
+	"super" : "HEExportingPackageTest",
 	"category" : "Hermes-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"old",
-		"aPackage"
-	],
-	"name" : "HEExportingPackageTest",
+	"instvars" : [ ],
+	"name" : "HEExportingPackageFromRingTest",
 	"type" : "normal"
 }
