@@ -3,7 +3,7 @@ rfiPackageFor: aPackageNamed
 	| environment rfienvironment |
 	environment := Dictionary new.
 	(((DADependencyChecker new daPackageFor: aPackageNamed) dependentPackages collect: #packageName)
-		, {aPackageNamed asSymbol} collect: [ :e | RPackageOrganizer default packageNamed: e ])
+		, {aPackageNamed asSymbol. #Traits. #Kernel. #'Collections-Native'. #'Collections-Abstract'} collect: [ :e | RPackageOrganizer default packageNamed: e ])
 		do: [ :pck | 
 			| version |
 			version := FiMonticelloWriter new written: pck mcWorkingCopy snapshot name: pck name.
