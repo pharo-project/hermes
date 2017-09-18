@@ -1,3 +1,3 @@
 tests
 testExportingCollectionsTests
-	super testExportingCollectionsTests 
+	self skip.
