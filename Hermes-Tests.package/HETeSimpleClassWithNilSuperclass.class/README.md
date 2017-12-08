@@ -1,0 +1,1 @@
+Test class with nil as superclass.

@@ -6,7 +6,10 @@ build: aHEClass
 	superclass := self classNamed: aHEClass superclass.
 	layoutType := self classNamed: aHEClass layoutClass.
 
-	newMetaclass superclass: superclass class withLayoutType: FixedLayout slots: (self asSlots: aHEClass classInstancevariables).
+	newMetaclass 
+		superclass: (superclass ifNil: [Class] ifNotNil: [superclass class]) 
+		withLayoutType: FixedLayout 
+		slots: (self asSlots: aHEClass classInstancevariables).
 	
 	newClass := newMetaclass new.
 	newClass setName: aHEClass className.
