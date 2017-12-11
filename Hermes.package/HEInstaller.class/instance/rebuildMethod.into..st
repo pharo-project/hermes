@@ -1,6 +1,8 @@
 installing methods
 rebuildMethod: aMethod into: aClass
 	| newMethod literalSpace extendedEnvironment |
+	
+	self validateExistanceOfMethod: aMethod in: aClass.	
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.

@@ -16,4 +16,6 @@ installPackage: aHEPackage
 
 	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
 
-	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ]
+	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	
+	self validateNoNewUndeclared

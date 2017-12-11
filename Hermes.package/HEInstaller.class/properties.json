@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"environment"
+		"environment",
+		"originalUndeclareds"
 	],
 	"name" : "HEInstaller",
 	"type" : "normal"

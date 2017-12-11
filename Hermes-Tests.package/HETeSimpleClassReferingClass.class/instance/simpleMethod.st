@@ -1,0 +1,3 @@
+test mock
+simpleMethod
+	^ HETeSimpleClass

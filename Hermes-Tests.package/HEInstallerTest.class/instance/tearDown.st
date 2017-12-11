@@ -4,5 +4,6 @@ tearDown
 	aTrait ifNotNil: #removeFromSystem.
 
 	UndefinedObject removeSelector: #xxx.
+	Undeclared removeKey: #AUndeclared ifAbsent:[].
 
 	super tearDown.

@@ -1,3 +1,11 @@
 converting
 asLiteralIn: env
-	^ env newClass bindingOf: value
+	| bind undec |
+	bind := env newClass bindingOf: value.
+	
+	bind ifNotNil: [ ^ bind ].
+	
+	undec := UndeclaredVariable named: value.
+	Undeclared add: undec.
+	
+	^ undec.

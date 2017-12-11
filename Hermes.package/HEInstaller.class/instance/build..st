@@ -1,6 +1,9 @@
 creating classes
 build: aHEClass
 	| newMetaclass newClass superclass layoutType |
+
+	self validateExistanceOfClass: aHEClass.
+
 	newMetaclass := Metaclass new.
 	
 	superclass := self classNamed: aHEClass superclass.

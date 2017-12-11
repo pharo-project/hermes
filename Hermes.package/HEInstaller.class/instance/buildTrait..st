@@ -1,6 +1,9 @@
 creating traits
 buildTrait: aTraitDefinition
 	| newTrait traitComposition |
+	
+	self validateExistanceOfTrait: aTraitDefinition.
+	
 	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
 	
 	newTrait := Trait
