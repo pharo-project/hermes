@@ -5,7 +5,7 @@ asLiteralIn: env
 	
 	bind ifNotNil: [ ^ bind ].
 	
-	undec := UndeclaredVariable named: value.
+	undec := UndeclaredVariable key: value value: nil.
 	Undeclared add: undec.
 	
 	^ undec.
