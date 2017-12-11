@@ -1,1 +1,0 @@
-This class has a method refering an undeclared.

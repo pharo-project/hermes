@@ -24,7 +24,7 @@ set -ex
 ./pharo Pharo.image eval "
 Metacello new 
 	baseline: '$BASELINE_NAME';
-	repository: 'filetree://$MC';
+	repository: 'tonel://$MC';
 	load.
 
 Smalltalk saveAs:'$NEW_IMAGENAME'.
