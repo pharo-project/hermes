@@ -1,10 +1,17 @@
 Extension { #name : #HEMethod }
 
 { #category : #'*Hermes-Exporter' }
+HEMethod >> fillEncoderClassName: aMethod [
+	encoderClassName := HEExportTranslator uniqueInstance
+		translateEncoderName: aMethod encoderClass name
+]
+
+{ #category : #'*Hermes-Exporter' }
 HEMethod >> fillLiteralsAndBytecode: aMethod [
 	| literalSpace |
 	
-	encoderClassName := aMethod encoderClass name.
+	self fillEncoderClassName: aMethod.
+	
 	numArgs := aMethod numArgs.
 	numTemps := aMethod numTemps.
 	hasPrimitive := aMethod isPrimitive asBit.
