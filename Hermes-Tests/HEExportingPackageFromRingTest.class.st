@@ -1,7 +1,7 @@
 Class {
 	#name : #HEExportingPackageFromRingTest,
 	#superclass : #HEExportingPackageTest,
-	#category : 'Hermes-Tests'
+	#category : #'Hermes-Tests'
 }
 
 { #category : #'as yet unclassified' }

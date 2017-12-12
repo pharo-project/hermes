@@ -5,7 +5,7 @@ Class {
 		'builder',
 		'newClass'
 	],
-	#category : 'Hermes-Tests'
+	#category : #'Hermes-Tests'
 }
 
 { #category : #utils }

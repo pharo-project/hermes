@@ -10,7 +10,7 @@ Class {
 		'writer',
 		'fileReference'
 	],
-	#category : 'Hermes-Tests'
+	#category : #'Hermes-Tests'
 }
 
 { #category : #initialization }
@@ -23,7 +23,7 @@ HEAbstractBinaryClassBuilderTest >> setUp [
 		stream: (File openForWriteFileNamed:filename);
 		yourself.
 
-	reader := HEBinaryReaderWriter new
+	reader := HEBinaryReader new
 		stream: (File openForReadFileNamed:filename);
 		yourself.
 

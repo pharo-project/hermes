@@ -6,5 +6,5 @@ Class {
 	#superclass : #HETeSimpleClass,
 	#traits : 'THEOneTestTrait - {#oneMessageRequired} + (THEOtherTestTrait @ {#otherMessage->#otherMessage2})',
 	#classTraits : 'THEOneTestTrait classTrait + THEOtherTestTrait classTrait',
-	#category : 'Hermes-Tests-Test-Classes'
+	#category : #'Hermes-Tests-Test-Classes'
 }

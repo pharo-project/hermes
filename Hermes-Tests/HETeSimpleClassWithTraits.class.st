@@ -6,5 +6,5 @@ Class {
 	#superclass : #HETeSimpleClass,
 	#traits : 'THEOneTestTrait + THEOtherTestTrait',
 	#classTraits : 'THEOneTestTrait classTrait + THEOtherTestTrait classTrait',
-	#category : 'Hermes-Tests-Test-Classes'
+	#category : #'Hermes-Tests-Test-Classes'
 }

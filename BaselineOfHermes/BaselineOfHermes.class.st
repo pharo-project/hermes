@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfHermes,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfHermes'
+	#category : #BaselineOfHermes
 }
 
 { #category : #baselines }
@@ -17,11 +17,14 @@ BaselineOfHermes >> baseline: spec [
 				repository: 'http://smalltalkhub.com/mc/MartinDias/Ficus/main' ];
 
 		package: 'Hermes';
+		package: 'Hermes-Exporter' with: [ spec requires: #('Hermes') ];
 		package: 'Hermes-Tests-External-Package';
 		package: 'Hermes-Ring' with: [ spec requires: #('core' 'Ficus') ];
 		package: 'Hermes-Tests' with: [ spec requires: #('core' 'Hermes-Ring' 'Hermes-Tests-External-Package') ];
 
 		group: 'core'
+			with: #(Hermes 'Hermes-Exporter');
+		group: 'minimal'
 			with: #(Hermes);
 		group: 'ring'
 			with: #('Hermes-Ring');

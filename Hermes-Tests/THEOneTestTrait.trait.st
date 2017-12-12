@@ -3,7 +3,7 @@ A simple trait used in tests
 "
 Trait {
 	#name : #THEOneTestTrait,
-	#category : 'Hermes-Tests-Test-Classes'
+	#category : #'Hermes-Tests-Test-Classes'
 }
 
 { #category : #'as yet unclassified' }

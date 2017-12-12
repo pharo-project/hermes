@@ -6,7 +6,7 @@ Class {
 		'aClass',
 		'aTrait'
 	],
-	#category : 'Hermes-Tests'
+	#category : #'Hermes-Tests'
 }
 
 { #category : #utils }

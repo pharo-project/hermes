@@ -1,7 +1,7 @@
 Class {
 	#name : #HEExportingClassTest,
 	#superclass : #HEAbstractBinaryClassBuilderTest,
-	#category : 'Hermes-Tests'
+	#category : #'Hermes-Tests'
 }
 
 { #category : #tests }

@@ -5,7 +5,7 @@ Class {
 		'old',
 		'aPackage'
 	],
-	#category : 'Hermes-Tests'
+	#category : #'Hermes-Tests'
 }
 
 { #category : #'as yet unclassified' }
