@@ -29,9 +29,17 @@ HermesCommandLineHandler >> activate [
 
 { #category : #'processing files' }
 HermesCommandLineHandler >> createInstaller [
-	^ HEInstaller new
-		failOnNewUndeclared: (self hasOption: 'no-fail-on-undeclared') not;
-		yourself.
+	"In the basic installation, the bootstraped version of Hermes, 
+	there is only one Installer, the HEInstaller. 
+	When the extensions are installed the new installer to use is the HEExtendedInstaller."
+
+	^ Smalltalk globals
+		at: #HEExtendedInstaller
+		ifPresent: [ :instClass | 
+			instClass new
+				forOptions: self commandLine;
+				yourself ]
+		ifAbsent: [ HEInstaller new ]
 ]
 
 { #category : #'processing files' }

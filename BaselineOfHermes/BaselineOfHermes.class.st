@@ -18,12 +18,14 @@ BaselineOfHermes >> baseline: spec [
 
 		package: 'Hermes';
 		package: 'Hermes-Exporter' with: [ spec requires: #('Hermes') ];
+		package: 'Hermes-Extensions' with: [ spec requires: #('Hermes') ];
+
 		package: 'Hermes-Tests-External-Package';
 		package: 'Hermes-Ring' with: [ spec requires: #('core' 'Ficus') ];
 		package: 'Hermes-Tests' with: [ spec requires: #('core' 'Hermes-Ring' 'Hermes-Tests-External-Package') ];
 
 		group: 'core'
-			with: #(Hermes 'Hermes-Exporter');
+			with: #(Hermes 'Hermes-Exporter' 'Hermes-Extensions');
 		group: 'minimal'
 			with: #(Hermes);
 		group: 'ring'

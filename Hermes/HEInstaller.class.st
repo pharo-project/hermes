@@ -3,8 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'environment',
-		'originalUndeclareds',
-		'failOnNewUndeclared'
+		'originalUndeclareds'
 	],
 	#category : #'Hermes-ClassInstaller'
 }
@@ -35,7 +34,7 @@ HEInstaller >> asSlots: aString [
 HEInstaller >> build: aHEClass [
 	| newMetaclass newClass superclass layoutType |
 
-	self validateExistanceOfClass: aHEClass.
+	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 
 	newMetaclass := Metaclass new.
 	
@@ -75,7 +74,7 @@ HEInstaller >> build: aHEClass [
 HEInstaller >> buildTrait: aTraitDefinition [
 	| newTrait traitComposition |
 	
-	self validateExistanceOfTrait: aTraitDefinition.
+	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
 	
 	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
 	
@@ -111,9 +110,21 @@ HEInstaller >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #accessing }
-HEInstaller >> failOnNewUndeclared: aValue [
-	failOnNewUndeclared := aValue
+{ #category : #'validating existance' }
+HEInstaller >> existingClass: aHEClass [
+	(environment hasClassNamed: aHEClass className) ifTrue:[
+		self error: (self messageExistingClass: aHEClass)
+	].
+	^ nil
+]
+
+{ #category : #'validating existance' }
+HEInstaller >> existingTrait: aHETrait. [
+	(environment includesKey: aHETrait traitName) ifTrue:[ 
+		self error: (self messageExistingTrait: aHETrait)
+	].
+	
+	^nil
 ]
 
 { #category : #initialization }
@@ -172,11 +183,28 @@ HEInstaller >> installPackage: aHEPackage [
 	self validateNoNewUndeclared
 ]
 
+{ #category : #messages }
+HEInstaller >> messageExistingClass: aHEClass [
+	^ 'The class ' , aHEClass className asString
+		, ' already exists. Should not be overwritten'
+]
+
+{ #category : #messages }
+HEInstaller >> messageExistingTrait: aHETrait [
+	^ 'The trait ' , aHETrait traitName asString
+		, ' already exists. Should not be overwritten'
+]
+
+{ #category : #messages }
+HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
+	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
+]
+
 { #category : #'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
 	
-	self validateExistanceOfMethod: aMethod in: aClass.	
+	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].	
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
@@ -203,42 +231,25 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 		notifying: nil
 ]
 
-{ #category : #'validating existance' }
-HEInstaller >> validateExistanceOfClass: aHEClass. [
-	(environment hasClassNamed: aHEClass className) ifTrue:[
-		self error: 'The class ' , aHEClass className asString, ' already exists. Should not be overwritten'.	
-	].
+{ #category : #'reporting undeclared' }
+HEInstaller >> reportNewUndeclareds: newUndeclareds [
+	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
 ]
 
 { #category : #'validating existance' }
-HEInstaller >> validateExistanceOfMethod: aHEMethod in: aClass [
+HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 	aClass
 		compiledMethodAt: aHEMethod name
 		ifPresent: [ :m | 
-			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^self ].  	
-			self error: 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString ]
-		ifAbsent: [  ]
-]
-
-{ #category : #'validating existance' }
-HEInstaller >> validateExistanceOfTrait: aHETrait. [
-	(environment includesKey: aHETrait traitName) ifTrue:[ 
-		self error: 'The trait ' , aHETrait traitName asString, ' already exists. Should not be overwritten'.	
-	].
+			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].  	
+			self error: (self messageMethod: aHEMethod alreadyExistsIn: aClass ) ]
+		ifAbsent: [ ^ true ]
 ]
 
 { #category : #'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
-	| newUndeclareds message |
+	self reportNewUndeclareds: self createdUndeclared.
 	
-	newUndeclareds := self createdUndeclared.
-	newUndeclareds ifNotEmpty: [ 
-		message := 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString.
-		
-		failOnNewUndeclared 
-			ifTrue:[ self error: message ] 
-			ifFalse:[ message logCr ].
-	].
-
-	('[Hermes] Remaining Undeclared variables in the system: ' , Undeclared keys printString) logCr.
+	('[Hermes] Remaining Undeclared variables in the system: '
+		, Undeclared keys printString) logCr
 ]

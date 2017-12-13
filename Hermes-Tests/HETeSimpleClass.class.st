@@ -36,6 +36,11 @@ HETeSimpleClass >> anUselessMethodWithPragma [
 	<someUselessPragma: 1 withArgs: #(1 2 3) with: #HETeSimpleClass>
 ]
 
+{ #category : #accessing }
+HETeSimpleClass >> answer [
+	^ 42
+]
+
 { #category : #'as yet unclassified' }
 HETeSimpleClass >> otherMethod [
 	^ self anInstanceVariable 
