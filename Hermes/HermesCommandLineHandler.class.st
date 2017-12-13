@@ -28,20 +28,25 @@ HermesCommandLineHandler >> activate [
 ]
 
 { #category : #'processing files' }
+HermesCommandLineHandler >> createInstaller [
+	^ HEInstaller new
+		failOnNewUndeclared: (self hasOption: 'no-fail-on-undeclared') not;
+		yourself.
+]
+
+{ #category : #'processing files' }
 HermesCommandLineHandler >> processFile: file [
 	| installer reader readPackage |
-	installer := HEInstaller new.
-	
+	installer := self createInstaller.
 	('[Hermes] Reading ' , file) logCr.
-	
+
 	reader := HEBinaryReader new
 		stream: (File named: file) readStream;
 		yourself.
-	
+
 	readPackage := HEPackage readFrom: reader.
-	
+
 	('[Hermes] Installing ' , file) logCr.
-	
 	installer installPackage: readPackage
 ]
 

@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'environment',
-		'originalUndeclareds'
+		'originalUndeclareds',
+		'failOnNewUndeclared'
 	],
 	#category : #'Hermes-ClassInstaller'
 }
@@ -110,10 +111,16 @@ HEInstaller >> environment: anObject [
 	environment := anObject
 ]
 
+{ #category : #accessing }
+HEInstaller >> failOnNewUndeclared: aValue [
+	failOnNewUndeclared := aValue
+]
+
 { #category : #initialization }
 HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
+	failOnNewUndeclared := true.
 ]
 
 { #category : #'creating classes' }
@@ -222,11 +229,15 @@ HEInstaller >> validateExistanceOfTrait: aHETrait. [
 
 { #category : #'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
-	| newUndeclareds|
+	| newUndeclareds message |
 	
 	newUndeclareds := self createdUndeclared.
 	newUndeclareds ifNotEmpty: [ 
-		self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString.
+		message := 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString.
+		
+		failOnNewUndeclared 
+			ifTrue:[ self error: message ] 
+			ifFalse:[ message logCr ].
 	].
 
 	('[Hermes] Remaining Undeclared variables in the system: ' , Undeclared keys printString) logCr.

@@ -123,6 +123,27 @@ HEInstallerTest >> testCreatingAClassWithUndeclared [
 ]
 
 { #category : #tests }
+HEInstallerTest >> testCreatingAClassWithUndeclaredWithNoFailOption [
+	| exportedClass |
+	
+	builder failOnNewUndeclared: false.
+	
+	exportedClass := HEClass for: HETeSimpleClassReferingClass. 
+	self changeNameOf: exportedClass to: #HETeSimpleClassReferingUndeclaredNew.
+	
+	((exportedClass methods at: 1) literals at:1) instVarNamed: #value put: #AUndeclared.
+	
+	aClass := builder build: exportedClass.
+	
+	builder installClass: aClass in: exportedClass category.
+	builder installMethods: exportedClass into: aClass.
+
+	self assert: builder createdUndeclared size equals: 1.
+
+	builder validateNoNewUndeclared
+]
+
+{ #category : #tests }
 HEInstallerTest >> testCreatingADuplicatedMethodsInSimpleClass [
 	| exportedClass  |
 	
