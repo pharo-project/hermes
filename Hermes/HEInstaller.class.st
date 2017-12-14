@@ -131,7 +131,7 @@ HEInstaller >> existingTrait: aHETrait. [
 HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
-	failOnNewUndeclared := true.
+
 ]
 
 { #category : #'creating classes' }
