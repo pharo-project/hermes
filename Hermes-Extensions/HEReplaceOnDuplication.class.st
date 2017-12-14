@@ -4,6 +4,11 @@ Class {
 	#category : #'Hermes-Extensions-ClassInstaller'
 }
 
+{ #category : #accessing }
+HEReplaceOnDuplication class >> keyword [
+	^ 'replace'
+]
+
 { #category : #'validating existence' }
 HEReplaceOnDuplication >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
 	^ nil

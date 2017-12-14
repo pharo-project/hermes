@@ -4,6 +4,13 @@ Class {
 	#category : #'Hermes-Extensions-ClassInstaller'
 }
 
+{ #category : #'as yet unclassified' }
+HEDuplicationModeStrategy class >> forOption: keyword [
+	^ (self allSubclasses
+		detect: [ :e | e keyword = keyword ]
+		ifNone: [ self error: 'There is no duplication strategy for ''' , keyword , '''' ]) new
+]
+
 { #category : #'validating existence' }
 HEDuplicationModeStrategy >> existingClass: aHEClass on: installer [
 	^ installer environment

@@ -4,6 +4,11 @@ Class {
 	#category : #'Hermes-Extensions-ClassInstaller'
 }
 
+{ #category : #accessing }
+HEFailOnDuplication class >> keyword [
+	^ 'fail'
+]
+
 { #category : #'validating existence' }
 HEFailOnDuplication >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
 	^ self error: (installer messageExistingClass: aHEClass)

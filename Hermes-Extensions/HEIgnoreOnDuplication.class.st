@@ -4,6 +4,11 @@ Class {
 	#category : #'Hermes-Extensions-ClassInstaller'
 }
 
+{ #category : #accessing }
+HEIgnoreOnDuplication class >> keyword [
+	^ 'ignore'
+]
+
 { #category : #'validating existence' }
 HEIgnoreOnDuplication >> doExistingClass: aClass hermesClass: aHEClass installer: installer [
 	^ aClass
