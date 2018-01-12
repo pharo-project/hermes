@@ -11,10 +11,17 @@ HETraitExclusion class >> tag [
 
 { #category : #converting }
 HETraitExclusion >> asLiteralIn: env [
-	^ TraitExclusion new
+	^ self traitExclusionClass new
 		exclusions: (value collect: [ :e | e asLiteralIn: env ]);
 		subject: (subject asLiteralIn: env);
 		yourself
+]
+
+{ #category : #converting }
+HETraitExclusion >> traitExclusionClass [
+
+	^ Smalltalk globals at: #TraitExclusion ifAbsent: [ self error: 'Trait support is not installed' ].
+
 ]
 
 { #category : #accessing }

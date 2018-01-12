@@ -72,13 +72,15 @@ HEInstaller >> build: aHEClass [
 
 { #category : #'creating traits' }
 HEInstaller >> buildTrait: aTraitDefinition [
-	| newTrait traitComposition |
+	| newTrait traitComposition traitClass|
 	
 	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
 	
 	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
 	
-	newTrait := Trait
+	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
+	
+	newTrait := traitClass
 		named: aTraitDefinition traitName
 		uses: traitComposition
 		category: aTraitDefinition category

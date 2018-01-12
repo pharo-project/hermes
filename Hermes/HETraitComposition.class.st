@@ -11,9 +11,15 @@ HETraitComposition class >> tag [
 
 { #category : #converting }
 HETraitComposition >> asLiteralIn: env [
-	^ TraitComposition new
+	^ self traitCompositionClass new
 		transformations: (value collect: [ :e | e asLiteralIn: env ]) asOrderedCollection;
 		yourself
+]
+
+{ #category : #accessing }
+HETraitComposition >> traitCompositionClass [
+	^ Smalltalk globals at: #TraitComposition ifAbsent: [ self error: 'Trait support is not installed' ].
+
 ]
 
 { #category : #accessing }

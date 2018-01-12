@@ -11,10 +11,16 @@ HETraitAlias class >> tag [
 
 { #category : #converting }
 HETraitAlias >> asLiteralIn: env [
-	^ TraitAlias new
+	^ self traitAliasClass new
 		aliases: (value collect: [ :e | e asLiteralIn: env ]);
-		subject: (subject asLiteralIn: env); 
+		subject: (subject asLiteralIn: env);
 		yourself
+]
+
+{ #category : #converting }
+HETraitAlias >> traitAliasClass [
+	^ Smalltalk globals at: #TraitAlias ifAbsent: [ self error: 'Trait support is not installed' ].
+
 ]
 
 { #category : #accessing }
