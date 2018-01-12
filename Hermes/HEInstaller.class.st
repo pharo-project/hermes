@@ -60,11 +60,7 @@ HEInstaller >> build: aHEClass [
 	newClass classLayout slots do: [ :each | each installingIn: newClass ].
 	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
 
-	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
-	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
-	
-	newClass applyChangesOfNewTraitCompositionReplacing:#() asTraitComposition.
-	newClass class applyChangesOfNewTraitCompositionReplacing:#() asTraitComposition.
+	self processTraitsFrom: aHEClass in: newClass.
 	
 	^newClass.
 
@@ -200,6 +196,18 @@ HEInstaller >> messageExistingTrait: aHETrait [
 { #category : #messages }
 HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
+]
+
+{ #category : #'creating classes' }
+HEInstaller >> processTraitsFrom: aHEClass in: newClass [
+
+	(Smalltalk globals hasClassNamed: #Trait) ifFalse: [ ^ self ].
+
+	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
+	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
+
+	newClass applyChangesOfNewTraitCompositionReplacing: #() asTraitComposition.
+	newClass class applyChangesOfNewTraitCompositionReplacing: #() asTraitComposition
 ]
 
 { #category : #'installing methods' }
