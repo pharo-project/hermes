@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'environment',
-		'originalUndeclareds'
+		'originalUndeclareds',
+		'hasTraits'
 	],
 	#category : #'Hermes-ClassInstaller'
 }
@@ -129,7 +130,7 @@ HEInstaller >> existingTrait: aHETrait. [
 HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
-
+	hasTraits := Smalltalk globals hasClassNamed: #Trait.
 ]
 
 { #category : #'creating classes' }
@@ -201,7 +202,7 @@ HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 { #category : #'creating classes' }
 HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 
-	(Smalltalk globals hasClassNamed: #Trait) ifFalse: [ ^ self ].
+	hasTraits ifFalse: [ ^ self ].
 
 	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
 	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
