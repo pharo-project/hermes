@@ -12,7 +12,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClass [
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self should: [installer installMethods: exportedClass into: aClass.] raise: Error.
@@ -28,7 +27,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassFailing
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	method := exportedClass methods detect:[:m | m name = #answer].
@@ -48,7 +46,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassIgnore 
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	method := exportedClass methods detect:[:m | m name = #answer].
@@ -70,7 +67,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassReplace
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	method := exportedClass methods detect:[:m | m name = #answer].
@@ -162,7 +158,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClass [
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self should: [installer build:exportedClass] raise: Error.
@@ -178,7 +173,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassFailing [
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	exportedClass instanceVariables: 'anInstanceVariable anotherInstanceVariable'.
@@ -196,7 +190,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassIgnore [
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	exportedClass instanceVariables: 'anInstanceVariable anotherInstanceVariable'.
@@ -215,7 +208,6 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassReplace [
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	exportedClass instanceVariables: 'anInstanceVariable anotherInstanceVariable'.

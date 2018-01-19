@@ -16,7 +16,6 @@ HEInstallerSimpleTest >> testCreatingAClassUsingComplexTraits [
 	self assert: aClass name equals: #HETeSimpleClassWithComplexTraitsNew.
 	self assert: aClass class name equals: #'HETeSimpleClassWithComplexTraitsNew class'.
 
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self deny: aClass traitComposition isEmpty.
@@ -40,7 +39,6 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 	self assert: aClass name equals: #HETeSimpleClassWithTraitsNew.
 	self assert: aClass class name equals: #'HETeSimpleClassWithTraitsNew class'.
 
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self deny: aClass traitComposition isEmpty.
@@ -66,7 +64,6 @@ HEInstallerSimpleTest >> testCreatingAClassWithUndeclared [
 	
 	aClass := installer build: exportedClass.
 	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self assert: installer createdUndeclared size equals: 1.
@@ -88,7 +85,6 @@ HEInstallerSimpleTest >> testCreatingAClassWithUndeclaredWithNoFailOption [
 	
 	aClass := installer build: exportedClass.
 	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self assert: installer createdUndeclared size equals: 1.
@@ -119,7 +115,6 @@ HEInstallerSimpleTest >> testCreatingASimpleClass [
 	self assert: aClass traitComposition isEmpty.
 	self assert: aClass classVariables equals: { #AClassVariable => ClassVariable }.
 	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self assert: aClass traitComposition isEmpty.
@@ -148,7 +143,6 @@ HEInstallerSimpleTest >> testCreatingASimpleClassExportingToFile [
 	self assert: readedClass equals: exportedClass.
 	
 	aClass := installer build: exportedClass.	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self assert: aClass traitComposition isEmpty.
@@ -228,7 +222,6 @@ HEInstallerSimpleTest >> testCreatingAWithNilSuperclass [
 	self assert: aClass traitComposition isEmpty.
 	self assert: aClass classVariables equals: { #AClassVariable => ClassVariable }.
 	
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self assert: aClass traitComposition isEmpty.
@@ -245,7 +238,6 @@ HEInstallerSimpleTest >> testPragmaMethod [
 	self changeNameOf: exportedClass to: #HETeSimpleClass2.
 	
 	aClass := installer build: exportedClass.
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 	
 	aMethod := aClass >> #pragmaMethod.
@@ -265,7 +257,6 @@ HEInstallerSimpleTest >> testUndeclared [
 	self changeNameOf: exportedClass to: #AnUndeclaredClass.
 
 	aClass := installer build: exportedClass.
-	installer installClass: aClass in: exportedClass category.
 	installer installMethods: exportedClass into: aClass.
 
 	self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.

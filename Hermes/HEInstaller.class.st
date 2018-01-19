@@ -33,34 +33,23 @@ HEInstaller >> asSlots: aString [
 
 { #category : #'creating classes' }
 HEInstaller >> build: aHEClass [
-	| newMetaclass newClass superclass layoutType |
+	| newMetaclass newClass superclass layoutType  |
 
 	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 
-	newMetaclass := Metaclass new.
-	
 	superclass := self classNamed: aHEClass superclass.
 	layoutType := self classNamed: aHEClass layoutClass.
 
-	newMetaclass 
-		superclass: (superclass ifNil: [Class] ifNotNil: [superclass class]) 
-		withLayoutType: FixedLayout 
-		slots: (self asSlots: aHEClass classInstancevariables).
+	newClass := self class classInstaller make: [ :builder |
+		builder name: aHEClass className;
+		superclass: superclass;
+		layoutClass: layoutType;
+		slots: (self asSlots: aHEClass instanceVariables);
+		sharedVariables:  (self asClassVariables:aHEClass classVariables);
+		sharedPools: aHEClass sharedPools;
+		category: aHEClass category;
+		classSlots: (self asSlots: aHEClass classInstancevariables) ].
 	
-	newClass := newMetaclass new.
-	newClass setName: aHEClass className.
-	
-	newClass superclass: superclass withLayoutType: layoutType slots: (self asSlots: aHEClass instanceVariables).
-	newClass environment: environment.	
-	newClass basicCategory: aHEClass category.
-	
-	newClass
-		declareClassVariables: (self asClassVariables:aHEClass classVariables);
-		sharing: aHEClass sharedPools.	
-
-	newClass classLayout slots do: [ :each | each installingIn: newClass ].
-	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
-
 	self processTraitsFrom: aHEClass in: newClass.
 	
 	^newClass.
@@ -73,7 +62,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	
 	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
 	
-	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
+	traitComposition := (aTraitDefinition traitComposition asLiteralIn: environment) asTraitComposition.
 	
 	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
 	
@@ -83,7 +72,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 		category: aTraitDefinition category
 		env: environment.
 
-	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment).
+	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment) asTraitComposition.
 
 	^ newTrait
 ]
@@ -109,11 +98,7 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
 
 	newClasses := aHEPackage classes
-		collect: [ :exportedClass | 
-			| aClass |
-			aClass := self build: exportedClass.
-			self installClass: aClass in: exportedClass category.
-			aClass ].
+		collect: [ :exportedClass | self build: exportedClass ].
 
 	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
 
@@ -154,17 +139,6 @@ HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
 	hasTraits := Smalltalk globals hasClassNamed: #Trait.
-]
-
-{ #category : #'creating classes' }
-HEInstaller >> installClass: aClass in: category [
-	environment at: aClass name put: aClass.
-	aClass superclass addSubclass: aClass.
-
-	aClass basicCategory: category.
-   environment organization ifNotNil: [ :e | e classify: aClass name under: category ].
-	SystemAnnouncer uniqueInstance classAdded: aClass inCategory: category.
-
 ]
 
 { #category : #'installing methods' }
@@ -212,11 +186,9 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 
 	hasTraits ifFalse: [ ^ self ].
 
-	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
-	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
+	newClass setTraitComposition: (aHEClass traitComposition asLiteralIn: environment) asTraitComposition.
+	newClass class setTraitComposition: (aHEClass classTraitComposition asLiteralIn: environment) asTraitComposition.
 
-	newClass applyChangesOfNewTraitCompositionReplacing: #() asTraitComposition.
-	newClass class applyChangesOfNewTraitCompositionReplacing: #() asTraitComposition
 ]
 
 { #category : #'installing methods' }
