@@ -101,6 +101,6 @@ HEExportingPackageTest >> testExportingSUnit [
 
 { #category : #tests }
 HEExportingPackageTest >> testExportingTraits [
-	self doTestExportingPackage: 'Traits'.
+	self doTestExportingPackage: 'TraitsV2'.
 
 ]
