@@ -1,3 +1,8 @@
+"
+I hold the configuration to translate the encoder classes used in methods.
+I translate the name of a given encoder class to the corresponding in the target image.
+The encoders (source and target) should use compatible bytecode, as the bytecode is not translated.
+"
 Class {
 	#name : #HEExportTranslator,
 	#superclass : #HEBinaryReader,

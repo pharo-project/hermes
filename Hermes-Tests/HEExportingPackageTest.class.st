@@ -8,7 +8,7 @@ Class {
 	#category : #'Hermes-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 	| new |
  
@@ -35,14 +35,14 @@ HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 	self assert: new equals: old.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageTest >> fillOldPackage: aPackageNamed [
 	aPackage := RPackageOrganizer default packageNamed: aPackageNamed.
 	old := HEPackage for:aPackage.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageTest >> in: aSeq allSharedPoolsAreBeforeThan: aClass [
 	| myIndex allSharedPools |
 	myIndex := aSeq indexOf: aClass.
@@ -51,7 +51,7 @@ HEExportingPackageTest >> in: aSeq allSharedPoolsAreBeforeThan: aClass [
 	^ allSharedPools allSatisfy: [ :sp | (aSeq indexOf: sp) < myIndex ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageTest >> in: aSeq allSuperclassesAreBeforeThan: aClass [
 	| myIndex superclass superclassIndex |
 	myIndex := aSeq indexOf: aClass.
@@ -61,7 +61,7 @@ HEExportingPackageTest >> in: aSeq allSuperclassesAreBeforeThan: aClass [
 	^ (superclassIndex < myIndex) and:[ self in:aSeq allSuperclassesAreBeforeThan: superclass].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageTest >> in: aSeq allTraitsAreBeforeThan: aTrait [
 	| myIndex |
 	myIndex := aSeq indexOf: aTrait.

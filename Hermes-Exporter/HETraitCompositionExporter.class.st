@@ -1,3 +1,7 @@
+"
+I am a visitor for visiting trait compositions.
+Each trait composition is visited and translated to a set of HEMessageSend and literals.
+"
 Class {
 	#name : #HETraitCompositionExporter,
 	#superclass : #Object,

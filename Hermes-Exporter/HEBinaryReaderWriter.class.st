@@ -1,3 +1,8 @@
+"
+I am an extension to HEBinaryReader that includes the ability to write data to the stream.
+The format used is compatible with the one in HEBinaryReader
+
+"
 Class {
 	#name : #HEBinaryReaderWriter,
 	#superclass : #HEBinaryReader,

@@ -2,6 +2,8 @@ Extension { #name : #HEMethodContainer }
 
 { #category : #'*Hermes-Exporter' }
 HEMethodContainer >> doFromMethodContainer: aMethodContainer [
+	"When a class or a trait is transformed all the methods should be transformed.
+	In both the class and instance side. Also the trait composition should be handled"
 	category := aMethodContainer category.
 	traitComposition := aMethodContainer traitComposition asExportedLiteral.
 	classTraitComposition := aMethodContainer theMetaClass traitComposition

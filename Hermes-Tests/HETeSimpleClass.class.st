@@ -31,7 +31,7 @@ HETeSimpleClass >> anInstanceVariable: anObject [
 	anInstanceVariable := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'a protocol so useful' }
 HETeSimpleClass >> anUselessMethodWithPragma [
 	<someUselessPragma: 1 withArgs: #(1 2 3) with: #HETeSimpleClass>
 ]
@@ -41,22 +41,22 @@ HETeSimpleClass >> answer [
 	^ 42
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'a protocol so useful' }
 HETeSimpleClass >> otherMethod [
 	^ self anInstanceVariable 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'a protocol so useful' }
 HETeSimpleClass >> pragmaMethod [
 	<pragma>
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'a protocol so useful' }
 HETeSimpleClass >> usingAConstant [
 	^ NumberParser parse:'42'.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'a protocol so useful' }
 HETeSimpleClass >> usingMoreConstants [
 	^ true printString , #() printString , #asd printString , 1.223 printString
 		, #[1 2 3] printString, $A printString

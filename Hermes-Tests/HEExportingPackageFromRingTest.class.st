@@ -4,14 +4,14 @@ Class {
 	#category : #'Hermes-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageFromRingTest >> fillOldPackage: aPackageNamed [
 	aPackage := self rfiPackageFor: aPackageNamed.
 	old := HERingToHermesBuilder new visitPackage: aPackage.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingPackageFromRingTest >> rfiPackageFor: aPackageNamed [
 	| environment rfienvironment |
 	environment := Dictionary new.

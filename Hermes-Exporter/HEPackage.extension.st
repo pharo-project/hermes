@@ -2,6 +2,7 @@ Extension { #name : #HEPackage }
 
 { #category : #'*Hermes-Exporter' }
 HEPackage >> allSharedPoolsOf: aClass in: aCollection [
+	"Used to check the dependency order when exporting"
 	^ ({aClass} , (aClass allSuperclassesIn: aCollection)) flatCollect: [:e | e sharedPoolsIn: aCollection].
 ]
 
@@ -26,12 +27,14 @@ HEPackage >> fromPackage: aPackage [
 
 { #category : #'*Hermes-Exporter' }
 HEPackage >> numberOfRequiredClassesOf: aClass in: aCollection [
+	"Used to sort the classes by dependency"
 	^ ((aClass allSuperclassesIn: aCollection) , ((self allSharedPoolsOf: aClass in: aCollection) flatCollect: [:e | {e} , (e allSuperclassesIn: aCollection)])) size
 ]
 
 { #category : #'*Hermes-Exporter' }
 HEPackage >> sortContent [
 	| allClasses|
+	"The classes and traits should be ordered by dependencies so it is easier to import in the target image"
 	traits := traits sorted: [ :a :b | (a traitComposition allDependenciesIn: traits) size < (b traitComposition allDependenciesIn: traits) size ].
 	
 	allClasses := classes.

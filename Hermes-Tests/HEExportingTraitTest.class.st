@@ -4,7 +4,7 @@ Class {
 	#category : #'Hermes-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utils }
 HEExportingTraitTest >> doTestExportingTrait: traitUnderTest [
 	| new old nonExtensionMethodsClassSide nonExtensionMethods |
 	old := HETrait for: traitUnderTest.

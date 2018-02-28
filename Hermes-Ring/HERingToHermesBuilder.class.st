@@ -1,7 +1,13 @@
+"
+I can visit a Ring model and generate a HEPackage.
+I adapt the Ring interfaces to the real image objects.
+A Ring class is not exactly polymorphic with a Class, so I implement the adaptation.
+The same for all the other elements in a Ring model.
+"
 Class {
 	#name : #HERingToHermesBuilder,
 	#superclass : #Object,
-	#category : 'Hermes-Ring'
+	#category : #'Hermes-Ring'
 }
 
 { #category : #compiling }

@@ -1,3 +1,6 @@
+"
+I am a class used by Hermes to test
+"
 Class {
 	#name : #AClassToBeExtracted,
 	#superclass : #Object,
@@ -6,7 +9,7 @@ Class {
 	#instVars : [
 		'aVariable'
 	],
-	#category : 'Hermes-Tests-External-Package'
+	#category : #'Hermes-Tests-External-Package'
 }
 
 { #category : #comparing }

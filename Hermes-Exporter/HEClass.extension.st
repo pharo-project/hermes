@@ -2,6 +2,7 @@ Extension { #name : #HEClass }
 
 { #category : #'*Hermes-Exporter' }
 HEClass >> allSuperclassesIn: aCollection [
+	"I check that all my dependencies are exported before myself"
 	^ aCollection detect:[:aSuper | aSuper className = self superclass]
 		ifFound:[ :miSuper | { miSuper } , (miSuper allSuperclassesIn: aCollection) ]
 		ifNone:[ #() ]
@@ -27,6 +28,8 @@ HEClass class >> for: aClass [
 
 { #category : #'*Hermes-Exporter' }
 HEClass >> fromClass: aClass [
+	"I fill the header from a real class.
+	I do not handle special slots yet"
 	className := aClass name.
 	superclass := aClass superclass ifNil: '' ifNotNil:#name.
 	instanceVariables := (aClass slots collect: #name) joinUsing: ' '.

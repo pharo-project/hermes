@@ -2,6 +2,10 @@ Extension { #name : #HEMethod }
 
 { #category : #'*Hermes-Exporter' }
 HEMethod >> fillEncoderClassName: aMethod [
+	"When a method is exported the name of the encoder class used is stored with it.
+	The name stored is the name of the target class.
+	A HEExportTranslator is used to handle the case when the target image has different (but compatible)
+	classes to handle the method"
 	encoderClassName := HEExportTranslator uniqueInstance
 		translateEncoderName: aMethod encoderClass name
 ]
@@ -10,6 +14,8 @@ HEMethod >> fillEncoderClassName: aMethod [
 HEMethod >> fillLiteralsAndBytecode: aMethod [
 	| literalSpace |
 	
+	"From a real method the information is extracted.
+	All the literals are transformed as exported literals"
 	self fillEncoderClassName: aMethod.
 	
 	numArgs := aMethod numArgs.

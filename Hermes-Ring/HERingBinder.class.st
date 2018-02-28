@@ -1,3 +1,7 @@
+"
+In order to export Ring models as Hermes packages a binding provider should be used.
+I implement the lookup of bindings and classes inside a Ring model.
+"
 Class {
 	#name : #HERingBinder,
 	#superclass : #Object,
@@ -5,7 +9,7 @@ Class {
 		'ringClass',
 		'ringMethod'
 	],
-	#category : 'Hermes-Ring'
+	#category : #'Hermes-Ring'
 }
 
 { #category : #'instance creation' }
