@@ -4,16 +4,16 @@ Extension { #name : #HEMethodContainer }
 HEMethodContainer >> doFromMethodContainer: aMethodContainer [
 	"When a class or a trait is transformed all the methods should be transformed.
 	In both the class and instance side. Also the trait composition should be handled"
-	category := aMethodContainer category.
-	traitComposition := aMethodContainer traitComposition asExportedLiteral.
-	classTraitComposition := aMethodContainer theMetaClass traitComposition
-		asExportedLiteral.
 
+	category := aMethodContainer category.
+	traitComposition := aMethodContainer traitComposition
+		asExportedLiteral.
+	classTraitComposition := aMethodContainer classSide traitComposition
+		asExportedLiteral.
 	methods := aMethodContainer localMethods
 		select: [ :e | e isExtension not ]
 		thenCollect: [ :e | HEMethod for: e ].
-
-	classSideMethods := aMethodContainer theMetaClass localMethods
+	classSideMethods := aMethodContainer classSide localMethods
 		select: [ :e | e isExtension not ]
 		thenCollect: [ :e | HEMethod for: e ]
 ]

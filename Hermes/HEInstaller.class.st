@@ -225,32 +225,29 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 { #category : #'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
-	
-	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].	
-
+	(self shouldBuildMethod: aMethod in: aClass)
+		ifFalse: [ ^ self ].
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
-
-	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
-
+	newMethod := CompiledMethod
+		newMethod: aMethod bytecode size
+		header: (aMethod headerFor: extendedEnvironment).
 	extendedEnvironment newMethod: newMethod.
-
 	aMethod literals
-		doWithIndex:
-			[ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
-
+		doWithIndex: [ :literal :idx | 
+			newMethod
+				literalAt: idx
+				put: (literal asLiteralIn: extendedEnvironment) ].
 	newMethod classBinding: aClass binding.
 	literalSpace := (aMethod literals size + 1) * Smalltalk wordSize.
-
-	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
-
+	aMethod bytecode
+		doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 	aClass
 		addAndClassifySelector: aMethod name
 		withMethod: newMethod
 		inProtocol: aMethod protocol
-		notifying: nil
 ]
 
 { #category : #'reporting undeclared' }

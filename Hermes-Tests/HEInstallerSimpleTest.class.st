@@ -47,7 +47,7 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 	obj := aClass someClassSideMessage.
 
 	self assert: aClass slots isEmpty.	
-	self assert: aClass class slots isEmpty.	
+	self assert: (aClass class slots collect:#name) equals: #(users).	
 
 	self assert: obj oneMessage equals: 1234.
 	self assert: obj otherMessage equals: 4321.	
@@ -159,19 +159,21 @@ HEInstallerSimpleTest >> testCreatingASimpleClassExportingToFile [
 { #category : #tests }
 HEInstallerSimpleTest >> testCreatingASimpleTrait [
 	| exportedTrait |
-	
-	exportedTrait := HETrait for: THEOneTestTrait. 
+
+	exportedTrait := HETrait for: THEOneTestTrait.
 	self changeNameOf: exportedTrait to: #THEOneTestTraitNew.
-	
-	aTrait := installer buildTrait: exportedTrait.	
+
+	aTrait := installer buildTrait: exportedTrait.
 	installer installMethods: exportedTrait into: aTrait.
 
 	self assert: aTrait traitComposition isEmpty.
-	self assert: aTrait theMetaClass traitComposition isEmpty.
-	
+	self assert: aTrait classSide traitComposition isEmpty.
 	self assert: aTrait methods size equals: THEOneTestTrait methods size.
-	self assert: aTrait classTrait methods size equals: THEOneTestTrait classTrait methods size.	
-	
+
+	self
+		assert: aTrait classTrait methods size
+		equals: THEOneTestTrait classTrait methods size.
+
 	aTrait >> #oneMessage.
 	aTrait >> #oneMessageRequired
 ]
@@ -179,23 +181,24 @@ HEInstallerSimpleTest >> testCreatingASimpleTrait [
 { #category : #tests }
 HEInstallerSimpleTest >> testCreatingATraitUsingOthers [
 	| exportedTrait |
-	
-	exportedTrait := HETrait for: THEATraitUsingOthers. 
-	self changeNameOf: exportedTrait to: #THEATraitUsingOthersNew. 
-	
-	aTrait := installer buildTrait: exportedTrait.	
+	exportedTrait := HETrait for: THEATraitUsingOthers.
+	self changeNameOf: exportedTrait to: #THEATraitUsingOthersNew.
+	aTrait := installer buildTrait: exportedTrait.
 	installer installMethods: exportedTrait into: aTrait.
-
 	self deny: aTrait traitComposition isEmpty.
-	self deny: aTrait theMetaClass traitComposition isEmpty.
-	
-	self assert: aTrait methods size equals: THEATraitUsingOthers methods size.
-	self assert: aTrait classTrait methods size equals: THEATraitUsingOthers classTrait methods size.	
-		
-	self assert: aTrait traitComposition printString equals: THEATraitUsingOthers traitComposition printString.
-
-	self assert: aTrait classTrait traitComposition printString equals: THEATraitUsingOthers classTrait traitComposition printString.
-	
+	self deny: aTrait classSide traitComposition isEmpty.
+	self
+		assert: aTrait methods size
+		equals: THEATraitUsingOthers methods size.
+	self
+		assert: aTrait classTrait methods size
+		equals: THEATraitUsingOthers classTrait methods size.
+	self
+		assert: aTrait traitComposition printString
+		equals: THEATraitUsingOthers traitComposition printString.
+	self
+		assert: aTrait classTrait traitComposition printString
+		equals: THEATraitUsingOthers classTrait traitComposition printString.
 	aTrait >> #oneMessage.
 	aTrait >> #oneMessageRequired
 ]
