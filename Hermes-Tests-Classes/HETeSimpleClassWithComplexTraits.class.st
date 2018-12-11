@@ -6,5 +6,10 @@ Class {
 	#superclass : #HETeSimpleClass,
 	#traits : 'THEOneTestTrait - {#oneMessageRequired} + (THEOtherTestTrait @ {#otherMessage2->#otherMessage})',
 	#classTraits : 'THEOneTestTrait classTrait + THEOtherTestTrait classTrait',
-	#category : #'Hermes-Tests-Test-Classes'
+	#category : #'Hermes-Tests-Classes'
 }
+
+{ #category : #'as yet unclassified' }
+HETeSimpleClassWithComplexTraits >> externalMethod [
+	^ 73
+]

@@ -10,7 +10,8 @@ BaselineOfHermes >> baseline: spec [
 	spec for: #common do: [ spec
 		baseline: 'Ring2' with: [
 				spec
-					repository: 'github://carolahp/Ring2:master/src' ];
+					repository: 'github://carolahp/Ring2:master/src';
+					loads: 'bootstrap' ];
 				
 		project: 'Ficus' with: [
 			spec
@@ -23,8 +24,9 @@ BaselineOfHermes >> baseline: spec [
 		package: 'Hermes-Exporter' with: [ spec requires: #('Hermes') ];
 		package: 'Hermes-Extensions' with: [ spec requires: #('Hermes') ];
 
+		package: 'Hermes-Tests-Classes';
 		package: 'Hermes-Tests-External-Package';
-		package: 'Hermes-Tests' with: [ spec requires: #('core' 'Hermes-Tests-External-Package') ];
+		package: 'Hermes-Tests' with: [ spec requires: #('core' 'Hermes-Tests-Classes' 'Hermes-Tests-External-Package') ];
 		package: 'Hermes-Tests-Ring' with: [ spec requires: #('core' 'Hermes-Tests-External-Package' 'Ring2') ];
 		
 		group: 'core'
@@ -32,6 +34,6 @@ BaselineOfHermes >> baseline: spec [
 		group: 'minimal'
 			with: #(Hermes);
 		group: 'test'
-			with: #('Hermes-Tests' 'Hermes-Tests-External-Package')
+			with: #('Hermes-Tests' 'Hermes-Tests-Classes' 'Hermes-Tests-External-Package')
 	]
 ]

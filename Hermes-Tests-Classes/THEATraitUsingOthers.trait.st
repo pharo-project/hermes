@@ -5,5 +5,5 @@ Trait {
 	#name : #THEATraitUsingOthers,
 	#traits : 'THEOtherTestTrait - {#otherMessage} + THEOneTestTrait',
 	#classTraits : 'THEOtherTestTrait classTrait + THEOneTestTrait classTrait',
-	#category : #'Hermes-Tests-Test-Classes'
+	#category : #'Hermes-Tests-Classes'
 }

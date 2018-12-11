@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'aClassInstanceVariable'
 	],
-	#category : #'Hermes-Tests-Test-Classes'
+	#category : #'Hermes-Tests-Classes'
 }
 
 { #category : #'instance creation' }

@@ -33,6 +33,16 @@ HESendMessage class >> tag [
 ]
 
 { #category : #accessing }
+HESendMessage >> = anotherSendMessage [
+	self species = anotherSendMessage species
+		ifFalse: [ ^ false ].
+
+	^ (self arguments = anotherSendMessage arguments
+		and: [ self receiver = anotherSendMessage receiver ])
+		and: [ self selector = anotherSendMessage selector ]
+]
+
+{ #category : #accessing }
 HESendMessage >> arguments [
 	^ arguments
 ]
@@ -59,6 +69,12 @@ HESendMessage >> doReadFrom: aReader [
 	selector := (HEExportedLiteral readFrom: aReader).
 	receiver := (HEExportedLiteral readFrom: aReader).
 	arguments := (HEExportedLiteral readFrom: aReader).
+]
+
+{ #category : #accessing }
+HESendMessage >> hash [
+	
+	^ self selector hash bitAnd: self receiver hash
 ]
 
 { #category : #accessing }
