@@ -49,17 +49,20 @@ HEChangeSetTest >> testChangeSetIsWrittenInAByteArray [
 { #category : #tests }
 HEChangeSetTest >> testChangeSetIsWrittenInAByteArrayAndReadAndItIsTheSame [
 
-	| aClass aChangeSet aByteArray anotherChangeSet |
+	| aClass aChangeSet |
 	aClass := self newClass: #HETAClass superclass: Object slots: #(aSlot).
 	aClass compile: 'm ^3'.
 	
 	aChangeSet := changeCollector changeSet.
 	
-	aByteArray := ByteArray streamContents: [:s | aChangeSet writeTo: s].
-
-	anotherChangeSet := HEChangeSet new 
-		readFrom: aByteArray readStream;
-		yourself.
-		
-	self assert: aChangeSet equals: anotherChangeSet
+	aClass removeFromSystem.
+	aClass := nil.
+	
+	aChangeSet install.
+	
+	self assert: (aClass := Smalltalk globals at: #HETAClass) isNotNil.
+	self assert: aClass name equals: #HETAClass.
+	self assert: (aClass lookupSelector: #m) isNotNil.
+	
+	self assert: aClass new m equals: 3.
 ]

@@ -48,6 +48,19 @@ HEChangeSet >> hash [
 	^ classes hash + methods hash
 ]
 
+{ #category : #'applying changes' }
+HEChangeSet >> install [
+
+	| installer |
+	installer := HEExtendedInstaller new.
+
+	classes do: [ :aHEClass | installer build: aHEClass ].
+	methods do: [ :aHEMethod | 
+		| aClass |
+		aClass := installer environment at: aHEMethod className.
+		installer rebuildMethod: aHEMethod into: aClass  ]
+]
+
 { #category : #accessing }
 HEChangeSet >> methods [
 	^ methods
