@@ -42,6 +42,12 @@ HEChangeSet >> doWrite: aHermesWriter [
 	aHermesWriter flush.
 ]
 
+{ #category : #comparing }
+HEChangeSet >> hash [
+
+	^ classes hash + methods hash
+]
+
 { #category : #accessing }
 HEChangeSet >> methods [
 	^ methods
