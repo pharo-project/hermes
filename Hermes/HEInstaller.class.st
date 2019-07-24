@@ -55,7 +55,7 @@ HEInstaller >> asSlots: aString [
 
 { #category : #'creating classes' }
 HEInstaller >> build: aHEClass [
-	| newMetaclass newClass superclass layoutType  |
+	| newClass superclass layoutType  |
 
 	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 
@@ -91,7 +91,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	newTrait := traitClass
 		named: aTraitDefinition traitName
 		uses: traitComposition
-		category: aTraitDefinition category
+		package: aTraitDefinition category
 		env: environment.
 
 	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment) asTraitComposition.
@@ -157,7 +157,7 @@ HEInstaller >> existingClass: aHEClass [
 ]
 
 { #category : #'validating existance' }
-HEInstaller >> existingTrait: aHETrait. [
+HEInstaller >> existingTrait: aHETrait [
 	(environment includesKey: aHETrait traitName) ifTrue:[ 
 		self error: (self messageExistingTrait: aHETrait)
 	].
@@ -176,6 +176,9 @@ HEInstaller >> initialize [
 HEInstaller >> installExtensionMethod: extensionMethod [
 	| aClass |
 	aClass := self environment classNamed: extensionMethod className.
+	
+	aClass ifNil: [ self error: 'Required class named: ' , extensionMethod className, ' does not exists.' ].
+	
 	self rebuildMethod: extensionMethod into: aClass.
 ]
 
@@ -225,25 +228,27 @@ HEInstaller >> processTraitsFrom: aHEClass in: newClass [
 { #category : #'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
-	(self shouldBuildMethod: aMethod in: aClass)
-		ifFalse: [ ^ self ].
+	
+	(self shouldBuildMethod: aMethod in: aClass) ifFalse: [ ^ self ].	
+
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
-	newMethod := CompiledMethod
-		newMethod: aMethod bytecode size
-		header: (aMethod headerFor: extendedEnvironment).
+
+	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+
 	extendedEnvironment newMethod: newMethod.
+
 	aMethod literals
-		doWithIndex: [ :literal :idx | 
-			newMethod
-				literalAt: idx
-				put: (literal asLiteralIn: extendedEnvironment) ].
+		doWithIndex:
+			[ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
+
 	newMethod classBinding: aClass binding.
 	literalSpace := (aMethod literals size + 1) * Smalltalk wordSize.
-	aMethod bytecode
-		doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
+
+	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
+
 	aClass
 		addAndClassifySelector: aMethod name
 		withMethod: newMethod

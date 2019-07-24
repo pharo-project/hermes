@@ -103,9 +103,10 @@ HEClass >> name [
 
 { #category : #printing }
 HEClass >> printOn: aStream [
+
 	aStream
 		nextPutAll: 'HEClass ( ';
-		nextPutAll: className asString;
+		print: className;
 		nextPutAll: ' )'
 ]
 

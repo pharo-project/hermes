@@ -88,7 +88,7 @@ HEPackage >> packageName: anObject [
 HEPackage >> printOn: aStream [
 	aStream
 		nextPutAll: 'HEPackage ( ';
-		nextPutAll: packageName asString;
+		print: packageName ;
 		nextPutAll: ' )'
 ]
 
