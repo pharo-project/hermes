@@ -47,7 +47,7 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 	obj := aClass someClassSideMessage.
 
 	self assert: aClass slots isEmpty.	
-	self assert: (aClass class slots collect:#name) equals: #(users).	
+	self assert: aClass class slots isEmpty.	
 
 	self assert: obj oneMessage equals: 1234.
 	self assert: obj otherMessage equals: 4321.	

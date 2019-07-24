@@ -182,38 +182,34 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassFailing [
 
 { #category : #'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassIgnore [
-	| exportedClass  |
+	| exportedClass |
 	installer := HEExtendedInstaller new.
 	installer duplicationMode: HEIgnoreOnDuplication new.
-	
-	exportedClass := HEClass for: HETeSimpleClass. 
+	exportedClass := HEClass for: HETeSimpleClass.
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
-	
-	aClass := installer build: exportedClass.	
+	aClass := installer build: exportedClass.
 	installer installMethods: exportedClass into: aClass.
-
-	exportedClass instanceVariables: 'anInstanceVariable anotherInstanceVariable'.
-
-	aClass := installer build:exportedClass.
-	self assert: aClass instanceVariables equals: #(anInstanceVariable).
+	exportedClass
+		instanceVariables: 'anInstanceVariable anotherInstanceVariable'.
+	aClass := installer build: exportedClass.
+	self assert: aClass instVarNames equals: #(anInstanceVariable)
 ]
 
 { #category : #'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassReplace [
-	| exportedClass  |
+	| exportedClass |
 	installer := HEExtendedInstaller new.
-	installer duplicationMode: HEReplaceOnDuplication new.	
-	
-	exportedClass := HEClass for: HETeSimpleClass. 
+	installer duplicationMode: HEReplaceOnDuplication new.
+	exportedClass := HEClass for: HETeSimpleClass.
 	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
-	
-	aClass := installer build: exportedClass.	
+	aClass := installer build: exportedClass.
 	installer installMethods: exportedClass into: aClass.
-
-	exportedClass instanceVariables: 'anInstanceVariable anotherInstanceVariable'.
-
-	aClass := installer build:exportedClass.
-	self assert: aClass instanceVariables equals: #(anInstanceVariable anotherInstanceVariable).
+	exportedClass
+		instanceVariables: 'anInstanceVariable anotherInstanceVariable'.
+	aClass := installer build: exportedClass.
+	self
+		assert: aClass instVarNames
+		equals: #(anInstanceVariable anotherInstanceVariable)
 ]
 
 { #category : #tests }

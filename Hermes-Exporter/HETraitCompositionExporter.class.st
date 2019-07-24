@@ -36,6 +36,12 @@ HETraitCompositionExporter >> visitLiteralNode: aLiteralValueNode [
 ]
 
 { #category : #visiting }
+HETraitCompositionExporter >> visitLiteralValueNode: aRBLiteralValueNode [ 
+	
+	^ self visitLiteralNode: aRBLiteralValueNode  
+]
+
+{ #category : #visiting }
 HETraitCompositionExporter >> visitMessageNode: aMessageNode [ 
 
 	^ HESendMessage
