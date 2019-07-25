@@ -78,7 +78,7 @@ HEAbstractChangeCollectorTest >> tearDown [
 	
 	| package |
 
-	changeCollector unsubcribe.
+	changeCollector ifNotNil: #unsubcribe.
 		
 	package := packageName asPackageIfAbsent: [ nil ].
 	package ifNotNil: [ package removeFromSystem ].
