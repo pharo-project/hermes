@@ -40,12 +40,6 @@ HEPackage >> addClass: anExportedClass [
 ]
 
 { #category : #accessing }
-HEPackage >> behaviors [
-	
-	^ self classes , self traits
-]
-
-{ #category : #accessing }
 HEPackage >> classes [
 	^ classes
 ]

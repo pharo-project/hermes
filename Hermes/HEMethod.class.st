@@ -88,7 +88,7 @@ HEMethod >> name: anObject [
 HEMethod >> printOn: aStream [
 	aStream
 		nextPutAll: 'HEMethod ( ';
-		nextPutAll: name printString;
+		print: name ;
 		nextPutAll: ' )'
 ]
 
@@ -120,10 +120,4 @@ HEMethod >> readFrom: aReader [
 	numberOfLiterals := aReader readInt32.
 	literals := Array new: numberOfLiterals.
 	1 to: numberOfLiterals do: [ :idx | literals at:idx put: (HEExportedLiteral readFrom: aReader) ]
-]
-
-{ #category : #accessing }
-HEMethod >> selector [
-	
-	^ self name
 ]
