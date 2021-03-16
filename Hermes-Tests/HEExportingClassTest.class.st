@@ -27,6 +27,11 @@ HEExportingClassTest >> doTestExportingClass: classUnderTest [
 ]
 
 { #category : #tests }
+HEExportingClassTest >> testExportingClassWithBlocks [
+	self doTestExportingClass: HETeSimpleClassWithBlocks 
+]
+
+{ #category : #tests }
 HEExportingClassTest >> testExportingClassWithComplexTraits [
 	self doTestExportingClass: HETeSimpleClassWithComplexTraits
 ]

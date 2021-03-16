@@ -54,6 +54,38 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 ]
 
 { #category : #tests }
+HEInstallerSimpleTest >> testCreatingAClassWithBlocks [
+	| exportedClass methodWithSimpleBlock block methodWithNestedBlocks nestedBlock |
+	
+	exportedClass := HEClass for: HETeSimpleClassWithBlocks. 
+	self changeNameOf: exportedClass to: #HETeSimpleClassWithBlocksNew.
+	
+	aClass := installer build: exportedClass.
+	
+	self assert: aClass name equals: #HETeSimpleClassWithBlocksNew.
+	self assert: aClass class name equals: #'HETeSimpleClassWithBlocksNew class'.
+
+	installer installMethods: exportedClass into: aClass.
+
+	methodWithSimpleBlock := aClass >> #aMethodWithABlock.
+	block := methodWithSimpleBlock literals at: 1.
+	
+	self assert: block isCompiledBlock.
+	self assert: (block allLiterals at: 2) equals: methodWithSimpleBlock.
+
+	methodWithNestedBlocks := aClass >> #aMethodWithNestedBlocks.
+	block := methodWithNestedBlocks literals at: 1.
+	nestedBlock := block literals at: 1.
+	
+	self assert: block isCompiledBlock.
+	self assert: (block allLiterals last) equals: methodWithNestedBlocks.
+	self assert: nestedBlock isCompiledBlock.
+	self assert: (nestedBlock allLiterals last) equals: block
+
+
+]
+
+{ #category : #tests }
 HEInstallerSimpleTest >> testCreatingAClassWithUndeclared [
 	| exportedClass |
 	

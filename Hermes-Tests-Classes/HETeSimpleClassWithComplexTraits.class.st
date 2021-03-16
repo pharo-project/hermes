@@ -8,8 +8,3 @@ Class {
 	#classTraits : 'THEOneTestTrait classTrait + THEOtherTestTrait classTrait',
 	#category : #'Hermes-Tests-Classes'
 }
-
-{ #category : #'as yet unclassified' }
-HETeSimpleClassWithComplexTraits >> externalMethod [
-	^ 73
-]

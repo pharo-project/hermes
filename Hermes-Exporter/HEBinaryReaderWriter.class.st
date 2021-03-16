@@ -36,10 +36,10 @@ HEBinaryReaderWriter >> writeInt32: aNumber [
 	numberToSave := aNumber < 0
 		ifTrue: [ (0 - aNumber) bitInvert32 + 1 ]
 		ifFalse: [ aNumber ].
-	1 to: 4 do: [ :i | stream nextPut: (numberToSave digitAt: i) ]
+	1 to: 4 do: [ :i | stream nextPut: (numberToSave byteAt: i) ]
 ]
 
 { #category : #writting }
 HEBinaryReaderWriter >> writeUInt32: aNumber [
-	1 to: 4 do: [ :i | stream nextPut: (aNumber digitAt: i) ]
+	1 to: 4 do: [ :i | stream nextPut: (aNumber byteAt: i) ]
 ]
