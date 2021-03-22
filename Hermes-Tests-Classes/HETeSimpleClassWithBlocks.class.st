@@ -1,8 +1,12 @@
+"
+I am a class with blocks, the idea is to tests the serialization and de-serialization of full blocks using Sista.
+"
 Class {
 	#name : #HETeSimpleClassWithBlocks,
 	#superclass : #Object,
 	#instVars : [
-		'anInstanceVariable'
+		'anInstanceVariable',
+		'passedTheEnsure'
 	],
 	#classVars : [
 		'AClassVariable'
@@ -19,5 +23,15 @@ HETeSimpleClassWithBlocks >> aMethodWithABlock [
 { #category : #'test methods' }
 HETeSimpleClassWithBlocks >> aMethodWithNestedBlocks [
 
-	^ [ [ 42 ] on: Error do: [ ^ self halt ] ] ensure: [ 4 ].
+	passedTheEnsure := false.
+
+	^ [ [ 42 ] on: Error 
+			do: [ ^ self halt ] ] 
+			ensure: [ passedTheEnsure := true ].
+]
+
+{ #category : #'test methods' }
+HETeSimpleClassWithBlocks >> passedTheEnsure [
+
+	^ passedTheEnsure
 ]
