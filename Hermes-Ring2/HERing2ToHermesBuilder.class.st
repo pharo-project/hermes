@@ -10,6 +10,7 @@ HERing2ToHermesBuilder >> compileMethod: aRGMethod [
 	^ OpalCompiler new
 		class: aRGMethod parent;
 		source: aRGMethod sourceCode;
+		compiledMethodClass: CompiledMethod;
 		environment: aRGMethod environment;		
 		compile
 ]
