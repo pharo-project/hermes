@@ -47,11 +47,6 @@ HERingTest >> loadPackages: pNames [
 ]
 
 { #category : #'as yet unclassified' }
-HERingTest >> setUp [
-	self loadPackages: {#'Hermes-Tests-Classes'}
-]
-
-{ #category : #'as yet unclassified' }
 HERingTest >> testHETeSimpleClass [
 	self compareClass: #HETeSimpleClass
 ]

@@ -10,7 +10,9 @@ Class {
 { #category : #accessing }
 HETestRingAgainstHermesModel >> behaviorNamed: aName [
 
-	^ hermesPackage behaviors detect: [ :aClass | aClass name = aName ]
+	^ hermesPackage classes 
+		detect: [ :aClass | aClass className = aName ]
+		ifNone: [ hermesPackage traits detect: [ :aTrait | aTrait traitName = aName ] ]
 ]
 
 { #category : #comparing }
@@ -45,7 +47,7 @@ HETestRingAgainstHermesModel >> compareBehavior: aClass with: aRGClass [
 { #category : #comparing }
 HETestRingAgainstHermesModel >> compareClass: hermesClass with: aRGClass [
 
-	self assert: hermesClass name equals: aRGClass name.
+	self assert: hermesClass className equals: aRGClass name.
 
 	hermesClass superclass isNil 
 		ifTrue: [ self assert: aRGClass superclass isNil]
@@ -75,6 +77,7 @@ HETestRingAgainstHermesModel >> setUp [
 	
 	| ringPackage |
 	super setUp.
+	self loadPackages: #('Hermes-Tests-Classes').
 	
 	ringPackage := rgEnvironment ask packageNamed: #'Hermes-Tests-Classes'.
 	hermesPackage := HERing2ToHermesBuilder new visitPackage: ringPackage

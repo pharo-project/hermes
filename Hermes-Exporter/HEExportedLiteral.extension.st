@@ -37,6 +37,11 @@ HEExportedLiteral class >> nextTag [
 ]
 
 { #category : #'*Hermes-Exporter' }
+HEExportedLiteral >> value: anObject [
+	value := anObject
+]
+
+{ #category : #'*Hermes-Exporter' }
 HEExportedLiteral >> writeInto: aWriter [
 	"I write the corresponding tag of the class and then my subclasses should implement the custom behavior"
 	aWriter writeByte: self class tag.

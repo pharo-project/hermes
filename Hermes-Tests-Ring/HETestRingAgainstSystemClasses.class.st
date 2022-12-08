@@ -66,3 +66,9 @@ HETestRingAgainstSystemClasses >> compareTrait: aTrait with: aRGClass [
 
 	self compareBehavior: aTrait with: aRGClass
 ]
+
+{ #category : #initialization }
+HETestRingAgainstSystemClasses >> setUp [
+
+	self loadPackages: #('Hermes-Tests-Classes' 'Hermes-Tests-External-Package')
+]

@@ -121,3 +121,8 @@ HEMethod >> readFrom: aReader [
 	literals := Array new: numberOfLiterals.
 	1 to: numberOfLiterals do: [ :idx | literals at:idx put: (HEExportedLiteral readFrom: aReader) ]
 ]
+
+{ #category : #accessing }
+HEMethod >> selector [
+	^ self name
+]
