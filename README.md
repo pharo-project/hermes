@@ -1,5 +1,16 @@
 # Hermes
 
+## Loading Hermes
+
+You can load a specific version using the following expression:
+
+```Smalltalk
+Metacello new 
+	baseline: 'Hermes';
+	repository: 'github://pharo-project/Hermes:<version>';
+	load
+```
+
 ## Usage
 
 For exporting it should be something like:
