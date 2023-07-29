@@ -41,7 +41,7 @@ HEMethod >> fromMethod: aMethod [
 HEMethod >> writeInto: aWriter [
 	aWriter writeByteString: name.
 	aWriter writeByteString: className.
-	aWriter writeByteString: protocol.
+	aWriter writeByteString: protocol name.
 
 	aWriter writeByteString: encoderClassName.
 	aWriter writeUInt32: numArgs.
