@@ -17,6 +17,14 @@ Class {
 { #category : #'test methods' }
 HETeSimpleClassWithBlocks >> aMethodWithABlock [
 
+	^ [
+	  self.
+	  42 ]
+]
+
+{ #category : #'test methods' }
+HETeSimpleClassWithBlocks >> aMethodWithAContantBlock [
+
 	^ [ 42 ]
 ]
 
@@ -25,9 +33,12 @@ HETeSimpleClassWithBlocks >> aMethodWithNestedBlocks [
 
 	passedTheEnsure := false.
 
-	^ [ [ 42 ] on: Error 
-			do: [ ^ self halt ] ] 
-			ensure: [ passedTheEnsure := true ].
+	^ [
+	  [
+	  self.
+	  42 ]
+		  on: Error
+		  do: [ ^ self halt ] ] ensure: [ passedTheEnsure := true ]
 ]
 
 { #category : #'test methods' }

@@ -33,6 +33,24 @@ HEInstallerClassesWithBlocksTest >> testAMethodWithASingleBlockHasCorrectBinding
 ]
 
 { #category : #tests }
+HEInstallerClassesWithBlocksTest >> testAMethodWithASingleConstantBlockHasCorrectBindingToTheHomeMethod [
+
+	| methodWithSimpleBlock block |
+	methodWithSimpleBlock := aClass >> #aMethodWithAContantBlock.
+	block := methodWithSimpleBlock literals at: 1.
+
+	self flag: #pharo10. "This can be simplified once Pharo 11 will be the minimal version for Hermes.
+	In Pharo < 11, this will be a compiled block while in other cases il will be a constant block."
+	SystemVersion current major >= 11
+		ifTrue: [
+			self assert: block isBlock.
+			self assert: (block compiledBlock allLiterals at: 2) equals: methodWithSimpleBlock ]
+		ifFalse: [
+			self assert: block isCompiledBlock.
+			self assert: (block allLiterals at: 2) equals: methodWithSimpleBlock ]
+]
+
+{ #category : #tests }
 HEInstallerClassesWithBlocksTest >> testAMethodWithNestedBlocksHasCorrectBindingOfTheHomeBlockInTheNested [
 		
 	| methodWithNestedBlocks block nestedBlock |
