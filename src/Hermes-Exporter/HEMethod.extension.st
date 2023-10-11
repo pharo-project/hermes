@@ -1,6 +1,6 @@
-Extension { #name : #HEMethod }
+Extension { #name : 'HEMethod' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethod >> fillLiteralsAndBytecode: aMethod [
 	| literalSpace |
 	
@@ -22,22 +22,26 @@ HEMethod >> fillLiteralsAndBytecode: aMethod [
 	literals := literals copyWith: nil asExportedLiteral.
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethod class >> for: aMethod [
 	^ self new
 		fromMethod: aMethod;
 		yourself
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethod >> fromMethod: aMethod [
+
 	name := aMethod selector.
 	className := aMethod methodClass name.
-	protocol := aMethod protocol.
+	self flag: #pharo11. "When Pharo 12 will be the minimal version we can remove this check and call #protocolName instead"
+	protocol := aMethod protocol isString
+		            ifTrue: [ aMethod protocol ]
+		            ifFalse: [ aMethod protocol name ].
 	self fillLiteralsAndBytecode: aMethod
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethod >> writeInto: aWriter [
 	aWriter writeByteString: name.
 	aWriter writeByteString: className.

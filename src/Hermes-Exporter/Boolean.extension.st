@@ -1,6 +1,6 @@
-Extension { #name : #Boolean }
+Extension { #name : 'Boolean' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 Boolean >> asExportedLiteral [
 	^ HEBoolean for: self
 ]

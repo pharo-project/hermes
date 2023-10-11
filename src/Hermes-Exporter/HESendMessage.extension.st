@@ -1,6 +1,6 @@
-Extension { #name : #HESendMessage }
+Extension { #name : 'HESendMessage' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HESendMessage >> doWriteInto: aWriter [ 
 	
 	selector writeInto: aWriter.

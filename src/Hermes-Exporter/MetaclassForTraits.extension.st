@@ -1,6 +1,6 @@
-Extension { #name : #MetaclassForTraits }
+Extension { #name : 'MetaclassForTraits' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 MetaclassForTraits >> asExportedLiteral [
 	^ HEClassTrait for: self
 ]

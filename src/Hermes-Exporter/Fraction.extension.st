@@ -1,6 +1,6 @@
-Extension { #name : #Fraction }
+Extension { #name : 'Fraction' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 Fraction >> asExportedLiteral [
 	^ HEFraction for: self.
 ]

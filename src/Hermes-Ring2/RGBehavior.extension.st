@@ -1,6 +1,6 @@
-Extension { #name : #RGBehavior }
+Extension { #name : 'RGBehavior' }
 
-{ #category : #'*Hermes-Ring2' }
+{ #category : '*Hermes-Ring2' }
 RGBehavior >> categoryOfElement: aSymbol [ 
 	
 	| aMethod |

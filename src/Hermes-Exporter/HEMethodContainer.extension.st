@@ -1,6 +1,6 @@
-Extension { #name : #HEMethodContainer }
+Extension { #name : 'HEMethodContainer' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethodContainer >> doFromMethodContainer: aMethodContainer [
 	"When a class or a trait is transformed all the methods should be transformed.
 	In both the class and instance side. Also the trait composition should be handled"
@@ -18,12 +18,12 @@ HEMethodContainer >> doFromMethodContainer: aMethodContainer [
 		thenCollect: [ :e | HEMethod for: e ]
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethodContainer >> doWriteHeaderInto: aWriter [ 
 	self subclassResponsibility
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethodContainer >> doWriteMethods: aWriter [
 	aWriter writeByteString: category.
 
@@ -37,7 +37,7 @@ HEMethodContainer >> doWriteMethods: aWriter [
 	classTraitComposition writeInto: aWriter
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethodContainer >> writeInto: aWriter [
 	self doWriteHeaderInto: aWriter.
 	self doWriteMethods: aWriter

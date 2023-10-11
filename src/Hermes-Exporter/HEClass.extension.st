@@ -1,6 +1,6 @@
-Extension { #name : #HEClass }
+Extension { #name : 'HEClass' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEClass >> allSuperclassesIn: aCollection [
 	"I check that all my dependencies are exported before myself"
 	^ aCollection detect:[:aSuper | aSuper className = self superclass]
@@ -8,7 +8,7 @@ HEClass >> allSuperclassesIn: aCollection [
 		ifNone:[ #() ]
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEClass >> doWriteHeaderInto: aWriter [
 	aWriter writeByteString: className.
 	aWriter writeByteString: superclass.
@@ -19,14 +19,14 @@ HEClass >> doWriteHeaderInto: aWriter [
 	aWriter writeByteString: layoutClass
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEClass class >> for: aClass [
 	^ self new
 		fromClass: aClass;
 		yourself
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEClass >> fromClass: aClass [
 	"I fill the header from a real class.
 	I do not handle special slots yet"
@@ -41,7 +41,7 @@ HEClass >> fromClass: aClass [
 	self doFromMethodContainer: aClass
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEClass >> sharedPoolsIn: aCollection [
 	^ ((sharedPools substrings collect: #asSymbol) collect: [ :aName | aCollection detect: [ :aClass | aClass className = aName ] ifNone: nil ]) reject: #isNil
 ]

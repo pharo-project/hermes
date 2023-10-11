@@ -1,19 +1,19 @@
-Extension { #name : #HEPackage }
+Extension { #name : 'HEPackage' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPackage >> allSharedPoolsOf: aClass in: aCollection [
 	"Used to check the dependency order when exporting"
 	^ ({aClass} , (aClass allSuperclassesIn: aCollection)) flatCollect: [:e | e sharedPoolsIn: aCollection].
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPackage class >> for: aPackage [
 	^ self new
 		fromPackage: aPackage;
 		yourself
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPackage >> fromPackage: aPackage [
 	packageName := aPackage name.
 
@@ -23,13 +23,13 @@ HEPackage >> fromPackage: aPackage [
 	extensionMethods := aPackage extensionMethods collect: [ :e | HEMethod for: e ]
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPackage >> numberOfRequiredClassesOf: aClass in: aCollection [
 	"Used to sort the classes by dependency"
 	^ ((aClass allSuperclassesIn: aCollection) , ((self allSharedPoolsOf: aClass in: aCollection) flatCollect: [:e | {e} , (e allSuperclassesIn: aCollection)])) size
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPackage >> sortContent [
 	| allClasses|
 	"The classes and traits should be ordered by dependencies so it is easier to import in the target image"
@@ -40,7 +40,7 @@ HEPackage >> sortContent [
 
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPackage >> writeInto: aWriter [
 	self sortContent.
 

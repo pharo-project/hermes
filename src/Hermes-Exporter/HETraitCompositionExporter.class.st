@@ -3,18 +3,20 @@ I am a visitor for visiting trait compositions.
 Each trait composition is visited and translated to a set of HEMessageSend and literals.
 "
 Class {
-	#name : #HETraitCompositionExporter,
-	#superclass : #Object,
-	#category : #'Hermes-Exporter-Traits'
+	#name : 'HETraitCompositionExporter',
+	#superclass : 'Object',
+	#category : 'Hermes-Exporter-Traits',
+	#package : 'Hermes-Exporter',
+	#tag : 'Traits'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HETraitCompositionExporter class >> export: aTraitComposition [
 
 	^ self new export: aTraitComposition
 ]
 
-{ #category : #exporting }
+{ #category : 'exporting' }
 HETraitCompositionExporter >> export: aTraitComposition [ 
 	| node |
 	
@@ -23,25 +25,25 @@ HETraitCompositionExporter >> export: aTraitComposition [
 	^ node acceptVisitor: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HETraitCompositionExporter >> visitArrayNode: aArrayNode [ 
 	
 	^ (aArrayNode statements collect: [ :e | e acceptVisitor: self ] as: Array) asExportedLiteral
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HETraitCompositionExporter >> visitLiteralNode: aLiteralValueNode [ 
 
 	^ aLiteralValueNode value asExportedLiteral
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HETraitCompositionExporter >> visitLiteralValueNode: aRBLiteralValueNode [ 
 	
 	^ self visitLiteralNode: aRBLiteralValueNode  
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HETraitCompositionExporter >> visitMessageNode: aMessageNode [ 
 
 	^ HESendMessage
@@ -50,7 +52,7 @@ HETraitCompositionExporter >> visitMessageNode: aMessageNode [
 		arguments: (aMessageNode arguments collect: [:e | e acceptVisitor: self ]) asExportedLiteral 
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HETraitCompositionExporter >> visitVariableNode: aVariableNode [ 
 
 	^ HETraitLiteral for: aVariableNode

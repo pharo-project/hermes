@@ -1,6 +1,6 @@
-Extension { #name : #ClassVariable }
+Extension { #name : 'ClassVariable' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 ClassVariable >> asExportedLiteral [
 	^ HEClassVariable for: self
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #AdditionalMethodState }
+Extension { #name : 'AdditionalMethodState' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 AdditionalMethodState >> asExportedLiteral [
 	^ HEAdditionalMethodState for:self.
 ]

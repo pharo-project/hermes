@@ -1,6 +1,6 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 Trait >> asExportedLiteral [
 	^ HETraitLiteral for: self.
 ]

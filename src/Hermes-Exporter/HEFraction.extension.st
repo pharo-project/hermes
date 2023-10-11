@@ -1,6 +1,6 @@
-Extension { #name : #HEFraction }
+Extension { #name : 'HEFraction' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEFraction >> doWriteInto: aWriter [
 	value numerator asExportedLiteral writeInto: aWriter.
 	value denominator asExportedLiteral writeInto: aWriter.	

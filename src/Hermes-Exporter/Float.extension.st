@@ -1,6 +1,6 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 Float >> asExportedLiteral [
 	^ HEFloat for: self
 ]

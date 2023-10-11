@@ -1,6 +1,6 @@
-Extension { #name : #HEConstantBlock }
+Extension { #name : 'HEConstantBlock' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEConstantBlock >> doWriteInto: aWriter [
 
 	aWriter writeUInt32: numArgs.
@@ -9,7 +9,7 @@ HEConstantBlock >> doWriteInto: aWriter [
 
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEConstantBlock >> value: aConstantBlock [
 
 	value := aConstantBlock.

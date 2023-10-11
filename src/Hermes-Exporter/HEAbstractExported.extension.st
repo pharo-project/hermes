@@ -1,6 +1,6 @@
-Extension { #name : #HEAbstractExported }
+Extension { #name : 'HEAbstractExported' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEAbstractExported >> encoderClassName: aMethod [
 	"When a method is exported the name of the encoder class used is stored with it.
 	The name stored is the name of the target class.

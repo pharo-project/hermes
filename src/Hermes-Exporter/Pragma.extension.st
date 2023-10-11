@@ -1,6 +1,6 @@
-Extension { #name : #Pragma }
+Extension { #name : 'Pragma' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 Pragma >> asExportedLiteral [
 	^ HEPragma for: self.
 ]

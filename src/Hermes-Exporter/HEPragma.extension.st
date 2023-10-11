@@ -1,6 +1,6 @@
-Extension { #name : #HEPragma }
+Extension { #name : 'HEPragma' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEPragma >> doWriteInto: aWriter [
 	method writeInto: aWriter.
 	keyword writeInto: aWriter.

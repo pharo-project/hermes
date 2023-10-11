@@ -1,6 +1,6 @@
-Extension { #name : #TaAbstractComposition }
+Extension { #name : 'TaAbstractComposition' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 TaAbstractComposition >> asExportedLiteral [
 	
 	^ HETraitCompositionExporter export: self.

@@ -1,6 +1,6 @@
-Extension { #name : #HEWideString }
+Extension { #name : 'HEWideString' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEWideString >> doWriteInto: aWriter [
 	aWriter writeByteArray: value utf8Encoded.
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #GlobalVariable }
+Extension { #name : 'GlobalVariable' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 GlobalVariable >> asExportedLiteral [
 	^ HEGlobalVariable for:self.
 ]

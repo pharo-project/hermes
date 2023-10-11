@@ -4,33 +4,34 @@ The format used is compatible with the one in HEBinaryReader
 
 "
 Class {
-	#name : #HEBinaryReaderWriter,
-	#superclass : #HEBinaryReader,
-	#category : #'Hermes-Exporter'
+	#name : 'HEBinaryReaderWriter',
+	#superclass : 'HEBinaryReader',
+	#category : 'Hermes-Exporter',
+	#package : 'Hermes-Exporter'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEBinaryReaderWriter >> flush [
 	stream flush
 ]
 
-{ #category : #writting }
+{ #category : 'writting' }
 HEBinaryReaderWriter >> writeByte: aNumber [
 	stream nextPut: aNumber
 ]
 
-{ #category : #writting }
+{ #category : 'writting' }
 HEBinaryReaderWriter >> writeByteArray: byteArray [
 	self writeInt32: byteArray size.
 	stream nextPutAll: byteArray.
 ]
 
-{ #category : #writting }
+{ #category : 'writting' }
 HEBinaryReaderWriter >> writeByteString: aString [
 	self writeByteArray: aString asByteArray
 ]
 
-{ #category : #writting }
+{ #category : 'writting' }
 HEBinaryReaderWriter >> writeInt32: aNumber [
 	| numberToSave |
 	numberToSave := aNumber < 0
@@ -39,7 +40,7 @@ HEBinaryReaderWriter >> writeInt32: aNumber [
 	1 to: 4 do: [ :i | stream nextPut: (numberToSave byteAt: i) ]
 ]
 
-{ #category : #writting }
+{ #category : 'writting' }
 HEBinaryReaderWriter >> writeUInt32: aNumber [
 	1 to: 4 do: [ :i | stream nextPut: (aNumber byteAt: i) ]
 ]

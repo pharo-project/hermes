@@ -1,18 +1,18 @@
-Extension { #name : #HETrait }
+Extension { #name : 'HETrait' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HETrait >> doWriteHeaderInto: aWriter [
 	aWriter writeByteString: traitName
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HETrait class >> for: aTrait [
 	^ self new
 		fromTrait: aTrait;
 		yourself
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HETrait >> fromTrait: aTrait [
 	traitName := aTrait name.
 

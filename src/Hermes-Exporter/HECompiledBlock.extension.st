@@ -1,6 +1,6 @@
-Extension { #name : #HECompiledBlock }
+Extension { #name : 'HECompiledBlock' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HECompiledBlock >> doWriteInto: aWriter [
 	
 	aWriter writeByteString: encoderClassName.
@@ -14,7 +14,7 @@ HECompiledBlock >> doWriteInto: aWriter [
 	literals do:[:e | e writeInto: aWriter].
 ]
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HECompiledBlock >> value: aCompiledBlock [
 	
 	| literalSpace |

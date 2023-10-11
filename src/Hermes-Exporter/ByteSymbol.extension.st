@@ -1,6 +1,6 @@
-Extension { #name : #ByteSymbol }
+Extension { #name : 'ByteSymbol' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 ByteSymbol >> asExportedLiteral [
 	^ HESymbol for: self.
 ]

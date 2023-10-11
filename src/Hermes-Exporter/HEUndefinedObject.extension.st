@@ -1,6 +1,6 @@
-Extension { #name : #HEUndefinedObject }
+Extension { #name : 'HEUndefinedObject' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEUndefinedObject >> doWriteInto: aWriter [
 
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #ByteString }
+Extension { #name : 'ByteString' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 ByteString >> asExportedLiteral [
 	^ HEByteString for:self.
 ]

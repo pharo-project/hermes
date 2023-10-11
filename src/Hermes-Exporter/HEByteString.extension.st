@@ -1,6 +1,6 @@
-Extension { #name : #HEByteString }
+Extension { #name : 'HEByteString' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEByteString >> doWriteInto: aWriter [
 	aWriter writeByteString: value.
 ]

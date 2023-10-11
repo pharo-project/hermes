@@ -1,6 +1,6 @@
-Extension { #name : #HEMethodLiteral }
+Extension { #name : 'HEMethodLiteral' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 HEMethodLiteral >> doWriteInto: aWriter [
 	aWriter writeByteString: className.
 	aWriter writeByteString: selector.

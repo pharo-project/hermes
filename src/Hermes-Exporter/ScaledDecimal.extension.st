@@ -1,6 +1,6 @@
-Extension { #name : #ScaledDecimal }
+Extension { #name : 'ScaledDecimal' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 ScaledDecimal >> asExportedLiteral [
 	^ HEScaledDecimal for: self.
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 Integer >> asExportedLiteral [
 	^ HEInteger for: self
 ]

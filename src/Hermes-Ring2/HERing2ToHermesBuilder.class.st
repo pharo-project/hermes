@@ -1,10 +1,11 @@
 Class {
-	#name : #HERing2ToHermesBuilder,
-	#superclass : #Object,
-	#category : #'Hermes-Ring2'
+	#name : 'HERing2ToHermesBuilder',
+	#superclass : 'Object',
+	#category : 'Hermes-Ring2',
+	#package : 'Hermes-Ring2'
 }
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 HERing2ToHermesBuilder >> compileMethod: aRGMethod [
 	
 	^ OpalCompiler new
@@ -15,7 +16,7 @@ HERing2ToHermesBuilder >> compileMethod: aRGMethod [
 		compile
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HERing2ToHermesBuilder >> visitClass: aClass [
 
 	| aHEClass |
@@ -42,22 +43,25 @@ HERing2ToHermesBuilder >> visitClass: aClass [
 	^ aHEClass
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HERing2ToHermesBuilder >> visitMethod: aMethod [
+
 	| aHEMethod compiledMethod |
-	aHEMethod  := HEMethod new.
+	aHEMethod := HEMethod new.
 	aHEMethod name: aMethod selector.
 	aHEMethod className: aMethod methodClass name.
-	aHEMethod protocol: aMethod protocol.
+	aHEMethod protocol: (aMethod protocol isString
+			 ifTrue: [ aMethod protocol ]
+			 ifFalse: [ aMethod protocol name ]).
 
 	compiledMethod := self compileMethod: aMethod.
 
 	aHEMethod fillLiteralsAndBytecode: compiledMethod.
-	
+
 	^ aHEMethod
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HERing2ToHermesBuilder >> visitMethodContainer: aMethodContainer using: aHEClass [
 
 	| instanceMethods classMethods |
@@ -78,7 +82,7 @@ HERing2ToHermesBuilder >> visitMethodContainer: aMethodContainer using: aHEClass
 		(classMethods collect: [ :e | e acceptVisitor: self ])
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HERing2ToHermesBuilder >> visitPackage: aPackage [
 	| aHEPackage classDefinedSorted |
 	aHEPackage := HEPackage new.
@@ -93,7 +97,7 @@ HERing2ToHermesBuilder >> visitPackage: aPackage [
 	^ aHEPackage.
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 HERing2ToHermesBuilder >> visitTrait: aTrait [
 	| aHETrait |
 	

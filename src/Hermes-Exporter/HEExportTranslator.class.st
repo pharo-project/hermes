@@ -4,38 +4,39 @@ I translate the name of a given encoder class to the corresponding in the target
 The encoders (source and target) should use compatible bytecode, as the bytecode is not translated.
 "
 Class {
-	#name : #HEExportTranslator,
-	#superclass : #HEBinaryReader,
+	#name : 'HEExportTranslator',
+	#superclass : 'HEBinaryReader',
 	#instVars : [
 		'encoderTranslateTable'
 	],
 	#classVars : [
 		'Instance'
 	],
-	#category : #'Hermes-Exporter'
+	#category : 'Hermes-Exporter',
+	#package : 'Hermes-Exporter'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HEExportTranslator class >> default [
 	^ self new.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HEExportTranslator class >> uniqueInstance [
 	^ Instance ifNil: [ Instance := self default ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExportTranslator >> encoderTranslateTable [
 	^ encoderTranslateTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExportTranslator >> encoderTranslateTable: anObject [
 	encoderTranslateTable := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEExportTranslator >> initialize [
 	encoderTranslateTable := {
 	 #OpalEncoderForSistaV1 -> #EncoderForSistaV1.
@@ -44,7 +45,7 @@ HEExportTranslator >> initialize [
 	} asDictionary
 ]
 
-{ #category : #translate }
+{ #category : 'translate' }
 HEExportTranslator >> translateEncoderName: aEncoderName [
 	^ encoderTranslateTable at: aEncoderName asSymbol ifAbsent: [ aEncoderName ]
 ]

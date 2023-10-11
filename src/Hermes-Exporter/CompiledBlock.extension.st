@@ -1,6 +1,6 @@
-Extension { #name : #CompiledBlock }
+Extension { #name : 'CompiledBlock' }
 
-{ #category : #'*Hermes-Exporter' }
+{ #category : '*Hermes-Exporter' }
 CompiledBlock >> asExportedLiteral [
 	^ HECompiledBlock for:self.
 ]
