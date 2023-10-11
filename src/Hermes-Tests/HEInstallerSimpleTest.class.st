@@ -254,8 +254,12 @@ HEInstallerSimpleTest >> testUndeclared [
 	[
 	UndefinedObject compile: 'xxx
 		^ AnUndeclaredClass'.
-
-	self assert: nil xxx equals: nil.
+	self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Warning"
+	self
+		assert: ([ nil xxx ]
+				 on: Warning
+				 do: [ :e | e resume ])
+		equals: nil.
 
 	exportedClass := HEClass for: HETeSimpleClass.
 	self changeNameOf: exportedClass to: #AnUndeclaredClass.
