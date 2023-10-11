@@ -26,7 +26,7 @@ Class {
 
 { #category : 'initialization' }
 HEBinaryReader >> close [
-	self stream close.
+	self stream close
 ]
 
 { #category : 'sizes' }
@@ -42,7 +42,7 @@ HEBinaryReader >> readByte [
 { #category : 'reading' }
 HEBinaryReader >> readByteArray [
 	| byteArray size |
-	size := self readInt32. 
+	size := self readInt32.
 	byteArray := stream next: size.
 	^ byteArray
 ]
@@ -54,7 +54,7 @@ HEBinaryReader >> readByteString [
 
 { #category : 'reading' }
 HEBinaryReader >> readByteSymbol [
-	^ self readByteString asSymbol 
+	^ self readByteString asSymbol
 ]
 
 { #category : 'reading' }

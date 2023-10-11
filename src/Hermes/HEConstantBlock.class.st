@@ -32,7 +32,7 @@ HEConstantBlock >> doReadFrom: aReader [
 
 	numArgs := aReader readUInt32.
 	literal := HEExportedLiteral readFrom: aReader.
-	compiledBlock := HEExportedLiteral readFrom: aReader.
+	compiledBlock := HEExportedLiteral readFrom: aReader
 ]
 
 { #category : 'comparing' }

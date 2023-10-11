@@ -23,5 +23,5 @@ HEByteArray >> asLiteralIn: env [
 
 { #category : 'reading' }
 HEByteArray >> doReadFrom: aReader [
-	value := aReader readByteArray.
+	value := aReader readByteArray
 ]

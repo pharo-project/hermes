@@ -99,7 +99,7 @@ HEClass >> layoutClass: anObject [
 
 { #category : 'accessing' }
 HEClass >> name [
-	
+
 	^ self className
 ]
 

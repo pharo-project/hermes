@@ -13,7 +13,7 @@ Class {
 
 { #category : 'accessing' }
 HEByteString class >> tag [
-	^ 4.
+	^ 4
 ]
 
 { #category : 'converting' }
@@ -24,10 +24,10 @@ HEByteString >> asLiteralIn: env [
 { #category : 'reading' }
 HEByteString >> doConvertValue: aValue [
 	"My subclasses are able to do something else to convert the readed value"
-	^ aValue.
+	^ aValue
 ]
 
 { #category : 'reading' }
 HEByteString >> doReadFrom: aReader [
-	value := self doConvertValue:(aReader readByteString).
+	value := self doConvertValue:(aReader readByteString)
 ]

@@ -16,7 +16,7 @@ Class {
 
 { #category : 'reading' }
 HETrait >> doReadHeaderFrom: aReader [
-	traitName := aReader readByteSymbol.
+	traitName := aReader readByteSymbol
 ]
 
 { #category : 'accessing' }

@@ -17,7 +17,7 @@ Class {
 
 { #category : 'accessing' }
 HEMethodLiteral class >> tag [
-	^ 10.
+	^ 10
 ]
 
 { #category : 'converting' }
@@ -40,13 +40,11 @@ HEMethodLiteral >> className: anObject [
 { #category : 'reading' }
 HEMethodLiteral >> doReadFrom: aReader [
 	className := aReader readByteSymbol.
-	selector := aReader readByteSymbol.
-
-
+	selector := aReader readByteSymbol
 ]
 
 { #category : 'accessing' }
 HEMethodLiteral >> value: aMethod [
 	className := aMethod methodClass name.
-	selector := aMethod selector.
+	selector := aMethod selector
 ]

@@ -18,5 +18,5 @@ HEWideString class >> tag [
 
 { #category : 'reading' }
 HEWideString >> doReadFrom: aReader [
-	value := aReader readByteArray utf8Decoded.
+	value := aReader readByteArray utf8Decoded
 ]

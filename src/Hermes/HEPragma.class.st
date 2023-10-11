@@ -22,7 +22,7 @@ Class {
 
 { #category : 'accessing' }
 HEPragma class >> tag [
-	^ 11.
+	^ 11
 ]
 
 { #category : 'accessing' }
@@ -39,7 +39,7 @@ HEPragma >> asLiteralIn: env [
 HEPragma >> doReadFrom: aReader [
 	method := HEExportedLiteral readFrom: aReader.
 	keyword := HEExportedLiteral readFrom: aReader.
-	arguments := HEExportedLiteral readFrom: aReader.
+	arguments := HEExportedLiteral readFrom: aReader
 ]
 
 { #category : 'accessing' }
@@ -56,5 +56,5 @@ HEPragma >> method [
 HEPragma >> value: aPragma [
 	method := aPragma method asExportedLiteral.
 	keyword := aPragma selector asExportedLiteral.
-	arguments := aPragma arguments asExportedLiteral 
+	arguments := aPragma arguments asExportedLiteral
 ]
