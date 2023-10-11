@@ -251,6 +251,8 @@ HEInstallerSimpleTest >> testPragmaMethod [
 HEInstallerSimpleTest >> testUndeclared [
 
 	| exportedClass |
+	"If we run the test multiple times we need to do this to be sure #AnUndeclaredClass is not in the Undeclared dictionary anymore."
+	Undeclared removeUnreferencedKeys.
 	[
 	UndefinedObject compile: 'xxx
 		^ AnUndeclaredClass'.
@@ -268,5 +270,7 @@ HEInstallerSimpleTest >> testUndeclared [
 	installer installMethods: exportedClass into: aClass.
 
 	self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.
-	Smalltalk at: #AnUndeclaredClass ] ensure: [ UndefinedObject removeSelector: #xxx ]
+	Smalltalk at: #AnUndeclaredClass ifAbsent: [ self fail: 'Class should be here.' ] ] ensure: [
+		UndefinedObject removeSelector: #xxx.
+		Smalltalk at: #AnUndeclaredClass ifPresent: [ :class | class removeFromSystem ] ]
 ]
