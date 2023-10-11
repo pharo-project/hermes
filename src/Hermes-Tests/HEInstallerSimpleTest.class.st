@@ -249,19 +249,20 @@ HEInstallerSimpleTest >> testPragmaMethod [
 
 { #category : #tests }
 HEInstallerSimpleTest >> testUndeclared [
+
 	| exportedClass |
-	
-	UndefinedObject compile:'xxx
+	[
+	UndefinedObject compile: 'xxx
 		^ AnUndeclaredClass'.
-		
+
 	self assert: nil xxx equals: nil.
-	
-	exportedClass := HEClass for: HETeSimpleClass. 
+
+	exportedClass := HEClass for: HETeSimpleClass.
 	self changeNameOf: exportedClass to: #AnUndeclaredClass.
 
 	aClass := installer build: exportedClass.
 	installer installMethods: exportedClass into: aClass.
 
 	self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.
-	Smalltalk at:#AnUndeclaredClass.
+	Smalltalk at: #AnUndeclaredClass ] ensure: [ UndefinedObject removeSelector: #xxx ]
 ]

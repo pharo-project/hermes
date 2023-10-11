@@ -45,12 +45,11 @@ HEInstallerTest >> setUp [
 
 { #category : #initialization }
 HEInstallerTest >> tearDown [
-	aClass ifNotNil: #removeFromSystem.
-	aTrait ifNotNil: #removeFromSystem.
 
-	UndefinedObject removeSelector: #xxx.
-	Undeclared removeKey: #AUndeclared ifAbsent:[].
+	aClass ifNotNil: [ :class | class removeFromSystem ].
+	aTrait ifNotNil: [ :trait | trait removeFromSystem ].
 
-	super tearDown.
+	Undeclared removeKey: #AUndeclared ifAbsent: [  ].
 
+	super tearDown
 ]
