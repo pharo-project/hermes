@@ -1,10 +1,11 @@
 Class {
-	#name : #HEExportingTraitTest,
-	#superclass : #HEAbstractBinaryClassBuilderTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEExportingTraitTest',
+	#superclass : 'HEAbstractBinaryClassBuilderTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEExportingTraitTest >> doTestExportingTrait: traitUnderTest [
 	| new old nonExtensionMethodsClassSide nonExtensionMethods |
 	old := HETrait for: traitUnderTest.
@@ -26,12 +27,12 @@ HEExportingTraitTest >> doTestExportingTrait: traitUnderTest [
 	self assert: old equals: new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingTraitTest >> testExportingTrait [
 	self doTestExportingTrait: THEOneTestTrait.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingTraitTest >> testExportingTraitUsingOther [
 	self doTestExportingTrait: THEATraitUsingOthers.
 ]

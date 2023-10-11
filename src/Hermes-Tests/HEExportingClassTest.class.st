@@ -1,10 +1,11 @@
 Class {
-	#name : #HEExportingClassTest,
-	#superclass : #HEAbstractBinaryClassBuilderTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEExportingClassTest',
+	#superclass : 'HEAbstractBinaryClassBuilderTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingClassTest >> doTestExportingClass: classUnderTest [
 	| new old nonExtensionMethodsClassSide nonExtensionMethods |
 	old := HEClass for: classUnderTest.
@@ -26,22 +27,22 @@ HEExportingClassTest >> doTestExportingClass: classUnderTest [
 	self assert: old equals: new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingClassTest >> testExportingClassWithBlocks [
 	self doTestExportingClass: HETeSimpleClassWithBlocks 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingClassTest >> testExportingClassWithComplexTraits [
 	self doTestExportingClass: HETeSimpleClassWithComplexTraits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingClassTest >> testExportingClassWithTraits [
 	self doTestExportingClass: HETeSimpleClassWithTraits
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingClassTest >> testExportingObject [
 	self doTestExportingClass: Object
 ]

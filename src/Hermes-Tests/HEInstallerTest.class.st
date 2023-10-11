@@ -2,17 +2,18 @@
 Abstract class that has the common behaviour of the HEInstallerTests
 "
 Class {
-	#name : #HEInstallerTest,
-	#superclass : #HEAbstractBinaryClassBuilderTest,
+	#name : 'HEInstallerTest',
+	#superclass : 'HEAbstractBinaryClassBuilderTest',
 	#instVars : [
 		'aClass',
 		'aTrait',
 		'installer'
 	],
-	#category : #'Hermes-Tests'
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEInstallerTest >> changeNameOf: exportedClass to: aNewName [
 	(exportedClass isKindOf: HETrait)
 		ifTrue: [ 
@@ -26,7 +27,7 @@ HEInstallerTest >> changeNameOf: exportedClass to: aNewName [
 
 ]
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEInstallerTest >> renameExportedClass: aName to: aNewName on:aMethod [
 	aMethod literals do:[ :e |
 		(e isKindOf: HEAdditionalMethodState) ifTrue:[
@@ -37,13 +38,13 @@ HEInstallerTest >> renameExportedClass: aName to: aNewName on:aMethod [
 	].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEInstallerTest >> setUp [
 	super setUp.
 	installer := HEInstaller new.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEInstallerTest >> tearDown [
 
 	aClass ifNotNil: [ :class | class removeFromSystem ].

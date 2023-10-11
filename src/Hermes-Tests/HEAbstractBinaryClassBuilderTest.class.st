@@ -2,18 +2,19 @@
 The abstract  class of all the Hermes tests. It creates a reader and a writer .
 "
 Class {
-	#name : #HEAbstractBinaryClassBuilderTest,
-	#superclass : #TestCase,
+	#name : 'HEAbstractBinaryClassBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'filename',
 		'reader',
 		'writer',
 		'fileReference'
 	],
-	#category : #'Hermes-Tests'
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEAbstractBinaryClassBuilderTest >> setUp [
 	super setUp.
 	fileReference := (FileReference newTempFilePrefix: 'export' suffix: '.exp').
@@ -29,7 +30,7 @@ HEAbstractBinaryClassBuilderTest >> setUp [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEAbstractBinaryClassBuilderTest >> tearDown [
 	writer close.
 	reader close.

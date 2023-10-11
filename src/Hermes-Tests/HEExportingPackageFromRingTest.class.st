@@ -1,17 +1,18 @@
 Class {
-	#name : #HEExportingPackageFromRingTest,
-	#superclass : #HEExportingPackageTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEExportingPackageFromRingTest',
+	#superclass : 'HEExportingPackageTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEExportingPackageFromRingTest >> fillOldPackage: aPackageNamed [
 	aPackage := self rfiPackageFor: aPackageNamed.
 	old := HERingToHermesBuilder new visitPackage: aPackage.
 
 ]
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEExportingPackageFromRingTest >> rfiPackageFor: aPackageNamed [
 	| environment rfienvironment |
 	environment := Dictionary new.
@@ -25,7 +26,7 @@ HEExportingPackageFromRingTest >> rfiPackageFor: aPackageNamed [
 	^ rfienvironment packages detect: [ :p | p name = aPackageNamed asSymbol ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingPackageFromRingTest >> testExportingCollectionsTests [
 	self skip.
 ]

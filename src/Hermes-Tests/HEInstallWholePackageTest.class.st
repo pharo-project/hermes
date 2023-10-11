@@ -1,14 +1,15 @@
 Class {
-	#name : #HEInstallWholePackageTest,
-	#superclass : #HEAbstractBinaryClassBuilderTest,
+	#name : 'HEInstallWholePackageTest',
+	#superclass : 'HEAbstractBinaryClassBuilderTest',
 	#instVars : [
 		'builder',
 		'newClass'
 	],
-	#category : #'Hermes-Tests'
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEInstallWholePackageTest >> changeClassesNames: aPackage [
 	aPackage instVarNamed: #packageName put: #'Hermes-Tests-External-Package2'.
 	aPackage classes
@@ -32,13 +33,13 @@ HEInstallWholePackageTest >> changeClassesNames: aPackage [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEInstallWholePackageTest >> setUp [
 	super setUp.
 	builder := HEInstaller new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEInstallWholePackageTest >> tearDown [
 	| aPackage |
 	aPackage := RPackageOrganizer default packageNamed:#'Hermes-Tests-External-Package2' ifAbsent: nil.
@@ -46,7 +47,7 @@ HEInstallWholePackageTest >> tearDown [
 	super tearDown.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallWholePackageTest >> testExportingWholePackageAndImportingIt [
 	| hePackage readPackage newPackage oldPackage obj obj2 |
 	oldPackage := RPackageOrganizer default packageNamed: #'Hermes-Tests-External-Package'.
@@ -69,7 +70,7 @@ HEInstallWholePackageTest >> testExportingWholePackageAndImportingIt [
 	self assert: obj2 class equals: (Smalltalk at: #AClassToBeExtracted2)
 ]
 
-{ #category : #utils }
+{ #category : 'utils' }
 HEInstallWholePackageTest >> updateMethodLiterals: methods [
 	methods
 		do: [ :e | 

@@ -1,10 +1,11 @@
 Class {
-	#name : #HEInstallerClassesWithBlocksTest,
-	#superclass : #HEInstallerTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEInstallerClassesWithBlocksTest',
+	#superclass : 'HEInstallerTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> setUp [ 
 
 	| exportedClass |
@@ -19,7 +20,7 @@ HEInstallerClassesWithBlocksTest >> setUp [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testAMethodWithASingleBlockHasCorrectBindingToTheHomeMethod [
 	| methodWithSimpleBlock block |
 		
@@ -32,7 +33,7 @@ HEInstallerClassesWithBlocksTest >> testAMethodWithASingleBlockHasCorrectBinding
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testAMethodWithASingleConstantBlockHasCorrectBindingToTheHomeMethod [
 
 	| methodWithSimpleBlock block |
@@ -50,7 +51,7 @@ HEInstallerClassesWithBlocksTest >> testAMethodWithASingleConstantBlockHasCorrec
 			self assert: (block allLiterals at: 2) equals: methodWithSimpleBlock ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testAMethodWithNestedBlocksHasCorrectBindingOfTheHomeBlockInTheNested [
 		
 	| methodWithNestedBlocks block nestedBlock |
@@ -64,7 +65,7 @@ HEInstallerClassesWithBlocksTest >> testAMethodWithNestedBlocksHasCorrectBinding
 	self assert: (nestedBlock allLiterals last) equals: block.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testCreatedClassHaveTheCorrectName [
 
 	self assert: aClass name equals: #HETeSimpleClassWithBlocksNew.
@@ -73,7 +74,7 @@ HEInstallerClassesWithBlocksTest >> testCreatedClassHaveTheCorrectName [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testExecutingAMethodWithASingleBlockBehavesCorrectly [
 
 	| obj |
@@ -82,7 +83,7 @@ HEInstallerClassesWithBlocksTest >> testExecutingAMethodWithASingleBlockBehavesC
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testExecutingAMethodWithNestedBlocksBehavesCorrectly [
 
 	| obj |
@@ -92,7 +93,7 @@ HEInstallerClassesWithBlocksTest >> testExecutingAMethodWithNestedBlocksBehavesC
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testExecutingAMethodWithNestedBlocksExecutesTheEnsure [
 
 	| obj |

@@ -1,10 +1,11 @@
 Class {
-	#name : #HECommandLineHandlerTest,
-	#superclass : #TestCase,
-	#category : #'Hermes-Tests'
+	#name : 'HECommandLineHandlerTest',
+	#superclass : 'TestCase',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testDuplicationModeDefault [
 	| handler installer |
 	handler := HermesCommandLineHandler new.
@@ -14,7 +15,7 @@ HECommandLineHandlerTest >> testDuplicationModeDefault [
 	self assert: (installer instVarNamed: #duplicationMode) class equals: HEFailOnDuplication.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testDuplicationModeFail [
 	| handler installer |
 	handler := HermesCommandLineHandler new.
@@ -24,7 +25,7 @@ HECommandLineHandlerTest >> testDuplicationModeFail [
 	self assert: (installer instVarNamed: #duplicationMode) class equals: HEFailOnDuplication.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testDuplicationModeIgnore [
 	| handler installer |
 	handler := HermesCommandLineHandler new.
@@ -34,7 +35,7 @@ HECommandLineHandlerTest >> testDuplicationModeIgnore [
 	self assert: (installer instVarNamed: #duplicationMode) class equals: HEIgnoreOnDuplication.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testDuplicationModeReplace [
 	| handler installer |
 	handler := HermesCommandLineHandler new.
@@ -44,7 +45,7 @@ HECommandLineHandlerTest >> testDuplicationModeReplace [
 	self assert: (installer instVarNamed: #duplicationMode) class equals: HEReplaceOnDuplication.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testFailOnNewUndeclared [
 	| handler installer |
 	handler := HermesCommandLineHandler new.
@@ -54,7 +55,7 @@ HECommandLineHandlerTest >> testFailOnNewUndeclared [
 	self assert: (installer instVarNamed: #failOnUndeclared) equals: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testNoFailOnNewUndeclared [
 	| handler installer |
 	handler := HermesCommandLineHandler new.
@@ -64,7 +65,7 @@ HECommandLineHandlerTest >> testNoFailOnNewUndeclared [
 	self assert: (installer instVarNamed: #failOnUndeclared) equals: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HECommandLineHandlerTest >> testValidateFiles [
 	| handler |
 	handler := HermesCommandLineHandler new.

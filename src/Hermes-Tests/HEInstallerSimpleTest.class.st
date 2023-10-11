@@ -1,10 +1,11 @@
 Class {
-	#name : #HEInstallerSimpleTest,
-	#superclass : #HEInstallerTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEInstallerSimpleTest',
+	#superclass : 'HEInstallerTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassUsingComplexTraits [
 	| exportedClass obj|
 	
@@ -27,7 +28,7 @@ HEInstallerSimpleTest >> testCreatingAClassUsingComplexTraits [
 	self assert: obj otherMessage equals: 4321.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 	| exportedClass obj|
 	
@@ -53,7 +54,7 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 	self assert: obj otherMessage equals: 4321.	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassWithUndeclared [
 	| exportedClass |
 	
@@ -71,7 +72,7 @@ HEInstallerSimpleTest >> testCreatingAClassWithUndeclared [
 	self should: [installer validateNoNewUndeclared] raise: Error.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassWithUndeclaredWithNoFailOption [
 	| exportedClass |
 	
@@ -92,7 +93,7 @@ HEInstallerSimpleTest >> testCreatingAClassWithUndeclaredWithNoFailOption [
 	installer validateNoNewUndeclared
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingASimpleClass [
 	| exportedClass slots classSlots obj |
 	
@@ -128,7 +129,7 @@ HEInstallerSimpleTest >> testCreatingASimpleClass [
 	self assert: obj usingAConstant equals: 42.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingASimpleClassExportingToFile [
 	| exportedClass obj readedClass |
 	
@@ -156,7 +157,7 @@ HEInstallerSimpleTest >> testCreatingASimpleClassExportingToFile [
 	self assert: obj usingAConstant equals: 42.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingASimpleTrait [
 	| exportedTrait |
 
@@ -178,7 +179,7 @@ HEInstallerSimpleTest >> testCreatingASimpleTrait [
 	aTrait >> #oneMessageRequired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingATraitUsingOthers [
 	| exportedTrait |
 	exportedTrait := HETrait for: THEATraitUsingOthers.
@@ -203,7 +204,7 @@ HEInstallerSimpleTest >> testCreatingATraitUsingOthers [
 	aTrait >> #oneMessageRequired
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAWithNilSuperclass [
 	| exportedClass slots classSlots |
 	
@@ -233,7 +234,7 @@ HEInstallerSimpleTest >> testCreatingAWithNilSuperclass [
 	self assert: aClass superclass equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testPragmaMethod [
 	| exportedClass aMethod |
 	
@@ -247,7 +248,7 @@ HEInstallerSimpleTest >> testPragmaMethod [
 	self assert: aMethod pragmas first method == aMethod. 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testUndeclared [
 
 	| exportedClass |
@@ -256,10 +257,10 @@ HEInstallerSimpleTest >> testUndeclared [
 	[
 	UndefinedObject compile: 'xxx
 		^ AnUndeclaredClass'.
-	self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Warning"
+	self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Error"
 	self
 		assert: ([ nil xxx ]
-				 on: Warning
+				 on: Error
 				 do: [ :e | e resume ])
 		equals: nil.
 

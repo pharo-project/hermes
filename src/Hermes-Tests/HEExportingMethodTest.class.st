@@ -1,10 +1,11 @@
 Class {
-	#name : #HEExportingMethodTest,
-	#superclass : #HEAbstractBinaryClassBuilderTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEExportingMethodTest',
+	#superclass : 'HEAbstractBinaryClassBuilderTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingMethodTest >> testAllObjectMethods [
 	| olds news |
 	olds := Object methods collect: [ :e | HEMethod for: e ].
@@ -17,7 +18,7 @@ HEExportingMethodTest >> testAllObjectMethods [
 	self assert: olds equals: news
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEExportingMethodTest >> testSingleMethod [
 	| old new |
 	old := HEMethod for: (Behavior >> #basicNew:).

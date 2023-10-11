@@ -1,10 +1,11 @@
 Class {
-	#name : #HEInstallerDuplicationTest,
-	#superclass : #HEInstallerTest,
-	#category : #'Hermes-Tests'
+	#name : 'HEInstallerDuplicationTest',
+	#superclass : 'HEInstallerTest',
+	#category : 'Hermes-Tests',
+	#package : 'Hermes-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClass [
 	| exportedClass  |
 	
@@ -18,7 +19,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClass [
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassFailing [
 	| exportedClass method |
 	installer := HEExtendedInstaller new.
@@ -36,7 +37,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassFailing
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassIgnore [
 	| exportedClass method |
 	installer := HEExtendedInstaller new.
@@ -57,7 +58,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassIgnore 
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassReplace [
 	| exportedClass method |
 	installer := HEExtendedInstaller new.
@@ -78,7 +79,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleClassReplace
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTrait [
 	| exportedTrait |
 	
@@ -92,7 +93,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTrait [
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTraitFailing [
 	| exportedTrait method |
 	installer := HEExtendedInstaller new.
@@ -110,7 +111,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTraitFailing
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTraitIgnore [
 	| exportedTrait method |
 	installer := HEExtendedInstaller new.
@@ -130,7 +131,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTraitIgnore 
 	self assert: (aTrait >> #oneMessage) literals first equals: 1234
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTraitReplace [
 	| exportedTrait method |
 	installer := HEExtendedInstaller new.
@@ -150,7 +151,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedMethodsInSimpleTraitReplace
 	self assert: (aTrait >> #oneMessage) literals first equals: 22
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClass [
 	| exportedClass  |
 	
@@ -164,7 +165,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClass [
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassFailing [
 	| exportedClass  |
 	installer := HEExtendedInstaller new.
@@ -180,7 +181,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassFailing [
 	self should: [installer build:exportedClass] raise: Error.
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassIgnore [
 	| exportedClass |
 	installer := HEExtendedInstaller new.
@@ -195,7 +196,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassIgnore [
 	self assert: aClass instVarNames equals: #(anInstanceVariable)
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassReplace [
 	| exportedClass |
 	installer := HEExtendedInstaller new.
@@ -212,7 +213,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleClassReplace [
 		equals: #(anInstanceVariable anotherInstanceVariable)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTrait [
 	| exportedTrait |
 	
@@ -226,7 +227,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTrait [
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitFailing [
 	| exportedTrait |
 	installer := HEExtendedInstaller new.
@@ -241,7 +242,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitFailing [
 
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitIgnore [
 	| exportedTrait |
 	installer := HEExtendedInstaller new.	
@@ -259,7 +260,7 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitIgnore [
 	self assert: (Smalltalk at: #THEOneTestTraitNew ) category equals: THEOneTestTrait category.
 ]
 
-{ #category : #'tests-extended-installer' }
+{ #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitReplace [
 	| exportedTrait newCategory |
 	installer := HEExtendedInstaller new.
