@@ -25,59 +25,37 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'environment',
-		'originalUndeclareds',
-		'hasTraits'
+		'originalUndeclareds'
 	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',
 	#tag : 'ClassInstaller'
 }
 
-{ #category : 'converting' }
-HEInstaller >> asClassVariables: aString [
-	| trimmed |
-	trimmed := aString trimBoth.
-
-	trimmed isEmpty
-		ifTrue: [ ^ #() ].
-
-	^ (trimmed substrings: ' ') collect: [:x | x asSymbol => ClassVariable]
-]
-
-{ #category : 'converting' }
-HEInstaller >> asSlots: aString [
-	| trimmed |
-	trimmed := aString trimBoth.
-
-	trimmed isEmpty
-		ifTrue: [ ^ #() ].
-
-	^ (trimmed splitOn: ' ') collect: [ :e | e asSymbol asSlot ] as: Array
-]
-
 { #category : 'creating classes' }
 HEInstaller >> build: aHEClass [
-	| newClass superclass layoutType  |
 
+	| newClass superclass layoutType |
 	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 
 	superclass := self classNamed: aHEClass superclass.
 	layoutType := self classNamed: aHEClass layoutClass.
 
 	newClass := self class classInstaller make: [ :builder |
-		builder name: aHEClass className;
-		superclass: superclass;
-		layoutClass: layoutType;
-		slots: (self asSlots: aHEClass instanceVariables);
-		sharedVariables:  (self asClassVariables:aHEClass classVariables);
-		sharedPools: aHEClass sharedPools;
-		category: aHEClass category;
-		classSlots: (self asSlots: aHEClass classInstancevariables) ].
-	
-	self processTraitsFrom: aHEClass in: newClass.
-	
-	^newClass.
-
+		            builder
+			            name: aHEClass className;
+			            superclass: superclass;
+			            layoutClass: layoutType;
+			            slots: aHEClass instanceVariables asSlotCollection;
+			            sharedVariablesFromString: aHEClass classVariables;
+			            sharedPools: aHEClass sharedPools;
+			            category: aHEClass category;
+			            classSlots: aHEClass classInstancevariables asSlotCollection.
+		            self supportsTraits ifTrue: [
+			            builder
+				            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
+				            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
+	^ newClass
 ]
 
 { #category : 'creating traits' }
@@ -183,9 +161,9 @@ HEInstaller >> existingTrait: aHETrait [
 
 { #category : 'initialization' }
 HEInstaller >> initialize [
+
 	environment := self class environment.
-	originalUndeclareds := Undeclared copy.
-	hasTraits := Smalltalk globals hasClassNamed: #Trait.
+	originalUndeclareds := Undeclared copy
 ]
 
 { #category : 'installing methods' }
@@ -231,16 +209,6 @@ HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
 ]
 
-{ #category : 'creating classes' }
-HEInstaller >> processTraitsFrom: aHEClass in: newClass [
-
-	hasTraits ifFalse: [ ^ self ].
-
-	newClass setTraitComposition: (self buildTraitCompositionFor: aHEClass traitComposition).
-	newClass class setTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition).
-
-]
-
 { #category : 'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
@@ -284,6 +252,12 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^ true ].  	
 			self error: (self messageMethod: aHEMethod alreadyExistsIn: aClass ) ]
 		ifAbsent: [ ^ true ]
+]
+
+{ #category : 'testing' }
+HEInstaller >> supportsTraits [
+
+	^ Smalltalk globals hasClassNamed: #Trait
 ]
 
 { #category : 'reporting undeclared' }

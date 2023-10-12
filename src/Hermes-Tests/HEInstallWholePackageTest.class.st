@@ -22,7 +22,7 @@ HEInstallWholePackageTest >> changeClassesNames: aPackage [
 	aPackage traits
 		do: [ :e | 
 			e instVarNamed: #category put: #'Hermes-Tests-External-Package2'.
-			e instVarNamed: #traitName put: (e className , '2') asSymbol.
+			e instVarNamed: #traitName put: (e traitName , '2') asSymbol.
 			self updateMethodLiterals: e methods.
 			self updateMethodLiterals: e classSideMethods ].
 
@@ -41,10 +41,9 @@ HEInstallWholePackageTest >> setUp [
 
 { #category : 'initialization' }
 HEInstallWholePackageTest >> tearDown [
-	| aPackage |
-	aPackage := RPackageOrganizer default packageNamed:#'Hermes-Tests-External-Package2' ifAbsent: nil.
-	aPackage ifNotNil: #removeFromSystem.
-	super tearDown.
+
+	(RPackageOrganizer default packageNamed: #'Hermes-Tests-External-Package2' ifAbsent: nil) ifNotNil: #removeFromSystem.
+	super tearDown
 ]
 
 { #category : 'tests' }
