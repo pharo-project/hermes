@@ -1,0 +1,9 @@
+SmalltalkCISpec {
+  #preLoading : '.github/scripts/preLoading.st',
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Hermes',
+      #directory : 'src'
+    }
+  ]
+}
