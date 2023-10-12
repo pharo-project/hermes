@@ -16,9 +16,9 @@ HERing2ToHermesBuilder >> compileMethod: aRGMethod [
 		            environment: aRGMethod environment;
 		            yourself.
 	self flag: #pharo11. "When Pharo12 will be the minimal version, remove the need of this condition."
-	SystemVersion current major > 12 ifTrue: [ compiler permitUndeclared: true ].
+	SystemVersion current major >= 12 ifTrue: [ compiler permitUndeclared: true ].
 
-	compiler compile
+	^ compiler compile
 ]
 
 { #category : 'visiting' }
