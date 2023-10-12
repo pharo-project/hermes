@@ -7,13 +7,18 @@ Class {
 
 { #category : 'compiling' }
 HERing2ToHermesBuilder >> compileMethod: aRGMethod [
-	
-	^ OpalCompiler new
-		class: aRGMethod parent;
-		source: aRGMethod sourceCode;
-		compiledMethodClass: CompiledMethod;
-		environment: aRGMethod environment;		
-		compile
+
+	| compiler |
+	compiler := self class compiler
+		            class: aRGMethod parent;
+		            source: aRGMethod sourceCode;
+		            compiledMethodClass: CompiledMethod;
+		            environment: aRGMethod environment;
+		            yourself.
+	self flag: #pharo11. "When Pharo12 will be the minimal version, remove the need of this condition."
+	SystemVersion current major > 12 ifTrue: [ compiler permitUndeclared: true ].
+
+	compiler compile
 ]
 
 { #category : 'visiting' }
