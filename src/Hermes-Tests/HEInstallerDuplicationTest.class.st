@@ -278,7 +278,10 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitReplace [
 	exportedTrait packageName: newPackage.
 	[
 	self flag: #pharo11. "This is a hack caused by the package/tag/category mess that should be fixed in P12 release."
-	self packageOrganizer ensurePackage: newPackage.
+	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
+	SystemVersion current major < 12
+		ifTrue: [ RPackageOrganizer default registerPackageNamed: newPackage ]
+		ifFalse: [ self packageOrganizer ensurePackage: newPackage ].
 	installer buildTrait: exportedTrait.
 
 	self assert: (Smalltalk at: #THEOneTestTraitNew) package name equals: newPackage ] ensure: [
