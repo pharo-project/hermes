@@ -70,7 +70,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 		  builder
 			  beTrait;
 			  name: aTraitDefinition traitName;
-			  uses: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
+			  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
 			  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
 			  package: aTraitDefinition packageName;
 			  environment: environment.
