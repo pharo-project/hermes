@@ -30,20 +30,11 @@ HERing2ToHermesBuilder >> visitClass: aClass [
 
 	aHEClass className: aClass name.
 	aHEClass superclass: (aClass superclass ifNil: '' ifNotNil: #name).
-	aHEClass instanceVariables:
-		((aClass slots collect: #name) joinUsing: ' ').
-	aHEClass classInstancevariables:
-		((aClass metaclass slots collect: #name) joinUsing: ' ').
+	aHEClass instanceVariables: ((aClass slots collect: #name) joinUsing: ' ').
+	aHEClass classInstancevariables: ((aClass metaclass slots collect: #name) joinUsing: ' ').
 	aHEClass classVariables: (aClass classVarNames joinUsing: ' ').
-	aHEClass sharedPools:
-		((aClass sharedPools collect: #name) joinUsing: ' ').
+	aHEClass sharedPools: ((aClass sharedPools collect: #name) joinUsing: ' ').
 	aHEClass layoutClass: aClass layout layoutName.
-
-	aHEClass category: aClass category.
-	aHEClass traitComposition: aClass traitComposition asExportedLiteral.
-	aHEClass classTraitComposition:
-		aClass classSide traitComposition asExportedLiteral.
-
 
 	^ aHEClass
 ]
@@ -70,21 +61,16 @@ HERing2ToHermesBuilder >> visitMethod: aMethod [
 HERing2ToHermesBuilder >> visitMethodContainer: aMethodContainer using: aHEClass [
 
 	| instanceMethods classMethods |
-	aHEClass category: aMethodContainer category.
-	aHEClass traitComposition:
-		aMethodContainer traitComposition asExportedLiteral.
-	aHEClass classTraitComposition:
-		aMethodContainer classSide traitComposition asExportedLiteral.
+	aHEClass packageName: aMethodContainer package name.
+	aHEClass tagName: (aMethodContainer tags ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ]).
+	aHEClass traitComposition: aMethodContainer traitComposition asExportedLiteral.
+	aHEClass classTraitComposition: aMethodContainer classSide traitComposition asExportedLiteral.
 
-	instanceMethods := aMethodContainer localMethods reject: [ :e | 
-		                   e isExtension ].
-	classMethods := aMethodContainer classSide localMethods reject: [ :e | 
-		                e isExtension ].
+	instanceMethods := aMethodContainer localMethods reject: [ :e | e isExtension ].
+	classMethods := aMethodContainer classSide localMethods reject: [ :e | e isExtension ].
 
-	aHEClass methods:
-		(instanceMethods collect: [ :e | e acceptVisitor: self ]).
-	aHEClass classSideMethods:
-		(classMethods collect: [ :e | e acceptVisitor: self ])
+	aHEClass methods: (instanceMethods collect: [ :e | e acceptVisitor: self ]).
+	aHEClass classSideMethods: (classMethods collect: [ :e | e acceptVisitor: self ])
 ]
 
 { #category : 'visiting' }

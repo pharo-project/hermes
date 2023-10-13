@@ -244,37 +244,43 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitFailing [
 
 { #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitIgnore [
+
 	| exportedTrait |
-	installer := HEExtendedInstaller new.	
+	installer := HEExtendedInstaller new.
 	installer duplicationMode: HEIgnoreOnDuplication new.
-	
-	exportedTrait := HETrait for: THEOneTestTrait. 
+
+	exportedTrait := HETrait for: THEOneTestTrait.
 	self changeNameOf: exportedTrait to: #THEOneTestTraitNew.
-	
-	aTrait := installer buildTrait: exportedTrait.	
+
+	aTrait := installer buildTrait: exportedTrait.
 	installer installMethods: exportedTrait into: aTrait.
 
-	exportedTrait category: (exportedTrait category , 'New') asSymbol.
-	installer buildTrait: exportedTrait.	
+	exportedTrait packageName: (exportedTrait packageName , 'New') asSymbol.
+	installer buildTrait: exportedTrait.
 
-	self assert: (Smalltalk at: #THEOneTestTraitNew ) category equals: THEOneTestTrait category.
+	self assert: (Smalltalk at: #THEOneTestTraitNew) package name equals: THEOneTestTrait package name
 ]
 
 { #category : 'tests-extended-installer' }
 HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitReplace [
-	| exportedTrait newCategory |
+
+	| exportedTrait newPackage |
 	installer := HEExtendedInstaller new.
 	installer duplicationMode: HEReplaceOnDuplication new.
-	
-	exportedTrait := HETrait for: THEOneTestTrait. 
+
+	exportedTrait := HETrait for: THEOneTestTrait.
 	self changeNameOf: exportedTrait to: #THEOneTestTraitNew.
-	
-	aTrait := installer buildTrait: exportedTrait.	
+
+	aTrait := installer buildTrait: exportedTrait.
 	installer installMethods: exportedTrait into: aTrait.
 
-	newCategory := (exportedTrait category , 'New') asSymbol.
-	exportedTrait category: newCategory.
-	installer buildTrait: exportedTrait.	
+	newPackage := (exportedTrait packageName , 'New') asSymbol.
+	exportedTrait packageName: newPackage.
+	[
+	self flag: #pharo11. "This is a hack caused by the package/tag/category mess that should be fixed in P12 release."
+	self packageOrganizer ensurePackage: newPackage.
+	installer buildTrait: exportedTrait.
 
-	self assert: (Smalltalk at: #THEOneTestTraitNew ) category equals: newCategory.
+	self assert: (Smalltalk at: #THEOneTestTraitNew) package name equals: newPackage ] ensure: [
+		(newPackage asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
 ]

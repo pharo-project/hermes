@@ -49,8 +49,9 @@ HEInstaller >> build: aHEClass [
 			            slots: aHEClass instanceVariables asSlotCollection;
 			            sharedVariablesFromString: aHEClass classVariables;
 			            sharedPools: aHEClass sharedPools;
-			            category: aHEClass category;
+			            package: aHEClass packageName;
 			            classSlots: aHEClass classInstancevariables asSlotCollection.
+		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
 		            self supportsTraits ifTrue: [
 			            builder
 				            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
@@ -71,8 +72,10 @@ HEInstaller >> buildTrait: aTraitDefinition [
 			  name: aTraitDefinition traitName;
 			  uses: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
 			  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
-			  package: aTraitDefinition category;
-			  environment: environment ]
+			  package: aTraitDefinition packageName;
+			  environment: environment.
+
+		  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
 ]
 
 { #category : 'creating traits' }
