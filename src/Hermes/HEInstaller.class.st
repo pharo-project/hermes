@@ -25,7 +25,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'environment',
-		'originalUndeclareds'
+		'originalUndeclareds',
+		'hasTraits'
 	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',
@@ -162,7 +163,8 @@ HEInstaller >> existingTrait: aHETrait [
 HEInstaller >> initialize [
 
 	environment := self class environment.
-	originalUndeclareds := Undeclared copy
+	originalUndeclareds := Undeclared copy.
+	self supportsTraits
 ]
 
 { #category : 'installing methods' }
@@ -256,7 +258,7 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 { #category : 'testing' }
 HEInstaller >> supportsTraits [
 
-	^ Smalltalk globals hasClassNamed: #Trait
+	^ hasTraits ifNil: [ hasTraits := Smalltalk globals hasClassNamed: #Trait ]
 ]
 
 { #category : 'reporting undeclared' }
