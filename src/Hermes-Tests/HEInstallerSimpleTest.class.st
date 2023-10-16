@@ -253,7 +253,7 @@ HEInstallerSimpleTest >> testUndeclared [
 
 	| exportedClass |
 	"If we run the test multiple times we need to do this to be sure #AnUndeclaredClass is not in the Undeclared dictionary anymore."
-	Undeclared removeUnreferencedKeys.
+	Smalltalk image cleanOutUndeclared.
 	[
 	UndefinedObject compile: 'xxx
 		^ AnUndeclaredClass'.
