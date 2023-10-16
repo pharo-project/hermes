@@ -157,7 +157,8 @@ HEInstaller >> initialize [
 
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
-	self supportsTraits
+	"We need to set it at the initialization and we cannot ask this later during the building because it will cause trouble if the class we are building is Trait."
+	hasTraits := Smalltalk globals hasClassNamed: #Trait
 ]
 
 { #category : 'installing methods' }
@@ -251,7 +252,7 @@ HEInstaller >> shouldBuildMethod: aHEMethod in: aClass [
 { #category : 'testing' }
 HEInstaller >> supportsTraits [
 
-	^ hasTraits ifNil: [ hasTraits := Smalltalk globals hasClassNamed: #Trait ]
+	^ hasTraits
 ]
 
 { #category : 'reporting undeclared' }
