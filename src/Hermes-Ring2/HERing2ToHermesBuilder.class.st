@@ -8,7 +8,7 @@ Class {
 { #category : 'compiling' }
 HERing2ToHermesBuilder >> compileMethod: aRGMethod [
 
-	| compiler |
+	| compiler ir |
 	compiler := self class compiler
 		            class: aRGMethod parent;
 		            source: aRGMethod sourceCode;
@@ -16,9 +16,18 @@ HERing2ToHermesBuilder >> compileMethod: aRGMethod [
 		            environment: aRGMethod environment;
 		            yourself.
 	self flag: #pharo11. "When Pharo12 will be the minimal version, remove the need of this condition."
-	SystemVersion current major >= 12 ifTrue: [ compiler permitUndeclared: true ].
+	SystemVersion current major >= 12 ifTrue: [
+		compiler permitUndeclared: true ].
 
-	^ compiler compile
+	compiler
+		parse;
+		doSemanticAnalysis.
+	compiler callPlugins.
+	compiler ast scope registerVariables.
+
+	compiler ast bcToASTCache: nil.
+	ir := self generateIR.
+	^ ir compiledMethod
 ]
 
 { #category : 'visiting' }
