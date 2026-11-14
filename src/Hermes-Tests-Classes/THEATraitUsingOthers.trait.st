@@ -2,8 +2,9 @@
 Just a trait used for tests, it has a  trait combination.
 "
 Trait {
-	#name : #THEATraitUsingOthers,
+	#name : 'THEATraitUsingOthers',
 	#traits : 'THEOtherTestTrait - {#otherMessage} + THEOneTestTrait',
 	#classTraits : 'THEOtherTestTrait classTrait + THEOneTestTrait classTrait',
-	#category : #'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes',
+	#package : 'Hermes-Tests-Classes'
 }

@@ -1,10 +1,11 @@
 Class {
-	#name : #HEMethodChangeCollectorTest,
-	#superclass : #HEAbstractChangeCollectorTest,
-	#category : #'Hermes-Tests-Changes-Collector'
+	#name : 'HEMethodChangeCollectorTest',
+	#superclass : 'HEAbstractChangeCollectorTest',
+	#category : 'Hermes-Tests-Changes-Collector',
+	#package : 'Hermes-Tests-Changes-Collector'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEMethodChangeCollectorTest >> testDoesNotTakeNonMonitoringMethods [
 
 	noTrackedClass compile: 'm ^ 42'.
@@ -12,14 +13,14 @@ HEMethodChangeCollectorTest >> testDoesNotTakeNonMonitoringMethods [
 	self assert: changeCollector allMethods isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEMethodChangeCollectorTest >> testMethodAddedAndDetected [
 
 	trackedClass compile: 'm ^ 42'.
 	self assertHasMethod: #m inClassNamed: trackedClass name.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEMethodChangeCollectorTest >> testMethodModifiedHasOnlyOne [
 
 	trackedClass compile: 'm ^ 42'.
@@ -28,7 +29,7 @@ HEMethodChangeCollectorTest >> testMethodModifiedHasOnlyOne [
 	self assert: changeCollector allMethods size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEMethodChangeCollectorTest >> testMethodModifiedKeepsLastOne [
 
 	| heMethod |

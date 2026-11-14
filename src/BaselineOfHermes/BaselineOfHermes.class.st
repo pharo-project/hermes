@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfHermes,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfHermes
+	#name : 'BaselineOfHermes',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfHermes',
+	#package : 'BaselineOfHermes'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfHermes >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
@@ -32,7 +33,7 @@ BaselineOfHermes >> baseline: spec [
 			package: 'Hermes-Exporter-Pharo11' ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfHermes >> pharoVersionsFrom: aVersion [
 	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
 ]

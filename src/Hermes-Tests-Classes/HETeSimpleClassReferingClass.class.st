@@ -2,18 +2,19 @@
 This class has a method refering an undeclared.
 "
 Class {
-	#name : #HETeSimpleClassReferingClass,
-	#superclass : #Object,
+	#name : 'HETeSimpleClassReferingClass',
+	#superclass : 'Object',
 	#instVars : [
 		'anInstanceVariable'
 	],
 	#classVars : [
 		'AClassVariable'
 	],
-	#category : #'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes',
+	#package : 'Hermes-Tests-Classes'
 }
 
-{ #category : #'test mock' }
+{ #category : 'test mock' }
 HETeSimpleClassReferingClass >> simpleMethod [
 	^ HETeSimpleClass
 ]

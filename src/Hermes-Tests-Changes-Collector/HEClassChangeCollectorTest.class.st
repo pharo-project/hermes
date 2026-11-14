@@ -1,10 +1,11 @@
 Class {
-	#name : #HEClassChangeCollectorTest,
-	#superclass : #HEAbstractChangeCollectorTest,
-	#category : #'Hermes-Tests-Changes-Collector'
+	#name : 'HEClassChangeCollectorTest',
+	#superclass : 'HEAbstractChangeCollectorTest',
+	#category : 'Hermes-Tests-Changes-Collector',
+	#package : 'Hermes-Tests-Changes-Collector'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEClassChangeCollectorTest >> testAddedClassIsDetected [
 
 	self newClass: #HETAClass superclass: Object slots: #().

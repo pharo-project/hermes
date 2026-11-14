@@ -1,1 +1,1 @@
-Package { #name : #'Hermes-Changes-Collector' }
+Package { #name : 'Hermes-Changes-Collector' }

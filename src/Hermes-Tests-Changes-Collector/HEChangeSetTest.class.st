@@ -1,17 +1,18 @@
 Class {
-	#name : #HEChangeSetTest,
-	#superclass : #HEAbstractChangeCollectorTest,
-	#category : #'Hermes-Tests-Changes-Collector'
+	#name : 'HEChangeSetTest',
+	#superclass : 'HEAbstractChangeCollectorTest',
+	#category : 'Hermes-Tests-Changes-Collector',
+	#package : 'Hermes-Tests-Changes-Collector'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEChangeSetTest >> testChangeSetIncludesClass [
 
 	self newClass: #HETAClass superclass: Object slots: #(aSlot).
 	self assert: (changeCollector changeSet classes anySatisfy: [:e | e className = #HETAClass])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEChangeSetTest >> testChangeSetIncludesClassAndMethod [
 
 	| aClass aChangeSet |
@@ -24,14 +25,14 @@ HEChangeSetTest >> testChangeSetIncludesClassAndMethod [
 	self assert: (aChangeSet methods anySatisfy: [:e | e selector = #m])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEChangeSetTest >> testChangeSetIncludesMethod [
 
 	trackedClass compile: 'm ^3'.
 	self assert: (changeCollector changeSet methods anySatisfy: [:e | e selector = #m])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEChangeSetTest >> testChangeSetIsWrittenInAByteArray [
 
 	| aClass aChangeSet aByteArray|
@@ -46,7 +47,7 @@ HEChangeSetTest >> testChangeSetIsWrittenInAByteArray [
 	self assert: aByteArray isNotEmpty 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HEChangeSetTest >> testChangeSetIsWrittenInAByteArrayAndReadAndItIsTheSame [
 
 	| aClass aChangeSet |
