@@ -71,9 +71,10 @@ HEExportingPackageTest >> in: aSeq allTraitsAreBeforeThan: aTrait [
 ]
 
 { #category : 'tests' }
-HEExportingPackageTest >> testExportingCollectionsTests [
-	self doTestExportingPackage: 'Collections-Tests'.
+HEExportingPackageTest >> testExportingCollectionsSequenceableTests [
+	"Collections-Tests was merged into the other collections test packages in Pharo 14."
 
+	self doTestExportingPackage: 'Collections-Sequenceable-Tests'
 ]
 
 { #category : 'tests' }

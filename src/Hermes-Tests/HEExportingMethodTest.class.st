@@ -21,16 +21,18 @@ HEExportingMethodTest >> testAllObjectMethods [
 
 { #category : 'tests' }
 HEExportingMethodTest >> testSingleMethod [
+
 	| old new |
-	old := HEMethod for: (Behavior >> #basicNew:).
+	old := HEMethod for: Behavior >> #basicNew:.
 	old writeInto: writer.
 	writer flush.
-	
+
 	new := HEMethod readFrom: reader.
 
 	self assert: old name equals: #basicNew:.
 	self assert: old equals: new.
 
-	self assert: (old literals at:12) species equals: HEUndefinedObject.
-	self assert: ((old literals at:11) value value at:1) keyword value equals: #primitive:error:
+	"The last literal is the class binding, exported as nil because the installer rebuilds it, and the one before is the method state. Since Pharo 14, the method state can hold properties before the pragma."
+	self assert: old literals last species equals: HEUndefinedObject.
+	self assert: ((old literals at: old literals size - 1) value value detect: [ :element | element species = HEPragma ]) keyword value equals: #primitive:error:
 ]

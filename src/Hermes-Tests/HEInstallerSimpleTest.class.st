@@ -328,23 +328,29 @@ HEInstallerSimpleTest >> testUndeclared [
 	"If we run the test multiple times we need to do this to be sure #AnUndeclaredClass is not in the Undeclared dictionary anymore."
 	Smalltalk image cleanOutUndeclared.
 	[
-	UndefinedObject compile: 'xxx
-		^ AnUndeclaredClass'.
-	self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Error"
-	self
-		assert: ([ nil xxx ]
-				 on: Error
-				 do: [ :e | e resume ])
-		equals: nil.
+		self flag: #pharo11. "Since Pharo 12, the compiler can be asked to permit undeclared variables, and it refuses them by default since Pharo 14. Remove this condition when Pharo 12 is the minimal version."
+		SystemVersion current major >= 12
+			ifTrue: [
+					UndefinedObject compiler
+						permitUndeclared: true;
+						source: 'xxx
+		^ AnUndeclaredClass';
+						protocol: #accessing;
+						install ]
+			ifFalse: [
+					UndefinedObject compile: 'xxx
+		^ AnUndeclaredClass' ].
+		self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Error"
+		self assert: ([ nil xxx ] on: Error do: [ :e | e resume ]) equals: nil.
 
-	exportedClass := HEClass for: HETeSimpleClass.
-	self changeNameOf: exportedClass to: #AnUndeclaredClass.
+		exportedClass := HEClass for: HETeSimpleClass.
+		self changeNameOf: exportedClass to: #AnUndeclaredClass.
 
-	aClass := installer build: exportedClass.
-	installer installMethods: exportedClass into: aClass.
+		aClass := installer build: exportedClass.
+		installer installMethods: exportedClass into: aClass.
 
-	self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.
-	Smalltalk at: #AnUndeclaredClass ifAbsent: [ self fail: 'Class should be here.' ] ] ensure: [
-		UndefinedObject removeSelector: #xxx.
-		Smalltalk at: #AnUndeclaredClass ifPresent: [ :class | class removeFromSystem ] ]
+		self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.
+		Smalltalk at: #AnUndeclaredClass ifAbsent: [ self fail: 'Class should be here.' ] ] ensure: [
+			UndefinedObject removeSelector: #xxx.
+			Smalltalk at: #AnUndeclaredClass ifPresent: [ :class | class removeFromSystem ] ]
 ]
