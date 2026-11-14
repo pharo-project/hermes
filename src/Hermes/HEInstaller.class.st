@@ -52,7 +52,7 @@ HEInstaller >> build: aHEClass [
 				            sharedPools: aHEClass sharedPools;
 				            package: aHEClass packageName;
 				            classSlots: aHEClass classInstancevariables asSlotCollection.
-			            self setTagOf: aHEClass in: builder.
+			            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
 			            self supportsTraits ifTrue: [
 					            builder
 						            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
@@ -76,7 +76,7 @@ HEInstaller >> buildTrait: aTraitDefinition [
 				  package: aTraitDefinition packageName;
 				  environment: environment.
 
-			  self setTagOf: aTraitDefinition in: builder ]
+			  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
 ]
 
 { #category : 'creating traits' }
@@ -102,8 +102,7 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	| newTraits newClasses |
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
-	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12 ifTrue: [ RPackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
+	self packageOrganizer ensurePackage: aHEPackage packageName.
 
 	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
@@ -172,19 +171,6 @@ HEInstaller >> installExtensionMethod: extensionMethod [
 ]
 
 { #category : 'installing methods' }
-HEInstaller >> installMethod: aCompiledMethod named: aSelector into: aClass protocol: aProtocolName [
-
-	self flag: #pharo13. "Pharo 14 replaced #addAndClassifySelector:withMethod:inProtocol: by the method installer. Remove this condition when Pharo 14 is the minimal version."
-	SystemVersion current major >= 14
-		ifTrue: [
-				aClass methodInstaller
-					logged: false;
-					protocol: aProtocolName;
-					install: aCompiledMethod into: aClass compiler: nil ]
-		ifFalse: [ aClass addAndClassifySelector: aSelector withMethod: aCompiledMethod inProtocol: aProtocolName ]
-]
-
-{ #category : 'installing methods' }
 HEInstaller >> installMethods: exportedClass into: aClass [
 	exportedClass methods do: [ :e | self rebuildMethod: e into: aClass ].
 	exportedClass classSideMethods
@@ -228,42 +214,31 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	self flag: #pharo11. "Since Pharo 12, #basicNew:header: replaces #newMethod:header: and we need to reserve the space of the trailer. Remove this condition when Pharo 12 is the minimal version."
-	newMethod := SystemVersion current major >= 12
-		             ifTrue: [ CompiledMethod basicNew: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment) ]
-		             ifFalse: [ CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment) ].
+	self flag: #pharo11. "Since Pharo 12, the method trailer has a fixed size and we need to reserve its space. Remove this condition when Pharo 12 is the minimal version."
+	newMethod := CompiledMethod
+		             basicNew: (SystemVersion current major >= 12 ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ] ifFalse: [ aMethod bytecode size ])
+		             header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
 	aMethod literals doWithIndex: [ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
-	"The method installer of Pharo 14+ installs the method under its own selector, so the selector must be the name of the Hermes method."
+	"The method installer installs the method under its own selector, so the selector must be the name of the Hermes method."
 	newMethod selector: aMethod name.
 	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
 
 	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
-	self
-		installMethod: newMethod
-		named: aMethod name
-		into: aClass
-		protocol: aMethod protocol
+	aClass methodInstaller
+		logged: false;
+		protocol: aMethod protocol;
+		install: newMethod into: aClass compiler: nil
 ]
 
 { #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
 	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
-]
-
-{ #category : 'creating classes' }
-HEInstaller >> setTagOf: aMethodContainer in: aClassBuilder [
-	"The class builder knows package tags since Pharo 12. Before, the tag is the end of the category of the class."
-
-	aMethodContainer tagName ifEmpty: [ ^ self ].
-
-	self flag: #pharo11. "Remove this condition when Pharo 12 is the minimal version."
-	SystemVersion current major >= 12 ifTrue: [ aClassBuilder tag: aMethodContainer tagName ] ifFalse: [ aClassBuilder category: aMethodContainer packageName , '-' , aMethodContainer tagName ]
 ]
 
 { #category : 'validating existence' }

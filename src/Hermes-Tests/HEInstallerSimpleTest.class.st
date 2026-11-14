@@ -324,22 +324,20 @@ HEInstallerSimpleTest >> testPragmaMethod [
 { #category : 'tests' }
 HEInstallerSimpleTest >> testUndeclared [
 
-	| exportedClass |
+	| exportedClass method |
 	"If we run the test multiple times we need to do this to be sure #AnUndeclaredClass is not in the Undeclared dictionary anymore."
 	Smalltalk image cleanOutUndeclared.
 	[
-		self flag: #pharo11. "Since Pharo 12, the compiler can be asked to permit undeclared variables, and it refuses them by default since Pharo 14. Remove this condition when Pharo 12 is the minimal version."
-		SystemVersion current major >= 12
-			ifTrue: [
-					UndefinedObject compiler
-						permitUndeclared: true;
-						source: 'xxx
+		method := UndefinedObject compiler
+			          permitUndeclared: true;
+			          class: UndefinedObject;
+			          source: 'xxx
 		^ AnUndeclaredClass';
-						protocol: #accessing;
-						install ]
-			ifFalse: [
-					UndefinedObject compile: 'xxx
-		^ AnUndeclaredClass' ].
+			          compile.
+		UndefinedObject methodInstaller
+			logged: false;
+			protocol: #accessing;
+			install: method into: UndefinedObject compiler: nil.
 		self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Error"
 		self assert: ([ nil xxx ] on: Error do: [ :e | e resume ]) equals: nil.
 

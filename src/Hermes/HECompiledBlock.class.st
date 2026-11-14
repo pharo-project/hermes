@@ -27,10 +27,7 @@ HECompiledBlock >> asLiteralIn: anEnvironment [
 	previousBlock := anEnvironment newBlock.
 	containingBlockOrMethod := previousBlock ifNil: [ anEnvironment newMethod ].
 
-	self flag: #pharo11. "Since Pharo 12, #basicNew:header: replaces #newMethod:header:. Remove this condition when Pharo 12 is the minimal version."
-	newBlock := SystemVersion current major >= 12
-		            ifTrue: [ CompiledBlock basicNew: bytecode size header: (self headerFor: anEnvironment) ]
-		            ifFalse: [ CompiledBlock newMethod: bytecode size header: (self headerFor: anEnvironment) ].
+	newBlock := CompiledBlock basicNew: bytecode size header: (self headerFor: anEnvironment).
 
 	anEnvironment newBlock: newBlock.
 

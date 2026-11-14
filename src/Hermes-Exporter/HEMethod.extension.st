@@ -34,10 +34,7 @@ HEMethod >> fromMethod: aMethod [
 
 	name := aMethod selector.
 	className := aMethod methodClass name.
-	self flag: #pharo11. "When Pharo 12 will be the minimal version we can remove this check and call #protocolName instead"
-	protocol := aMethod protocol isString
-		            ifTrue: [ aMethod protocol ]
-		            ifFalse: [ aMethod protocol name ].
+	protocol := aMethod protocolName.
 	self fillLiteralsAndBytecode: aMethod
 ]
 

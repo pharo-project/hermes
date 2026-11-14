@@ -46,13 +46,6 @@ HEAdditionalMethodState >> doReadFrom: aReader [
 ]
 
 { #category : 'accessing' }
-HEAdditionalMethodState >> propertiesToPersist [
-
-	self flag: #pharo11. "AdditionalMethodState class>>#propertiesToPersist exists since Pharo 12. Remove this condition when Pharo 12 is the minimal version."
-	^ SystemVersion current major >= 12 ifTrue: [ AdditionalMethodState propertiesToPersist ] ifFalse: [ #(  ) ]
-]
-
-{ #category : 'accessing' }
 HEAdditionalMethodState >> value: anAdditionalMethodState [
 	"I extract the information from the additional method state and convert it to exported literals.
 	The properties to persist (such as #extensionPackage since Pharo 12) are set by the image when a method is installed, and their values can be objects of the image that cannot be exported. So they are not exported."
@@ -61,6 +54,6 @@ HEAdditionalMethodState >> value: anAdditionalMethodState [
 	selector := anAdditionalMethodState selector asExportedLiteral.
 
 	value := (1 to: anAdditionalMethodState basicSize) collect: [ :index | anAdditionalMethodState basicAt: index ].
-	value := value reject: [ :element | element isAssociation and: [ self propertiesToPersist includes: element key ] ].
+	value := value reject: [ :element | element isAssociation and: [ AdditionalMethodState propertiesToPersist includes: element key ] ].
 	value := value asExportedLiteral
 ]
