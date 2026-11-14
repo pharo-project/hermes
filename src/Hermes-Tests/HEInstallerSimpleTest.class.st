@@ -159,8 +159,8 @@ HEInstallerSimpleTest >> testCreatingASimpleClassExportingToFile [
 
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingASimpleTrait [
-	| exportedTrait |
 
+	| exportedTrait |
 	exportedTrait := HETrait for: THEOneTestTrait.
 	self changeNameOf: exportedTrait to: #THEOneTestTraitNew.
 
@@ -168,12 +168,10 @@ HEInstallerSimpleTest >> testCreatingASimpleTrait [
 	installer installMethods: exportedTrait into: aTrait.
 
 	self assert: aTrait traitComposition isEmpty.
-	self assert: aTrait classSide traitComposition isEmpty.
+	self assert: aTrait classSide traitCompositionString equals: '{}'.
 	self assert: aTrait methods size equals: THEOneTestTrait methods size.
 
-	self
-		assert: aTrait classTrait methods size
-		equals: THEOneTestTrait classTrait methods size.
+	self assert: aTrait classTrait methods size equals: THEOneTestTrait classTrait methods size.
 
 	aTrait >> #oneMessage.
 	aTrait >> #oneMessageRequired

@@ -38,9 +38,9 @@ HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 
 { #category : 'utils' }
 HEExportingPackageTest >> fillOldPackage: aPackageNamed [
-	aPackage := RPackageOrganizer default packageNamed: aPackageNamed.
-	old := HEPackage for:aPackage.
 
+	aPackage := self packageOrganizer packageNamed: aPackageNamed.
+	old := HEPackage for: aPackage
 ]
 
 { #category : 'utils' }
@@ -102,6 +102,6 @@ HEExportingPackageTest >> testExportingSUnit [
 
 { #category : 'tests' }
 HEExportingPackageTest >> testExportingTraits [
-	self doTestExportingPackage: 'TraitsV2'.
 
+	self doTestExportingPackage: TraitedClass package name
 ]
