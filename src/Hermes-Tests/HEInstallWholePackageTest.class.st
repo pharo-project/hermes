@@ -42,14 +42,15 @@ HEInstallWholePackageTest >> setUp [
 { #category : 'initialization' }
 HEInstallWholePackageTest >> tearDown [
 
-	(RPackageOrganizer default packageNamed: #'Hermes-Tests-External-Package2' ifAbsent: nil) ifNotNil: #removeFromSystem.
+	(#'Hermes-Tests-External-Package2' asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ].
 	super tearDown
 ]
 
 { #category : 'tests' }
 HEInstallWholePackageTest >> testExportingWholePackageAndImportingIt [
+
 	| hePackage readPackage newPackage oldPackage obj obj2 |
-	oldPackage := RPackageOrganizer default packageNamed: #'Hermes-Tests-External-Package'.
+	oldPackage := #'Hermes-Tests-External-Package' asPackage.
 	hePackage := HEPackage for: oldPackage.
 	hePackage writeInto: writer.
 	writer flush.
@@ -58,7 +59,7 @@ HEInstallWholePackageTest >> testExportingWholePackageAndImportingIt [
 	self changeClassesNames: readPackage.
 
 	builder installPackage: readPackage.
-	newPackage := RPackageOrganizer default packageNamed: #'Hermes-Tests-External-Package2'.
+	newPackage := #'Hermes-Tests-External-Package2' asPackage.
 
 	self assert: newPackage classes size equals: oldPackage classes size.
 
