@@ -2,8 +2,8 @@
 Just a Simple class used for tests
 "
 Class {
-	#name : #HETeSimpleClass,
-	#superclass : #Object,
+	#name : 'HETeSimpleClass',
+	#superclass : 'Object',
 	#instVars : [
 		'anInstanceVariable'
 	],
@@ -13,50 +13,51 @@ Class {
 	#classInstVars : [
 		'aClassInstanceVariable'
 	],
-	#category : #'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes',
+	#package : 'Hermes-Tests-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HETeSimpleClass class >> newInstance [
 	^ self new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETeSimpleClass >> anInstanceVariable [
 	^ anInstanceVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETeSimpleClass >> anInstanceVariable: anObject [
 	anInstanceVariable := anObject
 ]
 
-{ #category : #'a protocol so useful' }
+{ #category : 'a protocol so useful' }
 HETeSimpleClass >> anUselessMethodWithPragma [
 	<someUselessPragma: 1 withArgs: #(1 2 3) with: #HETeSimpleClass>
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETeSimpleClass >> answer [
 	^ 42
 ]
 
-{ #category : #'a protocol so useful' }
+{ #category : 'a protocol so useful' }
 HETeSimpleClass >> otherMethod [
 	^ self anInstanceVariable 
 ]
 
-{ #category : #'a protocol so useful' }
+{ #category : 'a protocol so useful' }
 HETeSimpleClass >> pragmaMethod [
 	<pragma>
 ]
 
-{ #category : #'a protocol so useful' }
+{ #category : 'a protocol so useful' }
 HETeSimpleClass >> usingAConstant [
 	^ NumberParser parse:'42'.
 ]
 
-{ #category : #'a protocol so useful' }
+{ #category : 'a protocol so useful' }
 HETeSimpleClass >> usingMoreConstants [
 	^ true printString , #() printString , #asd printString , 1.223 printString
 		, #[1 2 3] printString, $A printString

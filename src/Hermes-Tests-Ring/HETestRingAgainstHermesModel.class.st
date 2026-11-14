@@ -1,13 +1,14 @@
 Class {
-	#name : #HETestRingAgainstHermesModel,
-	#superclass : #HERingTest,
+	#name : 'HETestRingAgainstHermesModel',
+	#superclass : 'HERingTest',
 	#instVars : [
 		'hermesPackage'
 	],
-	#category : #'Hermes-Tests-Ring'
+	#category : 'Hermes-Tests-Ring',
+	#package : 'Hermes-Tests-Ring'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETestRingAgainstHermesModel >> behaviorNamed: aName [
 
 	^ hermesPackage classes 
@@ -15,7 +16,7 @@ HETestRingAgainstHermesModel >> behaviorNamed: aName [
 		ifNone: [ hermesPackage traits detect: [ :aTrait | aTrait traitName = aName ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HETestRingAgainstHermesModel >> compareBehavior: aClass with: aRGClass [
 
 	| aClassTraitComposition rgClassTraitComposition |
@@ -44,7 +45,7 @@ HETestRingAgainstHermesModel >> compareBehavior: aClass with: aRGClass [
 	
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HETestRingAgainstHermesModel >> compareClass: hermesClass with: aRGClass [
 
 	self assert: hermesClass className equals: aRGClass name.
@@ -66,13 +67,13 @@ HETestRingAgainstHermesModel >> compareClass: hermesClass with: aRGClass [
 	self compareBehavior: hermesClass with: aRGClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HETestRingAgainstHermesModel >> compareTrait: aHermesTrait with: aRGTrait [
 
 	self compareBehavior: aHermesTrait with: aRGTrait
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 HETestRingAgainstHermesModel >> setUp [
 	
 	| ringPackage |

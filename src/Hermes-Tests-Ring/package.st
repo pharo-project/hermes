@@ -1,1 +1,1 @@
-Package { #name : #'Hermes-Tests-Ring' }
+Package { #name : 'Hermes-Tests-Ring' }

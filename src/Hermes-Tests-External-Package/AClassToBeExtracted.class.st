@@ -2,38 +2,39 @@
 I am a class used by Hermes to test
 "
 Class {
-	#name : #AClassToBeExtracted,
-	#superclass : #Object,
+	#name : 'AClassToBeExtracted',
+	#superclass : 'Object',
 	#traits : 'TComparable',
 	#classTraits : 'TComparable classTrait',
 	#instVars : [
 		'aVariable'
 	],
-	#category : #'Hermes-Tests-External-Package'
+	#category : 'Hermes-Tests-External-Package',
+	#package : 'Hermes-Tests-External-Package'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AClassToBeExtracted >> < aComparable [
 	self aVariable < aComparable aVariable.
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AClassToBeExtracted >> = aComparable [ 
 	(self species ~= aComparable species) ifTrue:[^false].
 	^ self aVariable = aComparable aVariable.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AClassToBeExtracted >> aVariable [
 	^ aVariable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AClassToBeExtracted >> aVariable: anObject [
 	aVariable := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 AClassToBeExtracted >> hash [
 	^ self aVariable hash
 ]

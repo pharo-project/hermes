@@ -1,6 +1,6 @@
-Extension { #name : #HETeSimpleClassWithComplexTraits }
+Extension { #name : 'HETeSimpleClassWithComplexTraits' }
 
-{ #category : #'*Hermes-Tests-External-Package' }
+{ #category : '*Hermes-Tests-External-Package' }
 HETeSimpleClassWithComplexTraits >> externalMethod [
 	^ 73
 ]

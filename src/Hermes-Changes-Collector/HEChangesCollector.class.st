@@ -1,28 +1,29 @@
 Class {
-	#name : #HEChangesCollector,
-	#superclass : #Object,
+	#name : 'HEChangesCollector',
+	#superclass : 'Object',
 	#instVars : [
 		'monitoredPackageNames',
 		'methods',
 		'announcer',
 		'classes'
 	],
-	#category : #'Hermes-Changes-Collector'
+	#category : 'Hermes-Changes-Collector',
+	#package : 'Hermes-Changes-Collector'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangesCollector >> allClasses [
 	
 	^ classes values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangesCollector >> allMethods [
 	
 	^ methods values
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangesCollector >> changeSet [
 
 	^ HEChangeSet new
@@ -31,7 +32,7 @@ HEChangesCollector >> changeSet [
 			yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEChangesCollector >> initialize [
 
 	monitoredPackageNames := OrderedCollection new.
@@ -39,19 +40,19 @@ HEChangesCollector >> initialize [
 	classes := Dictionary new.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HEChangesCollector >> isMonitored: ann [ 
 
 	^ (ann packagesAffected collect: #name) includesAnyOf: monitoredPackageNames.
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 HEChangesCollector >> monitor: aPackageName [ 
 	
 	monitoredPackageNames add: aPackageName 
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 HEChangesCollector >> recordClass: ann [ 
 	
 	| heClass |
@@ -64,7 +65,7 @@ HEChangesCollector >> recordClass: ann [
 	classes at: heClass className put: heClass
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 HEChangesCollector >> recordMethod: ann [ 
 	
 	| heMethod |
@@ -77,7 +78,7 @@ HEChangesCollector >> recordMethod: ann [
 	methods at: heMethod className -> heMethod selector put: heMethod
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEChangesCollector >> subscribeTo: anAnnouncer [ 	
 	
 	announcer ifNotNil:[ self unsubcribe ].
@@ -94,7 +95,7 @@ HEChangesCollector >> subscribeTo: anAnnouncer [
 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEChangesCollector >> unsubcribe [
 
 	announcer unsubscribe: self.

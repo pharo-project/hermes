@@ -1,6 +1,6 @@
 Class {
-	#name : #HEAbstractChangeCollectorTest,
-	#superclass : #TestCase,
+	#name : 'HEAbstractChangeCollectorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'changeCollector',
 		'packageName',
@@ -8,22 +8,23 @@ Class {
 		'trackedClass',
 		'noTrackedClass'
 	],
-	#category : #'Hermes-Tests-Changes-Collector'
+	#category : 'Hermes-Tests-Changes-Collector',
+	#package : 'Hermes-Tests-Changes-Collector'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 HEAbstractChangeCollectorTest >> assertHasClass: aName [ 
 
 	self assert: (changeCollector allClasses anySatisfy: [:e | e className = aName])
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 HEAbstractChangeCollectorTest >> assertHasMethod: aSelector inClassNamed: aClassName [
 
 	self assert: (changeCollector allMethods anySatisfy: [:e | e selector = aSelector and: [ e className = aClassName ]])
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HEAbstractChangeCollectorTest >> newClass: className superclass: aSuperclass slots: slots [
 
 	^ self newClass: className superclass: aSuperclass slots: slots package: packageName
@@ -31,7 +32,7 @@ HEAbstractChangeCollectorTest >> newClass: className superclass: aSuperclass slo
 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HEAbstractChangeCollectorTest >> newClass: className superclass: aSuperclass slots: slots package: aPackageName [
 
 	^ ShiftClassInstaller
@@ -45,7 +46,7 @@ HEAbstractChangeCollectorTest >> newClass: className superclass: aSuperclass slo
 				category: aPackageName ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HEAbstractChangeCollectorTest >> newNonTrackedClass: className superclass: aSuperclass slots: slots [
 
 	^ self newClass: className superclass: aSuperclass slots: slots package: outsideName
@@ -53,7 +54,7 @@ HEAbstractChangeCollectorTest >> newNonTrackedClass: className superclass: aSupe
 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HEAbstractChangeCollectorTest >> setUp [
 	
 	super setUp.
@@ -73,7 +74,7 @@ HEAbstractChangeCollectorTest >> setUp [
 		
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 HEAbstractChangeCollectorTest >> tearDown [
 	
 	| package |

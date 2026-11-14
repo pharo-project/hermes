@@ -6,7 +6,9 @@ Once this project will have Pharo 11 as minimal version we can merge me in Herme
 
 "
 Class {
-	#name : #ManifestHermesExporterPharo11,
-	#superclass : #PackageManifest,
-	#category : #'Hermes-Exporter-Pharo11-Manifest'
+	#name : 'ManifestHermesExporterPharo11',
+	#superclass : 'PackageManifest',
+	#category : 'Hermes-Exporter-Pharo11-Manifest',
+	#package : 'Hermes-Exporter-Pharo11',
+	#tag : 'Manifest'
 }

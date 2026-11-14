@@ -1,16 +1,17 @@
 Class {
-	#name : #HETestRingAgainstSystemClasses,
-	#superclass : #HERingTest,
-	#category : #'Hermes-Tests-Ring'
+	#name : 'HETestRingAgainstSystemClasses',
+	#superclass : 'HERingTest',
+	#category : 'Hermes-Tests-Ring',
+	#package : 'Hermes-Tests-Ring'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 HETestRingAgainstSystemClasses >> behaviorNamed: aName [
 
 	^ self class environment at: aName
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HETestRingAgainstSystemClasses >> compareBehavior: aClass with: aRGClass [
 
 	| aClassTraitComposition rgClassTraitComposition |
@@ -45,7 +46,7 @@ HETestRingAgainstSystemClasses >> compareBehavior: aClass with: aRGClass [
 	
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HETestRingAgainstSystemClasses >> compareClass: aClass with: aRGClass [
 
 	self assert: aClass name equals: aRGClass name.
@@ -61,13 +62,13 @@ HETestRingAgainstSystemClasses >> compareClass: aClass with: aRGClass [
 	self compareBehavior: aClass with: aRGClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HETestRingAgainstSystemClasses >> compareTrait: aTrait with: aRGClass [
 
 	self compareBehavior: aTrait with: aRGClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HETestRingAgainstSystemClasses >> setUp [
 
 	self loadPackages: #('Hermes-Tests-Classes' 'Hermes-Tests-External-Package')

@@ -1,14 +1,15 @@
 Class {
-	#name : #HEChangeSet,
-	#superclass : #Object,
+	#name : 'HEChangeSet',
+	#superclass : 'Object',
 	#instVars : [
 		'classes',
 		'methods'
 	],
-	#category : #'Hermes-Changes-Collector'
+	#category : 'Hermes-Changes-Collector',
+	#package : 'Hermes-Changes-Collector'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEChangeSet >> = anotherObject [
 
 	anotherObject species = self species
@@ -18,17 +19,17 @@ HEChangeSet >> = anotherObject [
 		and: [ anotherObject methods hasEqualElements: self methods ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangeSet >> classes [
 	^ classes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangeSet >> classes: aCollection [ 
 	classes := aCollection
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 HEChangeSet >> doWrite: aHermesWriter [ 
 	
 	"Write classes"
@@ -42,13 +43,13 @@ HEChangeSet >> doWrite: aHermesWriter [
 	aHermesWriter flush.
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEChangeSet >> hash [
 
 	^ classes hash + methods hash
 ]
 
-{ #category : #'applying changes' }
+{ #category : 'applying changes' }
 HEChangeSet >> install [
 
 	| installer |
@@ -61,17 +62,17 @@ HEChangeSet >> install [
 		installer rebuildMethod: aHEMethod into: aClass  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangeSet >> methods [
 	^ methods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEChangeSet >> methods: aCollection [ 
 	methods := aCollection
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEChangeSet >> readFrom: aReadStream [ 
 	
 	| numberOfClasses numberOfMethods reader |
@@ -91,7 +92,7 @@ HEChangeSet >> readFrom: aReadStream [
 	1 to: numberOfMethods do: [ :idx | methods add: (HEMethod readFrom: reader ) ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 HEChangeSet >> writeTo: aWriteStream [ 
 		
 	self doWrite: (	HEBinaryReaderWriter new
