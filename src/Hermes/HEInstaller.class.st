@@ -172,6 +172,19 @@ HEInstaller >> installExtensionMethod: extensionMethod [
 ]
 
 { #category : 'installing methods' }
+HEInstaller >> installMethod: aCompiledMethod named: aSelector into: aClass protocol: aProtocolName [
+
+	self flag: #pharo13. "Pharo 14 replaced #addAndClassifySelector:withMethod:inProtocol: by the method installer. Remove this condition when Pharo 14 is the minimal version."
+	SystemVersion current major >= 14
+		ifTrue: [
+				aClass methodInstaller
+					logged: false;
+					protocol: aProtocolName;
+					install: aCompiledMethod into: aClass compiler: nil ]
+		ifFalse: [ aClass addAndClassifySelector: aSelector withMethod: aCompiledMethod inProtocol: aProtocolName ]
+]
+
+{ #category : 'installing methods' }
 HEInstaller >> installMethods: exportedClass into: aClass [
 	exportedClass methods do: [ :e | self rebuildMethod: e into: aClass ].
 	exportedClass classSideMethods
@@ -215,23 +228,27 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	self flag: #pharo11. "If Pharo12 the management of the method trailer changed and the way to create a new method changed too."
-	newMethod := CompiledMethod
-		             newMethod: (SystemVersion current major >= 12
-				              ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ]
-				              ifFalse: [ aMethod bytecode size ])
-		             header: (aMethod headerFor: extendedEnvironment).
+	self flag: #pharo11. "Since Pharo 12, #basicNew:header: replaces #newMethod:header: and we need to reserve the space of the trailer. Remove this condition when Pharo 12 is the minimal version."
+	newMethod := SystemVersion current major >= 12
+		             ifTrue: [ CompiledMethod basicNew: aMethod bytecode size + CompiledMethod trailerSize header: (aMethod headerFor: extendedEnvironment) ]
+		             ifFalse: [ CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment) ].
 
 	extendedEnvironment newMethod: newMethod.
 
 	aMethod literals doWithIndex: [ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
+	"The method installer of Pharo 14+ installs the method under its own selector, so the selector must be the name of the Hermes method."
+	newMethod selector: aMethod name.
 	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
 
 	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
-	aClass addAndClassifySelector: aMethod name withMethod: newMethod inProtocol: aMethod protocol
+	self
+		installMethod: newMethod
+		named: aMethod name
+		into: aClass
+		protocol: aMethod protocol
 ]
 
 { #category : 'reporting undeclared' }
