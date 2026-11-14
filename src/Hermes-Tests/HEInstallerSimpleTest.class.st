@@ -5,6 +5,46 @@ Class {
 	#package : 'Hermes-Tests'
 }
 
+{ #category : 'utilities' }
+HEInstallerSimpleTest >> assertInstallingKeepsTheLayoutOf: aFixtureClass [
+
+	| exportedClass |
+	exportedClass := HEClass for: aFixtureClass.
+	self changeNameOf: exportedClass to: (aFixtureClass name , 'New') asSymbol.
+
+	aClass := installer build: exportedClass.
+
+	self assert: aClass classLayout class identicalTo: aFixtureClass classLayout class
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassInATag [
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeTaggedClass.
+	self changeNameOf: exportedClass to: #HETeTaggedClassNew.
+
+	aClass := installer build: exportedClass.
+
+	self assert: exportedClass tagName asString equals: 'Tagged'.
+	self assert: aClass package name equals: HETeTaggedClass package name.
+	self assert: (HEClass for: aClass) tagName equals: exportedClass tagName
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassUsingASharedPool [
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeSimpleClassUsingSharedPool.
+	self changeNameOf: exportedClass to: #HETeSimpleClassUsingSharedPoolNew.
+
+	aClass := installer build: exportedClass.
+	installer installMethods: exportedClass into: aClass.
+
+	self assert: aClass sharedPools asArray equals: { HETeSharedPool }.
+	self assert: aClass new sharedValue equals: 42
+]
+
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassUsingComplexTraits [
 	| exportedClass obj|
@@ -52,6 +92,24 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 
 	self assert: obj oneMessage equals: 1234.
 	self assert: obj otherMessage equals: 4321.	
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassWithAByteLayout [
+
+	self assertInstallingKeepsTheLayoutOf: HETeByteClass
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassWithAVariableLayout [
+
+	self assertInstallingKeepsTheLayoutOf: HETeVariableClass
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassWithAWeakLayout [
+
+	self assertInstallingKeepsTheLayoutOf: HETeWeakClass
 ]
 
 { #category : 'tests' }
@@ -230,6 +288,22 @@ HEInstallerSimpleTest >> testCreatingAWithNilSuperclass [
 	self assert: aClass class traitComposition isEmpty.
 
 	self assert: aClass superclass equals: nil
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testInstalledMethodsKeepTheirProtocol [
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeSimpleClass.
+	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
+
+	aClass := installer build: exportedClass.
+	installer installMethods: exportedClass into: aClass.
+
+	"The fixture uses several protocols, so a method installed in a default protocol would be noticed."
+	self assert: (exportedClass methods collect: [ :method | method protocol ]) asSet size > 1.
+	exportedClass methods do: [ :exportedMethod | self assert: (HEMethod for: aClass >> exportedMethod name) protocol equals: exportedMethod protocol ].
+	exportedClass classSideMethods do: [ :exportedMethod | self assert: (HEMethod for: aClass class >> exportedMethod name) protocol equals: exportedMethod protocol ]
 ]
 
 { #category : 'tests' }

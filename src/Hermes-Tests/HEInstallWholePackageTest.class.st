@@ -9,7 +9,7 @@ Class {
 	#package : 'Hermes-Tests'
 }
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEInstallWholePackageTest >> changeClassesNames: aPackage [
 	aPackage instVarNamed: #packageName put: #'Hermes-Tests-External-Package2'.
 	aPackage classes
@@ -33,6 +33,20 @@ HEInstallWholePackageTest >> changeClassesNames: aPackage [
 
 ]
 
+{ #category : 'utilities' }
+HEInstallWholePackageTest >> installCopyOfExternalPackage [
+	"Export the external test package, rename its classes, traits and extension methods with a 2 suffix in a package Hermes-Tests-External-Package2, and install it."
+
+	| readPackage |
+	(HEPackage for: #'Hermes-Tests-External-Package' asPackage) writeInto: writer.
+	writer flush.
+
+	readPackage := HEPackage readFrom: reader.
+	self changeClassesNames: readPackage.
+
+	builder installPackage: readPackage
+]
+
 { #category : 'initialization' }
 HEInstallWholePackageTest >> setUp [
 	super setUp.
@@ -49,16 +63,10 @@ HEInstallWholePackageTest >> tearDown [
 { #category : 'tests' }
 HEInstallWholePackageTest >> testExportingWholePackageAndImportingIt [
 
-	| hePackage readPackage newPackage oldPackage obj obj2 |
+	| newPackage oldPackage obj obj2 |
 	oldPackage := #'Hermes-Tests-External-Package' asPackage.
-	hePackage := HEPackage for: oldPackage.
-	hePackage writeInto: writer.
-	writer flush.
 
-	readPackage := HEPackage readFrom: reader.
-	self changeClassesNames: readPackage.
-
-	builder installPackage: readPackage.
+	self installCopyOfExternalPackage.
 	newPackage := #'Hermes-Tests-External-Package2' asPackage.
 
 	self assert: newPackage classes size equals: oldPackage classes size.
@@ -70,7 +78,19 @@ HEInstallWholePackageTest >> testExportingWholePackageAndImportingIt [
 	self assert: obj2 class equals: (Smalltalk at: #AClassToBeExtracted2)
 ]
 
-{ #category : 'utils' }
+{ #category : 'tests' }
+HEInstallWholePackageTest >> testInstallingAPackageInstallsItsExtensionMethods [
+
+	| extensionMethod |
+	self installCopyOfExternalPackage.
+
+	extensionMethod := HETeSimpleClassWithComplexTraits >> #externalMethod2.
+
+	self assert: HETeSimpleClassWithComplexTraits new externalMethod2 equals: 73.
+	self assert: extensionMethod package name equals: #'Hermes-Tests-External-Package2' asPackage name
+]
+
+{ #category : 'utilities' }
 HEInstallWholePackageTest >> updateMethodLiterals: methods [
 	methods
 		do: [ :e | 

@@ -43,24 +43,24 @@ HEInstaller >> build: aHEClass [
 	layoutType := self classNamed: aHEClass layoutClass.
 
 	newClass := self class classInstaller make: [ :builder |
-		            builder
-			            name: aHEClass className;
-			            superclass: superclass;
-			            layoutClass: layoutType;
-			            slots: aHEClass instanceVariables asSlotCollection;
-			            sharedVariablesFromString: aHEClass classVariables;
-			            sharedPools: aHEClass sharedPools;
-			            package: aHEClass packageName;
-			            classSlots: aHEClass classInstancevariables asSlotCollection.
-		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
-		            self supportsTraits ifTrue: [
 			            builder
-				            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
-				            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
+				            name: aHEClass className;
+				            superclass: superclass;
+				            layoutClass: layoutType;
+				            slots: aHEClass instanceVariables asSlotCollection;
+				            sharedVariablesFromString: aHEClass classVariables;
+				            sharedPools: aHEClass sharedPools;
+				            package: aHEClass packageName;
+				            classSlots: aHEClass classInstancevariables asSlotCollection.
+			            self setTagOf: aHEClass in: builder.
+			            self supportsTraits ifTrue: [
+					            builder
+						            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
+						            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
 	^ newClass
 ]
 
-{ #category : 'creating traits' }
+{ #category : 'creating classes' }
 HEInstaller >> buildTrait: aTraitDefinition [
 
 	(self existingTrait: aTraitDefinition) ifNotNil: [ :x | ^ x ].
@@ -68,15 +68,15 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	self supportsTraits ifFalse: [ self error: 'Trait support is not installed' ].
 
 	^ self class classInstaller make: [ :builder |
-		  builder
-			  beTrait;
-			  name: aTraitDefinition traitName;
-			  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
-			  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
-			  package: aTraitDefinition packageName;
-			  environment: environment.
+			  builder
+				  beTrait;
+				  name: aTraitDefinition traitName;
+				  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
+				  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
+				  package: aTraitDefinition packageName;
+				  environment: environment.
 
-		  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
+			  self setTagOf: aTraitDefinition in: builder ]
 ]
 
 { #category : 'creating traits' }
@@ -237,6 +237,16 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 { #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
 	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
+]
+
+{ #category : 'creating classes' }
+HEInstaller >> setTagOf: aMethodContainer in: aClassBuilder [
+	"The class builder knows package tags since Pharo 12. Before, the tag is the end of the category of the class."
+
+	aMethodContainer tagName ifEmpty: [ ^ self ].
+
+	self flag: #pharo11. "Remove this condition when Pharo 12 is the minimal version."
+	SystemVersion current major >= 12 ifTrue: [ aClassBuilder tag: aMethodContainer tagName ] ifFalse: [ aClassBuilder category: aMethodContainer packageName , '-' , aMethodContainer tagName ]
 ]
 
 { #category : 'validating existence' }
