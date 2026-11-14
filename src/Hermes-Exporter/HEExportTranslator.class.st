@@ -12,8 +12,9 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'Hermes-Exporter',
-	#package : 'Hermes-Exporter'
+	#category : 'Hermes-Exporter-Translation',
+	#package : 'Hermes-Exporter',
+	#tag : 'Translation'
 }
 
 { #category : 'instance creation' }

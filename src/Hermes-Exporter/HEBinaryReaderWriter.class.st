@@ -6,8 +6,9 @@ The format used is compatible with the one in HEBinaryReader
 Class {
 	#name : 'HEBinaryReaderWriter',
 	#superclass : 'HEBinaryReader',
-	#category : 'Hermes-Exporter',
-	#package : 'Hermes-Exporter'
+	#category : 'Hermes-Exporter-Writing',
+	#package : 'Hermes-Exporter',
+	#tag : 'Writing'
 }
 
 { #category : 'accessing' }

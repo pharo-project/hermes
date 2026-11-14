@@ -1,8 +1,9 @@
 Class {
 	#name : 'HERing2ToHermesBuilder',
 	#superclass : 'Object',
-	#category : 'Hermes-Ring2',
-	#package : 'Hermes-Ring2'
+	#category : 'Hermes-Ring2-Builder',
+	#package : 'Hermes-Ring2',
+	#tag : 'Builder'
 }
 
 { #category : 'compiling' }

@@ -13,8 +13,9 @@ Class {
 	#classInstVars : [
 		'aClassInstanceVariable'
 	],
-	#category : 'Hermes-Tests-Classes',
-	#package : 'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes-Classes',
+	#package : 'Hermes-Tests-Classes',
+	#tag : 'Classes'
 }
 
 { #category : 'instance creation' }

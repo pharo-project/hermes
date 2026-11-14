@@ -3,8 +3,9 @@ A simple trait used in tests
 "
 Trait {
 	#name : 'THEOtherTestTrait',
-	#category : 'Hermes-Tests-Classes',
-	#package : 'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes-Traits',
+	#package : 'Hermes-Tests-Classes',
+	#tag : 'Traits'
 }
 
 { #category : 'as yet unclassified' }

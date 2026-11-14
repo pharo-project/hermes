@@ -5,6 +5,7 @@ Class {
 	#name : 'HETeVariableClass',
 	#superclass : 'Object',
 	#type : 'variable',
-	#category : 'Hermes-Tests-Classes',
-	#package : 'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes-Layouts',
+	#package : 'Hermes-Tests-Classes',
+	#tag : 'Layouts'
 }

@@ -1,8 +1,9 @@
 Class {
 	#name : 'HETestRingAgainstSystemClasses',
 	#superclass : 'HERingTest',
-	#category : 'Hermes-Tests-Ring',
-	#package : 'Hermes-Tests-Ring'
+	#category : 'Hermes-Tests-Ring-Tests',
+	#package : 'Hermes-Tests-Ring',
+	#tag : 'Tests'
 }
 
 { #category : 'as yet unclassified' }

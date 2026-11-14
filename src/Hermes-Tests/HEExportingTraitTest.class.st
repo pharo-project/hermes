@@ -1,8 +1,9 @@
 Class {
 	#name : 'HEExportingTraitTest',
 	#superclass : 'HEAbstractBinaryClassBuilderTest',
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-Exporting',
+	#package : 'Hermes-Tests',
+	#tag : 'Exporting'
 }
 
 { #category : 'utils' }

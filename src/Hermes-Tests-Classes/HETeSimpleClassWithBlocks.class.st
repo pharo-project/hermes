@@ -11,8 +11,9 @@ Class {
 	#classVars : [
 		'AClassVariable'
 	],
-	#category : 'Hermes-Tests-Classes',
-	#package : 'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes-Classes',
+	#package : 'Hermes-Tests-Classes',
+	#tag : 'Classes'
 }
 
 { #category : 'test methods' }

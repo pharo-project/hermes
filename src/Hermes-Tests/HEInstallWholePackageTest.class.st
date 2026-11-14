@@ -5,8 +5,9 @@ Class {
 		'builder',
 		'newClass'
 	],
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-Installing',
+	#package : 'Hermes-Tests',
+	#tag : 'Installing'
 }
 
 { #category : 'utilities' }

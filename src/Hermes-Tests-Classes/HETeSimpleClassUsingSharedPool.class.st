@@ -7,8 +7,9 @@ Class {
 	#pools : [
 		'HETeSharedPool'
 	],
-	#category : 'Hermes-Tests-Classes',
-	#package : 'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes-SharedPools',
+	#package : 'Hermes-Tests-Classes',
+	#tag : 'SharedPools'
 }
 
 { #category : 'accessing' }
