@@ -22,6 +22,23 @@ HEInstallerClassesWithBlocksTest >> setUp [
 ]
 
 { #category : 'tests' }
+HEInstallerClassesWithBlocksTest >> testAMethodWithACleanBlockHasCorrectBindingToTheHomeMethod [
+
+	| method block |
+	method := aClass >> #aMethodWithACleanBlock.
+	block := method literals detect: [ :literal | literal isBlock or: [ literal isCompiledBlock ] ].
+
+	self flag: #pharo13. "The compiler creates clean blocks by default since Pharo 14. Before, the literal is a compiled block. This can be simplified once Pharo 14 will be the minimal version for Hermes."
+	SystemVersion current major >= 14
+		ifTrue: [
+				self assert: block isBlock.
+				self assert: block compiledBlock outerCode equals: method ]
+		ifFalse: [
+				self assert: block isCompiledBlock.
+				self assert: block outerCode equals: method ]
+]
+
+{ #category : 'tests' }
 HEInstallerClassesWithBlocksTest >> testAMethodWithASingleBlockHasCorrectBindingToTheHomeMethod [
 	| methodWithSimpleBlock block |
 		
@@ -73,6 +90,12 @@ HEInstallerClassesWithBlocksTest >> testCreatedClassHaveTheCorrectName [
 	self assert: aClass class name equals: #'HETeSimpleClassWithBlocksNew class'.
 
 
+]
+
+{ #category : 'tests' }
+HEInstallerClassesWithBlocksTest >> testExecutingAMethodWithACleanBlockBehavesCorrectly [
+
+	self assert: (aClass new aMethodWithACleanBlock value: 41) equals: 42
 ]
 
 { #category : 'tests' }
