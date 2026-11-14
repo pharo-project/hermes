@@ -9,7 +9,7 @@ Class {
 	#package : 'Hermes-Tests'
 }
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 	| new |
  
@@ -36,14 +36,14 @@ HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 	self assert: new equals: old.
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> fillOldPackage: aPackageNamed [
 
-	aPackage := self packageOrganizer packageNamed: aPackageNamed.
+	aPackage := aPackageNamed asPackage.
 	old := HEPackage for: aPackage
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> in: aSeq allSharedPoolsAreBeforeThan: aClass [
 	| myIndex allSharedPools |
 	myIndex := aSeq indexOf: aClass.
@@ -52,7 +52,7 @@ HEExportingPackageTest >> in: aSeq allSharedPoolsAreBeforeThan: aClass [
 	^ allSharedPools allSatisfy: [ :sp | (aSeq indexOf: sp) < myIndex ]
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> in: aSeq allSuperclassesAreBeforeThan: aClass [
 	| myIndex superclass superclassIndex |
 	myIndex := aSeq indexOf: aClass.
@@ -62,7 +62,7 @@ HEExportingPackageTest >> in: aSeq allSuperclassesAreBeforeThan: aClass [
 	^ (superclassIndex < myIndex) and:[ self in:aSeq allSuperclassesAreBeforeThan: superclass].
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> in: aSeq allTraitsAreBeforeThan: aTrait [
 	| myIndex |
 	myIndex := aSeq indexOf: aTrait.
