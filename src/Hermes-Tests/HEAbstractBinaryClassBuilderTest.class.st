@@ -10,8 +10,9 @@ Class {
 		'writer',
 		'fileReference'
 	],
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-Support',
+	#package : 'Hermes-Tests',
+	#tag : 'Support'
 }
 
 { #category : 'initialization' }

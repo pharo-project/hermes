@@ -1,8 +1,9 @@
 Class {
 	#name : 'HECommandLineHandlerTest',
 	#superclass : 'TestCase',
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-CommandLine',
+	#package : 'Hermes-Tests',
+	#tag : 'CommandLine'
 }
 
 { #category : 'tests' }

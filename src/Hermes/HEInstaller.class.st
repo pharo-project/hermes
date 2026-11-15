@@ -43,24 +43,24 @@ HEInstaller >> build: aHEClass [
 	layoutType := self classNamed: aHEClass layoutClass.
 
 	newClass := self class classInstaller make: [ :builder |
-		            builder
-			            name: aHEClass className;
-			            superclass: superclass;
-			            layoutClass: layoutType;
-			            slots: aHEClass instanceVariables asSlotCollection;
-			            sharedVariablesFromString: aHEClass classVariables;
-			            sharedPools: aHEClass sharedPools;
-			            package: aHEClass packageName;
-			            classSlots: aHEClass classInstancevariables asSlotCollection.
-		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
-		            self supportsTraits ifTrue: [
 			            builder
-				            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
-				            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
+				            name: aHEClass className;
+				            superclass: superclass;
+				            layoutClass: layoutType;
+				            slots: aHEClass instanceVariables asSlotCollection;
+				            sharedVariablesFromString: aHEClass classVariables;
+				            sharedPools: aHEClass sharedPools;
+				            package: aHEClass packageName;
+				            classSlots: aHEClass classInstancevariables asSlotCollection.
+			            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
+			            self supportsTraits ifTrue: [
+					            builder
+						            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
+						            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
 	^ newClass
 ]
 
-{ #category : 'creating traits' }
+{ #category : 'creating classes' }
 HEInstaller >> buildTrait: aTraitDefinition [
 
 	(self existingTrait: aTraitDefinition) ifNotNil: [ :x | ^ x ].
@@ -68,15 +68,15 @@ HEInstaller >> buildTrait: aTraitDefinition [
 	self supportsTraits ifFalse: [ self error: 'Trait support is not installed' ].
 
 	^ self class classInstaller make: [ :builder |
-		  builder
-			  beTrait;
-			  name: aTraitDefinition traitName;
-			  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
-			  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
-			  package: aTraitDefinition packageName;
-			  environment: environment.
+			  builder
+				  beTrait;
+				  name: aTraitDefinition traitName;
+				  traitComposition: (self buildTraitCompositionFor: aTraitDefinition traitComposition);
+				  classTraitComposition: (self buildTraitCompositionFor: aTraitDefinition classTraitComposition);
+				  package: aTraitDefinition packageName;
+				  environment: environment.
 
-		  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
+			  aTraitDefinition tagName ifNotEmpty: [ :tag | builder tag: tag ] ]
 ]
 
 { #category : 'creating traits' }
@@ -102,8 +102,7 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	| newTraits newClasses |
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
-	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12 ifTrue: [ RPackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
+	self packageOrganizer ensurePackage: aHEPackage packageName.
 
 	"2. Install the traits"
 	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
@@ -215,11 +214,9 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	self flag: #pharo11. "If Pharo12 the management of the method trailer changed and the way to create a new method changed too."
+	self flag: #pharo11. "Since Pharo 12, the method trailer has a fixed size and we need to reserve its space. Remove this condition when Pharo 12 is the minimal version."
 	newMethod := CompiledMethod
-		             newMethod: (SystemVersion current major >= 12
-				              ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ]
-				              ifFalse: [ aMethod bytecode size ])
+		             basicNew: (SystemVersion current major >= 12 ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ] ifFalse: [ aMethod bytecode size ])
 		             header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
@@ -227,11 +224,16 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	aMethod literals doWithIndex: [ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
+	"The method installer installs the method under its own selector, so the selector must be the name of the Hermes method."
+	newMethod selector: aMethod name.
 	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
 
 	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
 
-	aClass addAndClassifySelector: aMethod name withMethod: newMethod inProtocol: aMethod protocol
+	aClass methodInstaller
+		logged: false;
+		protocol: aMethod protocol;
+		install: newMethod into: aClass compiler: nil
 ]
 
 { #category : 'reporting undeclared' }

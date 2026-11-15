@@ -6,21 +6,12 @@ HEMethodContainer >> doFromMethodContainer: aMethodContainer [
 	In both the class and instance side. Also the trait composition should be handled"
 
 	packageName := aMethodContainer package name.
-	self flag: #pharo11.
-	tagName := SystemVersion current major >= 12
-		           ifTrue: [
-			           aMethodContainer packageTag isRoot
-				           ifTrue: [ '' ]
-				           ifFalse: [ aMethodContainer packageTag name ] ]
-		           ifFalse: [ aMethodContainer tags ifEmpty: [ '' ] ifNotEmpty: [ :tags | tags anyOne ] ].
+	tagName := aMethodContainer packageTag isRoot ifTrue: [ '' ] ifFalse: [ aMethodContainer packageTag name ].
 	traitComposition := aMethodContainer traitComposition asExportedLiteral.
-	classTraitComposition := aMethodContainer classSide traitComposition asExportedLiteral.
-	methods := aMethodContainer localMethods
-		           select: [ :e | e isExtension not ]
-		           thenCollect: [ :e | HEMethod for: e ].
-	classSideMethods := aMethodContainer classSide localMethods
-		                    select: [ :e | e isExtension not ]
-		                    thenCollect: [ :e | HEMethod for: e ]
+	"Since Pharo 12, the trait composition of the class side of a trait includes TraitedClass, which is added again when the trait is built. We only export the declared composition."
+	classTraitComposition := HETraitCompositionExporter export: aMethodContainer classSide traitCompositionString.
+	methods := aMethodContainer localMethods select: [ :e | e isExtension not ] thenCollect: [ :e | HEMethod for: e ].
+	classSideMethods := aMethodContainer classSide localMethods select: [ :e | e isExtension not ] thenCollect: [ :e | HEMethod for: e ]
 ]
 
 { #category : '*Hermes-Exporter' }

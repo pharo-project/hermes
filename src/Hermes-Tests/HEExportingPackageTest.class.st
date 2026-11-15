@@ -5,11 +5,12 @@ Class {
 		'old',
 		'aPackage'
 	],
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-Exporting',
+	#package : 'Hermes-Tests',
+	#tag : 'Exporting'
 }
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 	| new |
  
@@ -36,14 +37,14 @@ HEExportingPackageTest >> doTestExportingPackage: aPackageNamed [
 	self assert: new equals: old.
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> fillOldPackage: aPackageNamed [
-	aPackage := RPackageOrganizer default packageNamed: aPackageNamed.
-	old := HEPackage for:aPackage.
 
+	aPackage := aPackageNamed asPackage.
+	old := HEPackage for: aPackage
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> in: aSeq allSharedPoolsAreBeforeThan: aClass [
 	| myIndex allSharedPools |
 	myIndex := aSeq indexOf: aClass.
@@ -52,7 +53,7 @@ HEExportingPackageTest >> in: aSeq allSharedPoolsAreBeforeThan: aClass [
 	^ allSharedPools allSatisfy: [ :sp | (aSeq indexOf: sp) < myIndex ]
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> in: aSeq allSuperclassesAreBeforeThan: aClass [
 	| myIndex superclass superclassIndex |
 	myIndex := aSeq indexOf: aClass.
@@ -62,7 +63,7 @@ HEExportingPackageTest >> in: aSeq allSuperclassesAreBeforeThan: aClass [
 	^ (superclassIndex < myIndex) and:[ self in:aSeq allSuperclassesAreBeforeThan: superclass].
 ]
 
-{ #category : 'utils' }
+{ #category : 'utilities' }
 HEExportingPackageTest >> in: aSeq allTraitsAreBeforeThan: aTrait [
 	| myIndex |
 	myIndex := aSeq indexOf: aTrait.
@@ -70,9 +71,10 @@ HEExportingPackageTest >> in: aSeq allTraitsAreBeforeThan: aTrait [
 ]
 
 { #category : 'tests' }
-HEExportingPackageTest >> testExportingCollectionsTests [
-	self doTestExportingPackage: 'Collections-Tests'.
+HEExportingPackageTest >> testExportingCollectionsSequenceableTests [
+	"Collections-Tests was merged into the other collections test packages in Pharo 14."
 
+	self doTestExportingPackage: 'Collections-Sequenceable-Tests'
 ]
 
 { #category : 'tests' }
@@ -102,6 +104,6 @@ HEExportingPackageTest >> testExportingSUnit [
 
 { #category : 'tests' }
 HEExportingPackageTest >> testExportingTraits [
-	self doTestExportingPackage: 'TraitsV2'.
 
+	self doTestExportingPackage: TraitedClass package name
 ]

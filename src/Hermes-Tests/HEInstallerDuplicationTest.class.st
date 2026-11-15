@@ -1,8 +1,9 @@
 Class {
 	#name : 'HEInstallerDuplicationTest',
 	#superclass : 'HEInstallerTest',
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-Installing',
+	#package : 'Hermes-Tests',
+	#tag : 'Installing'
 }
 
 { #category : 'tests' }
@@ -277,13 +278,8 @@ HEInstallerDuplicationTest >> testCreatingADuplicatedSimpleTraitReplace [
 	newPackage := (exportedTrait packageName , 'New') asSymbol.
 	exportedTrait packageName: newPackage.
 	[
-	self flag: #pharo11. "This is a hack caused by the package/tag/category mess that should be fixed in P12 release."
-	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12
-		ifTrue: [ RPackageOrganizer default registerPackageNamed: newPackage ]
-		ifFalse: [ self packageOrganizer ensurePackage: newPackage ].
-	installer buildTrait: exportedTrait.
+		self packageOrganizer ensurePackage: newPackage.
+		installer buildTrait: exportedTrait.
 
-	self assert: (Smalltalk at: #THEOneTestTraitNew) package name equals: newPackage ] ensure: [
-		(newPackage asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
+		self assert: (Smalltalk at: #THEOneTestTraitNew) package name equals: newPackage ] ensure: [ (newPackage asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
 ]

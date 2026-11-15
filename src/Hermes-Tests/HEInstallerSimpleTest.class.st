@@ -1,9 +1,50 @@
 Class {
 	#name : 'HEInstallerSimpleTest',
 	#superclass : 'HEInstallerTest',
-	#category : 'Hermes-Tests',
-	#package : 'Hermes-Tests'
+	#category : 'Hermes-Tests-Installing',
+	#package : 'Hermes-Tests',
+	#tag : 'Installing'
 }
+
+{ #category : 'utilities' }
+HEInstallerSimpleTest >> assertInstallingKeepsTheLayoutOf: aFixtureClass [
+
+	| exportedClass |
+	exportedClass := HEClass for: aFixtureClass.
+	self changeNameOf: exportedClass to: (aFixtureClass name , 'New') asSymbol.
+
+	aClass := installer build: exportedClass.
+
+	self assert: aClass classLayout class identicalTo: aFixtureClass classLayout class
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassInATag [
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeTaggedClass.
+	self changeNameOf: exportedClass to: #HETeTaggedClassNew.
+
+	aClass := installer build: exportedClass.
+
+	self assert: exportedClass tagName asString equals: 'Tagged'.
+	self assert: aClass package name equals: HETeTaggedClass package name.
+	self assert: (HEClass for: aClass) tagName equals: exportedClass tagName
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassUsingASharedPool [
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeSimpleClassUsingSharedPool.
+	self changeNameOf: exportedClass to: #HETeSimpleClassUsingSharedPoolNew.
+
+	aClass := installer build: exportedClass.
+	installer installMethods: exportedClass into: aClass.
+
+	self assert: aClass sharedPools asArray equals: { HETeSharedPool }.
+	self assert: aClass new sharedValue equals: 42
+]
 
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassUsingComplexTraits [
@@ -52,6 +93,24 @@ HEInstallerSimpleTest >> testCreatingAClassUsingTraits [
 
 	self assert: obj oneMessage equals: 1234.
 	self assert: obj otherMessage equals: 4321.	
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassWithAByteLayout [
+
+	self assertInstallingKeepsTheLayoutOf: HETeByteClass
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassWithAVariableLayout [
+
+	self assertInstallingKeepsTheLayoutOf: HETeVariableClass
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testCreatingAClassWithAWeakLayout [
+
+	self assertInstallingKeepsTheLayoutOf: HETeWeakClass
 ]
 
 { #category : 'tests' }
@@ -159,8 +218,8 @@ HEInstallerSimpleTest >> testCreatingASimpleClassExportingToFile [
 
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingASimpleTrait [
-	| exportedTrait |
 
+	| exportedTrait |
 	exportedTrait := HETrait for: THEOneTestTrait.
 	self changeNameOf: exportedTrait to: #THEOneTestTraitNew.
 
@@ -168,12 +227,10 @@ HEInstallerSimpleTest >> testCreatingASimpleTrait [
 	installer installMethods: exportedTrait into: aTrait.
 
 	self assert: aTrait traitComposition isEmpty.
-	self assert: aTrait classSide traitComposition isEmpty.
+	self assert: aTrait classSide traitCompositionString equals: '{}'.
 	self assert: aTrait methods size equals: THEOneTestTrait methods size.
 
-	self
-		assert: aTrait classTrait methods size
-		equals: THEOneTestTrait classTrait methods size.
+	self assert: aTrait classTrait methods size equals: THEOneTestTrait classTrait methods size.
 
 	aTrait >> #oneMessage.
 	aTrait >> #oneMessageRequired
@@ -235,6 +292,22 @@ HEInstallerSimpleTest >> testCreatingAWithNilSuperclass [
 ]
 
 { #category : 'tests' }
+HEInstallerSimpleTest >> testInstalledMethodsKeepTheirProtocol [
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeSimpleClass.
+	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
+
+	aClass := installer build: exportedClass.
+	installer installMethods: exportedClass into: aClass.
+
+	"The fixture uses several protocols, so a method installed in a default protocol would be noticed."
+	self assert: (exportedClass methods collect: [ :method | method protocol ]) asSet size > 1.
+	exportedClass methods do: [ :exportedMethod | self assert: (HEMethod for: aClass >> exportedMethod name) protocol equals: exportedMethod protocol ].
+	exportedClass classSideMethods do: [ :exportedMethod | self assert: (HEMethod for: aClass class >> exportedMethod name) protocol equals: exportedMethod protocol ]
+]
+
+{ #category : 'tests' }
 HEInstallerSimpleTest >> testPragmaMethod [
 	| exportedClass aMethod |
 	
@@ -251,27 +324,31 @@ HEInstallerSimpleTest >> testPragmaMethod [
 { #category : 'tests' }
 HEInstallerSimpleTest >> testUndeclared [
 
-	| exportedClass |
+	| exportedClass method |
 	"If we run the test multiple times we need to do this to be sure #AnUndeclaredClass is not in the Undeclared dictionary anymore."
 	Smalltalk image cleanOutUndeclared.
 	[
-	UndefinedObject compile: 'xxx
-		^ AnUndeclaredClass'.
-	self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Error"
-	self
-		assert: ([ nil xxx ]
-				 on: Error
-				 do: [ :e | e resume ])
-		equals: nil.
+		method := UndefinedObject compiler
+			          permitUndeclared: true;
+			          class: UndefinedObject;
+			          source: 'xxx
+		^ AnUndeclaredClass';
+			          compile.
+		UndefinedObject methodInstaller
+			logged: false;
+			protocol: #accessing;
+			install: method into: UndefinedObject compiler: nil.
+		self flag: #pahro11. "In Pharo 12 we should use UndeclaredVariableRead instead of the Error"
+		self assert: ([ nil xxx ] on: Error do: [ :e | e resume ]) equals: nil.
 
-	exportedClass := HEClass for: HETeSimpleClass.
-	self changeNameOf: exportedClass to: #AnUndeclaredClass.
+		exportedClass := HEClass for: HETeSimpleClass.
+		self changeNameOf: exportedClass to: #AnUndeclaredClass.
 
-	aClass := installer build: exportedClass.
-	installer installMethods: exportedClass into: aClass.
+		aClass := installer build: exportedClass.
+		installer installMethods: exportedClass into: aClass.
 
-	self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.
-	Smalltalk at: #AnUndeclaredClass ifAbsent: [ self fail: 'Class should be here.' ] ] ensure: [
-		UndefinedObject removeSelector: #xxx.
-		Smalltalk at: #AnUndeclaredClass ifPresent: [ :class | class removeFromSystem ] ]
+		self should: [ Undeclared at: #AnUndeclaredClass ] raise: KeyNotFound.
+		Smalltalk at: #AnUndeclaredClass ifAbsent: [ self fail: 'Class should be here.' ] ] ensure: [
+			UndefinedObject removeSelector: #xxx.
+			Smalltalk at: #AnUndeclaredClass ifPresent: [ :class | class removeFromSystem ] ]
 ]

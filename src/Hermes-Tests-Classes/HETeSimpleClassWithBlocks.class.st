@@ -11,8 +11,9 @@ Class {
 	#classVars : [
 		'AClassVariable'
 	],
-	#category : 'Hermes-Tests-Classes',
-	#package : 'Hermes-Tests-Classes'
+	#category : 'Hermes-Tests-Classes-Classes',
+	#package : 'Hermes-Tests-Classes',
+	#tag : 'Classes'
 }
 
 { #category : 'test methods' }
@@ -21,6 +22,13 @@ HETeSimpleClassWithBlocks >> aMethodWithABlock [
 	^ [
 	  self.
 	  42 ]
+]
+
+{ #category : 'test methods' }
+HETeSimpleClassWithBlocks >> aMethodWithACleanBlock [
+	"The block does not use self, the instance variables, the outer temporaries nor a non-local return, so it is a clean block since Pharo 14."
+
+	^ [ :number | number + 1 ]
 ]
 
 { #category : 'test methods' }
