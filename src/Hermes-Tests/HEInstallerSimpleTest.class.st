@@ -121,39 +121,39 @@ HEInstallerSimpleTest >> testCreatingAClassWithAWeakLayout [
 
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassWithUndeclared [
+
 	| exportedClass |
-	
-	exportedClass := HEClass for: HETeSimpleClassReferingClass. 
+	exportedClass := HEClass for: HETeSimpleClassReferingClass.
 	self changeNameOf: exportedClass to: #HETeSimpleClassReferingUndeclaredNew.
-	
-	((exportedClass methods at: 1) literals at:1) instVarNamed: #value put: #AUndeclared.
-	
+
+	((exportedClass methods at: 1) literals at: 1) instVarNamed: #value put: #AUndeclared.
+
 	aClass := installer build: exportedClass.
-	
+
 	installer installMethods: exportedClass into: aClass.
 
-	self assert: installer createdUndeclared size equals: 1.
+	self assert: installer newUndeclaredVariables size equals: 1.
 
-	self should: [installer validateNoNewUndeclared] raise: Error.
+	self should: [ installer validateNoNewUndeclared ] raise: Error
 ]
 
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassWithUndeclaredWithNoFailOption [
+
 	| exportedClass |
-	
 	installer := HEExtendedInstaller new.
 	installer failOnUndeclared: false.
-	
-	exportedClass := HEClass for: HETeSimpleClassReferingClass. 
+
+	exportedClass := HEClass for: HETeSimpleClassReferingClass.
 	self changeNameOf: exportedClass to: #HETeSimpleClassReferingUndeclaredNew.
-	
-	((exportedClass methods at: 1) literals at:1) instVarNamed: #value put: #AUndeclared.
-	
+
+	((exportedClass methods at: 1) literals at: 1) instVarNamed: #value put: #AUndeclared.
+
 	aClass := installer build: exportedClass.
-	
+
 	installer installMethods: exportedClass into: aClass.
 
-	self assert: installer createdUndeclared size equals: 1.
+	self assert: installer newUndeclaredVariables size equals: 1.
 
 	installer validateNoNewUndeclared
 ]
