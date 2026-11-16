@@ -2,24 +2,25 @@ Extension { #name : 'HEMethod' }
 
 { #category : '*Hermes-Exporter' }
 HEMethod >> fillLiteralsAndBytecode: aMethod [
+
 	| literalSpace |
-	
 	"From a real method the information is extracted.
 	All the literals are transformed as exported literals"
 	encoderClassName := self encoderClassName: aMethod.
-	
+
 	numArgs := aMethod numArgs.
 	numTemps := aMethod numTemps.
 	hasPrimitive := aMethod isPrimitive asBit.
 
-	literalSpace := (aMethod numLiterals + 1) * Smalltalk wordSize.
+	literalSpace := aMethod numLiterals + 1 * Smalltalk wordSize.
 
-	bytecode := ByteArray new: aMethod size - literalSpace.
+	"The trailer of the method, after its last bytecode, is not exported: the installer creates a new one."
+	bytecode := ByteArray new: aMethod endPC - literalSpace.
 	1 to: bytecode size do: [ :i | bytecode at: i put: (aMethod at: i + literalSpace) ].
 
 	literals := aMethod allLiterals allButLast collect: [ :e | e asExportedLiteral ].
 	"The last literal is the binding of the method with the holding class, it is easy to reconstruct"
-	literals := literals copyWith: nil asExportedLiteral.
+	literals := literals copyWith: nil asExportedLiteral
 ]
 
 { #category : '*Hermes-Exporter' }
