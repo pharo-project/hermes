@@ -39,9 +39,9 @@ Examples
 Class {
 	#name : 'HermesCommandLineHandler',
 	#superclass : 'CommandLineHandler',
-	#category : 'Hermes-CommandLineHandler',
-	#package : 'Hermes',
-	#tag : 'CommandLineHandler'
+	#category : 'Hermes-CommandLineHandler-Commands',
+	#package : 'Hermes-CommandLineHandler',
+	#tag : 'Commands'
 }
 
 { #category : 'accessing' }
@@ -69,17 +69,11 @@ HermesCommandLineHandler >> activate [
 
 { #category : 'processing files' }
 HermesCommandLineHandler >> createInstaller [
-	"In the basic installation, the bootstraped version of Hermes,
-	there is only one Installer, the HEInstaller.
-	When the extensions are installed the new installer to use is the HEExtendedInstaller."
 
-	^ Smalltalk globals
-		at: #HEExtendedInstaller
-		ifPresent: [ :instClass |
-			instClass new
-				forOptions: self commandLine;
-				yourself ]
-		ifAbsent: [ HEInstaller new ]
+	^ HEExtendedInstaller new
+		  failOnUndeclared: (self commandLine hasOption: 'no-fail-on-undeclared') not;
+		  duplicationMode: (HEDuplicationModeStrategy forOption: (self commandLine optionAt: 'on-duplication' ifAbsent: [ 'fail' ]));
+		  yourself
 ]
 
 { #category : 'processing files' }

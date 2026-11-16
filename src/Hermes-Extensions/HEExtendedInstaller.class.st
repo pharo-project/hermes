@@ -42,13 +42,6 @@ HEExtendedInstaller >> failOnUndeclared: anObject [
 ]
 
 { #category : 'initialization' }
-HEExtendedInstaller >> forOptions: aCommandLine [
-	failOnUndeclared := (aCommandLine hasOption: 'no-fail-on-undeclared') not.
-
-	duplicationMode := HEDuplicationModeStrategy forOption: (aCommandLine optionAt: 'on-duplication' ifAbsent: [ 'fail' ])
-]
-
-{ #category : 'initialization' }
 HEExtendedInstaller >> initialize [
 	super initialize.
 	failOnUndeclared := true.

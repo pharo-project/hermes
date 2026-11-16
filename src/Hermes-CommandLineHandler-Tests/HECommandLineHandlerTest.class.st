@@ -1,9 +1,9 @@
 Class {
 	#name : 'HECommandLineHandlerTest',
 	#superclass : 'TestCase',
-	#category : 'Hermes-Tests-CommandLine',
-	#package : 'Hermes-Tests',
-	#tag : 'CommandLine'
+	#category : 'Hermes-CommandLineHandler-Tests-Tests',
+	#package : 'Hermes-CommandLineHandler-Tests',
+	#tag : 'Tests'
 }
 
 { #category : 'tests' }
@@ -53,7 +53,7 @@ HECommandLineHandlerTest >> testFailOnNewUndeclared [
 	handler commandLine: (CommandLineArguments withArguments: #(prb.hermes)).
 	
 	installer := handler createInstaller.
-	self assert: (installer instVarNamed: #failOnUndeclared) equals: true
+	self assert: (installer instVarNamed: #failOnUndeclared)
 ]
 
 { #category : 'tests' }
@@ -63,7 +63,7 @@ HECommandLineHandlerTest >> testNoFailOnNewUndeclared [
 	handler commandLine: (CommandLineArguments withArguments: #('prb.hermes' '--no-fail-on-undeclared')).
 	
 	installer := handler createInstaller.
-	self assert: (installer instVarNamed: #failOnUndeclared) equals: false
+	self deny: (installer instVarNamed: #failOnUndeclared)
 ]
 
 { #category : 'tests' }
