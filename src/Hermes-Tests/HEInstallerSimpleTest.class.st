@@ -18,6 +18,12 @@ HEInstallerSimpleTest >> assertInstallingKeepsTheLayoutOf: aFixtureClass [
 	self assert: aClass classLayout class identicalTo: aFixtureClass classLayout class
 ]
 
+{ #category : 'utils' }
+HEInstallerSimpleTest >> bytecodesOf: aCompiledMethod [
+
+	^ (aCompiledMethod initialPC to: aCompiledMethod endPC) collect: [ :index | aCompiledMethod at: index ]
+]
+
 { #category : 'tests' }
 HEInstallerSimpleTest >> testCreatingAClassInATag [
 
@@ -289,6 +295,21 @@ HEInstallerSimpleTest >> testCreatingAWithNilSuperclass [
 	self assert: aClass class traitComposition isEmpty.
 
 	self assert: aClass superclass equals: nil
+]
+
+{ #category : 'tests' }
+HEInstallerSimpleTest >> testInstalledMethodsHaveTheBytecodesOfTheOriginalMethods [
+	"The trailer of the original methods must not be exported with their bytecodes, else the installed methods cannot be decompiled."
+
+	| exportedClass |
+	exportedClass := HEClass for: HETeSimpleClass.
+	self changeNameOf: exportedClass to: #HETeSimpleClassNew.
+
+	aClass := installer build: exportedClass.
+	installer installMethods: exportedClass into: aClass.
+
+	HETeSimpleClass methods do: [ :method | self assert: (self bytecodesOf: aClass >> method selector) equals: (self bytecodesOf: method) ].
+	self assert: (aClass >> #otherMethod) decompile selector equals: #otherMethod
 ]
 
 { #category : 'tests' }
