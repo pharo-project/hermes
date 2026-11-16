@@ -28,10 +28,26 @@ Class {
 		'originalUndeclareds',
 		'hasTraits'
 	],
+	#classVars : [
+		'EnableClassInitialization'
+	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',
 	#tag : 'ClassInstaller'
 }
+
+{ #category : 'accessing' }
+HEInstaller class >> enableClassInitialization [
+	"When true, Hermes will call the class side initialize methods after loading"
+
+	^ EnableClassInitialization ifNil: [ EnableClassInitialization := true ]
+]
+
+{ #category : 'accessing' }
+HEInstaller class >> enableClassInitialization: aBoolean [
+
+	EnableClassInitialization := aBoolean
+]
 
 { #category : 'creating classes' }
 HEInstaller >> build: aHEClass [
@@ -43,20 +59,20 @@ HEInstaller >> build: aHEClass [
 	layoutType := self classNamed: aHEClass layoutClass.
 
 	newClass := self class classInstaller make: [ :builder |
+		            builder
+			            name: aHEClass className;
+			            superclass: superclass;
+			            layoutClass: layoutType;
+			            slotsFromString: aHEClass instanceVariables;
+			            sharedVariablesFromString: aHEClass classVariables;
+			            sharedPoolsFromString: aHEClass sharedPools;
+			            package: aHEClass packageName;
+			            classSlots: aHEClass classInstancevariables asSlotCollection.
+		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
+		            self supportsTraits ifTrue: [
 			            builder
-				            name: aHEClass className;
-				            superclass: superclass;
-				            layoutClass: layoutType;
-				            slots: aHEClass instanceVariables asSlotCollection;
-				            sharedVariablesFromString: aHEClass classVariables;
-				            sharedPools: aHEClass sharedPools;
-				            package: aHEClass packageName;
-				            classSlots: aHEClass classInstancevariables asSlotCollection.
-			            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
-			            self supportsTraits ifTrue: [
-					            builder
-						            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
-						            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
+				            traitComposition: (self buildTraitCompositionFor: aHEClass traitComposition);
+				            classTraitComposition: (self buildTraitCompositionFor: aHEClass classTraitComposition) ] ].
 	^ newClass
 ]
 
@@ -91,11 +107,6 @@ HEInstaller >> classNamed: aSymbol [
 	^ self environment at: aSymbol
 ]
 
-{ #category : 'reporting undeclared' }
-HEInstaller >> createdUndeclared [
-	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
-]
-
 { #category : 'installing package' }
 HEInstaller >> doInstallPackage: aHEPackage [
 
@@ -117,9 +128,12 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
 
 	"6. Install extension methods"
-	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	aHEPackage extensionMethods do: [ :method | self installExtensionMethod: method ].
 
-	"7. After all I validate if there are no new undeclared variables created in the environment.
+	"7. Initialize classes if the option is enabled"
+	self class enableClassInitialization ifTrue: [ newClasses do: [ :newClass | (newClass class isLocalSelector: #initialize) ifTrue: [ newClass initialize ] ] ].
+
+	"8. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
 	self validateNoNewUndeclared
 ]
@@ -155,7 +169,7 @@ HEInstaller >> existingTrait: aHETrait [
 HEInstaller >> initialize [
 
 	environment := self class environment.
-	originalUndeclareds := Undeclared copy.
+	originalUndeclareds := self class undeclaredRegistry copy.
 	"We need to set it at the initialization and we cannot ask this later during the building because it will cause trouble if the class we are building is Trait."
 	hasTraits := Smalltalk globals hasClassNamed: #Trait
 ]
@@ -180,10 +194,8 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 
 { #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
-	| storedAnnouncements |
-	
-	storedAnnouncements := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ].	
-	storedAnnouncements do: [ :e | SystemAnnouncer uniqueInstance announce: e ].
+
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
 ]
 
 { #category : 'messages' }
@@ -201,6 +213,13 @@ HEInstaller >> messageExistingTrait: aHETrait [
 { #category : 'messages' }
 HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
+]
+
+{ #category : 'reporting undeclared' }
+HEInstaller >> newUndeclaredVariables [
+	"Return the collection of undeclared variables created during this installation"
+
+	^ self class undeclaredRegistry associations reject: [ :association | originalUndeclareds associations includes: association ]
 ]
 
 { #category : 'installing methods' }
@@ -238,7 +257,8 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 
 { #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
-	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
+
+	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , (newUndeclareds collect: [ :association | association key ]) printString ]
 ]
 
 { #category : 'validating existence' }
@@ -259,8 +279,8 @@ HEInstaller >> supportsTraits [
 
 { #category : 'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
-	self reportNewUndeclareds: self createdUndeclared.
-	
-	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
-		, Undeclared keys printString)
+
+	self reportNewUndeclareds: self newUndeclaredVariables.
+
+	SystemNotification signal: '[Hermes] Remaining Undeclared variables in the system: ' , self class undeclaredRegistry keys printString
 ]
