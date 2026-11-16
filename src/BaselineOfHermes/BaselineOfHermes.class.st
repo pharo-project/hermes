@@ -58,6 +58,9 @@ BaselineOfHermes >> pharoVersionsFrom: aVersion [
 
 { #category : 'baselines' }
 BaselineOfHermes >> pharoVersionsUpTo: aVersion [
+	"Answer the attribute of the current Pharo version if it is at most aVersion. Metacello attributes of a Pharo version include the ones of the older versions, so we cannot list them."
 
-	^ (10 to: (aVersion min: SystemVersion current major)) collect: [ :version | ('pharo' , version asString , '.x') asSymbol ]
+	^ SystemVersion current major <= aVersion
+		  ifTrue: [ { ('pharo' , SystemVersion current major asString , '.x') asSymbol } ]
+		  ifFalse: [ #(  ) ]
 ]
